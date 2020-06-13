@@ -8,6 +8,18 @@ class EditorTareas extends StatefulWidget {
 class _EditorTareasState extends State<EditorTareas> {
   final values = List.filled(7, false);
   @override
+  void initState() {
+    var now=DateTime.now();
+    int dis;
+    var date=DateTime(now.year,now.month,now.day);
+    var lastMonday = date.subtract(Duration(days: date.weekday -1 )).day;
+    dis=date.day-lastMonday;
+    //print( "hoy=$date.day" );
+    //print( lastMonday );
+    values[1+dis]=true;
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
           backgroundColor: Color.fromRGBO(155,155,155, 1),
@@ -26,9 +38,10 @@ class _EditorTareasState extends State<EditorTareas> {
           ),
           body:
             Container(
+
               margin: EdgeInsets.all(30),
               width: 350,
-              child: Column(
+              child: ListView(
                 children: <Widget>[
                   TextField(
                     decoration: InputDecoration(
@@ -40,11 +53,14 @@ class _EditorTareasState extends State<EditorTareas> {
                           borderSide: BorderSide( color: Colors.green ),
                           borderRadius: BorderRadius.all( Radius.circular(30) )
                       ),*/
+                      //border:  OutlineInputBorder(),
+                      /// labelText: "Nombre",
                       //prefixIcon: Icon( Icons.title ),
                       hintText: "Nombre de Tarea",
                       filled: true,
                       fillColor: Colors.white
                     ),
+
                   ),
                   SizedBox( height: 20, width: 20, ),
                   TextField(
@@ -74,28 +90,30 @@ class _EditorTareasState extends State<EditorTareas> {
                     ),
                   ),
                   SizedBox( height: 20, width: 20, ),
-      WeekdaySelector(
-        fillColor: Colors.white,
-        firstDayOfWeek: 1,
-        /// letra del color
-        color: Colors.black,
-        selectedFillColor: Colors.green,
-        onChanged: (int day) {
-          setState(() {
-            // Use module % 7 as Sunday's index in the array is 0 and
-            // DateTime.sunday constant integer value is 7.
-            final index = day % 7;
-            // We "flip" the value in this example, but you may also
-            // perform validation, a DB write, an HTTP call or anything
-            // else before you actually flip the value,
-            // it's up to your app's needs.
-            values[index] = !values[index];
-            for (var i = 0; i < 7; ++i) {
-              print("$i ${values[i]} ");
-            }
+                   WeekdaySelector(
+                    fillColor: Colors.white,
+                    firstDayOfWeek: 1,
+                    /// letra del color
+                    color: Colors.black,
+                    selectedFillColor: Colors.green,
 
-          });
-        },
+                    onChanged: (int day) {
+                      setState(() {
+                        // Use module % 7 as Sunday's index in the array is 0 and
+                        // DateTime.sunday constant integer value is 7.
+                        final index = day % 7;
+                        // We "flip" the value in this example, but you may also
+                        // perform validation, a DB write, an HTTP call or anything
+                        // else before you actually flip the value,
+                        // it's up to your app's needs.
+                        values[index] = !values[index];
+                        for (var i = 0; i < 7; ++i) {
+                          print("$i ${values[i]} ");
+
+                        }
+
+                      });
+                      },
         values: values,
       ),
                 ],
