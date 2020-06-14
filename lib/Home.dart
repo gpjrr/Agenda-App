@@ -14,6 +14,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromRGBO(155,155,155, 1),
       appBar: AppBar(
         centerTitle: true,
         title: Text(
@@ -25,10 +26,11 @@ class _HomeState extends State<Home> {
             fontFamily: 'Bellota-BoldItalic',
           ),
         ),
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.yellow[500],
       ),
 
       body: SafeArea(
+
         child: ListView(
           children: <Widget>[
             ListTile(
@@ -44,7 +46,7 @@ class _HomeState extends State<Home> {
           ],
 
         ),
-        
+
 
       ),
       floatingActionButton: FloatingActionButton(
@@ -53,7 +55,7 @@ class _HomeState extends State<Home> {
 
           });
         },
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.purple,
         child: Icon(
           Icons.add,
           color: Colors.black87,

@@ -7,6 +7,8 @@ class EditorTareas extends StatefulWidget {
 
 class _EditorTareasState extends State<EditorTareas> {
   final values = List.filled(7, false);
+  String TextoNombre;
+  String TextoDescripcion;
   @override
   void initState() {
     var now=DateTime.now();
@@ -38,12 +40,13 @@ class _EditorTareasState extends State<EditorTareas> {
           ),
           body:
             Container(
-
               margin: EdgeInsets.all(30),
               width: 350,
               child: ListView(
                 children: <Widget>[
                   TextField(
+                    textAlign: TextAlign.center,
+                    cursorWidth: 5,
                     decoration: InputDecoration(
                       /*enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide( color: Colors.red ),
@@ -54,17 +57,21 @@ class _EditorTareasState extends State<EditorTareas> {
                           borderRadius: BorderRadius.all( Radius.circular(30) )
                       ),*/
                       //border:  OutlineInputBorder(),
-                      /// labelText: "Nombre",
+                       //labelText: "Nombre de tarea",
                       //prefixIcon: Icon( Icons.title ),
                       hintText: "Nombre de Tarea",
                       filled: true,
                       fillColor: Colors.white
                     ),
-
+                    onChanged: (String text){
+                      TextoNombre=text;
+                    },
+                    autofocus: true,
                   ),
                   SizedBox( height: 20, width: 20, ),
                   TextField(
                     maxLines:4,
+                    cursorWidth: 5,
                     decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide( color: Colors.red ),
@@ -78,6 +85,10 @@ class _EditorTareasState extends State<EditorTareas> {
                         filled: true,
                         fillColor: Colors.white
                     ),
+                    onChanged: (String text){
+                      TextoDescripcion=text;
+                      //print("$TextoDescripcion $TextoNombre  ");
+                      },
                   ),
                   SizedBox( height: 20, width: 20, ),
                   Text(
@@ -116,6 +127,21 @@ class _EditorTareasState extends State<EditorTareas> {
                       },
         values: values,
       ),
+                  SizedBox( height: 20, width: 20, ),
+                  Text(
+                    "¿Como quieres medir el tiempo?",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      //letterSpacing: 1,
+                      fontFamily: 'Bellota-BoldItalic',
+                    ),
+                  ),
+                  Row(
+                    children: <Widget>[
+                      
+                    ],
+                  )
                 ],
               ),
             ),
