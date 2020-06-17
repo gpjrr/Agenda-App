@@ -6,9 +6,11 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  String toto=" ";
   @override
   void initState() {
     //// aqui vamos a descargar la informacion
+
     super.initState();
   }
   @override
@@ -28,7 +30,6 @@ class _HomeState extends State<Home> {
         ),
         backgroundColor: Colors.yellow[500],
       ),
-
       body: SafeArea(
 
         child: ListView(
@@ -59,7 +60,6 @@ class _HomeState extends State<Home> {
         child: Icon(
           Icons.add,
           color: Colors.black87,
-
         ),
       ),
       drawer: Drawer(
