@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:agendaprocrastinacion/Task.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -6,15 +9,14 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  String toto=" ";
+  List<Task> Tareas=new List();
   @override
-  void initState() {
-    //// aqui vamos a descargar la informacion
-
+  void initState()  {
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
+    Tareas=Tareas.isNotEmpty?Tareas:ModalRoute.of(context).settings.arguments;
     return Scaffold(
       backgroundColor: Color.fromRGBO(155,155,155, 1),
       appBar: AppBar(
@@ -32,23 +34,22 @@ class _HomeState extends State<Home> {
       ),
       body: SafeArea(
 
-        child: ListView(
-          children: <Widget>[
-            ListTile(
+        child: ListView.builder(
+          itemCount: Tareas.length,
+          itemBuilder: (context,index){
+            return ListTile(
               leading: Icon( Icons.people ),
-              title: Text('hola'),
+              title: Text(
+                  Tareas[index].Nombre,
+                  style: TextStyle(
+                      fontFamily: 'Caveat-Regular',
+                  ),
+              ),
               trailing: Icon( Icons.beenhere ),
-            ),
-            ListTile(
-              leading: Icon( Icons.people ),
-              title: Text('popos'),
-              trailing: Icon( Icons.beenhere ),
-            ),
-          ],
+            );
+          },
 
         ),
-
-
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){

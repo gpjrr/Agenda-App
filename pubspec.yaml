@@ -66,9 +66,12 @@ flutter:
     - family: Bellota-BoldItalic
       fonts:
         - asset: fonts/Bellota-BoldItalic.ttf
-    - family: EastSea
+    - family: EastSeaDokdo-Regular
       fonts:
         - asset: fonts/EastSeaDokdo-Regular.ttf
+    - family: Caveat-Regular
+      fonts:
+          - asset: fonts/Caveat-Regular.ttf
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf
