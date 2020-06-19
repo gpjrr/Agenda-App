@@ -7,12 +7,12 @@ import 'package:flutter/material.dart';
 
 void main() => runApp( MaterialApp(
 
-  initialRoute: '/Loading',
+  initialRoute: '/',
   routes:{
-    '/': (context)=> Loading(),
-    '/home': (context)=> Home(),
-    '/TipList':(context)=> TipList(),
-    '/EditorTareas':(context)=> EditorTareas(),
+    '/': (context) => Loading(),
+    '/home': (context) => Home(),
+    '/tiplist': (context) => TipList(),
+    '/editor': (context) => EditorTareas(),
   }
 
 

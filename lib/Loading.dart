@@ -21,7 +21,7 @@ class _LoadingState extends State<Loading> {
        )
      );
     }
-    await new Future.delayed(const Duration(seconds : 3));
+    await new Future.delayed(const Duration(seconds : 1));
     Navigator.pushReplacementNamed(context, '/home',arguments: Tareas);
   }
 

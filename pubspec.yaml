@@ -72,6 +72,9 @@ flutter:
     - family: Caveat-Regular
       fonts:
           - asset: fonts/Caveat-Regular.ttf
+    - family: Peddana-Regular
+      fonts:
+          - asset: fonts/Peddana-Regular.ttf
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

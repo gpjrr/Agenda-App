@@ -1,21 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:weekday_selector/weekday_selector.dart';
+import 'package:agendaprocrastinacion/Task.dart';
 class EditorTareas extends StatefulWidget {
   @override
   _EditorTareasState createState() => _EditorTareasState();
 }
 
 class _EditorTareasState extends State<EditorTareas> {
-  final values = List.filled(7, false);
+  Task Nota=new Task(
+      Limpio: true,
+      Dias: List.filled(7, false),
+      Nombre: '',
+      Descripcion: '',
+      Done: false,
+  );
+  List<bool> values=List.filled(7,false) ;
   List<bool> BotonTime= List.filled(2, false);
   String TextoNombre;
   String TextoDescripcion;
   String Horas="00",Minutos="00";
-  TextEditingController ControlTime= TextEditingController(text: "00:00");
+  TextEditingController ControlDesc= TextEditingController();
+  TextEditingController ControlName= TextEditingController();
+  TextEditingController ControlTime= TextEditingController();
+
   @override
   void initState() {
 
     BotonTime[0]=true;
+    /*
     var now=DateTime.now();
     int dis;
     var date=DateTime(now.year,now.month,now.day);
@@ -24,13 +36,33 @@ class _EditorTareasState extends State<EditorTareas> {
     //print( "hoy=$date.day" );
     //print( lastMonday );
     values[1+dis]=true;
+    */
+    //print("se construye con ${Nota.Limpio}");
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
+    if(Nota.Limpio==true) {
+      //isInstanceOf();
+      dynamic cosa=ModalRoute.of(context).settings.arguments;
+      //print( "da thin= ${cosa }");
+      Nota.Nombre=cosa['Nombre'];
+      Nota.Dias=cosa['Dias'];
+      Nota.Descripcion=cosa['Descripcion'];
+      Nota.Limpio=false;
+      setState(() {
+        ControlDesc=TextEditingController( text: Nota.Descripcion );
+        ControlName=TextEditingController( text: Nota.Nombre );
+        //values=Nota.Dias;
+        for(int i=0;i<7;i++) {
+          values[i]=Nota.Dias[i];
+          //print(" val $i = ${values[i]} ");
+        }
+
+        });
+    }
     return Scaffold(
           backgroundColor: Color.fromRGBO(155,155,155, 1),
-          /*
           appBar: AppBar(
             backgroundColor: Colors.yellow[500],
             centerTitle: true,
@@ -41,12 +73,12 @@ class _EditorTareasState extends State<EditorTareas> {
                 fontSize: 25,
                 letterSpacing: 1,
                 //fontFamily: 'EastSeaDokdo-Regular',
-                fontFamily: 'Bellota-BoldItalic',
+                //fontFamily: 'Bellota-BoldItalic',
+                fontFamily: 'Peddana-Regular',
+
               ),
             ),
           ),
-
-         */
           body:
             Container(
               margin: EdgeInsets.all(30),
@@ -54,6 +86,7 @@ class _EditorTareasState extends State<EditorTareas> {
               child: ListView(
                 children: <Widget>[
                   TextField(
+                    controller: ControlName,
                     textAlign: TextAlign.center,
                     cursorWidth: 5,
                     decoration: InputDecoration(
@@ -79,6 +112,7 @@ class _EditorTareasState extends State<EditorTareas> {
                   ),
                   SizedBox( height: 20, width: 20, ),
                   TextField(
+                    controller: ControlDesc,
                     maxLines:4,
                     cursorWidth: 5,
                     decoration: InputDecoration(
@@ -155,7 +189,7 @@ class _EditorTareasState extends State<EditorTareas> {
                         Container(
                           child:
                           Text(
-                            "Temporizador",
+                            "Cronometro",
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,
@@ -169,7 +203,7 @@ class _EditorTareasState extends State<EditorTareas> {
                         Container(
                           child:
                           Text(
-                            "Cronometro",
+                            "Temporizador",
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,

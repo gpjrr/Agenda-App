@@ -33,16 +33,22 @@ class _HomeState extends State<Home> {
         backgroundColor: Colors.yellow[500],
       ),
       body: SafeArea(
-
         child: ListView.builder(
           itemCount: Tareas.length,
           itemBuilder: (context,index){
             return ListTile(
+              onTap: (){
+                print(" ${Tareas[index].Nombre} ");
+              },
               leading: Icon( Icons.people ),
               title: Text(
                   Tareas[index].Nombre,
                   style: TextStyle(
-                      fontFamily: 'Caveat-Regular',
+                    color: Colors.white,
+                    fontSize: 30,
+                    letterSpacing: 1,
+                    fontFamily: 'EastSeaDokdo-Regular',
+                    //fontFamily: 'Caveat-Regular',
                   ),
               ),
               trailing: Icon( Icons.beenhere ),
@@ -52,9 +58,31 @@ class _HomeState extends State<Home> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          setState(() {
+        onPressed: () async{
+          Task Nuevo=Task(
+            Nombre:"pruebaa",
+            Descripcion: "esto es una popo peroo puede funcionar",
+            Limpio: true,
+            Dias: List.filled(7, false),
+            Lave: "0",
+          );
 
+          Nuevo.Hoy();
+          Nuevo.Dias[0]=true;
+          await Navigator.pushNamed(context,'/editor',arguments: {
+            'Nombre': Nuevo.Nombre ,
+            'Descripcion': Nuevo.Descripcion ,
+            'Dias':Nuevo.Dias,
+          } );
+          setState( (){
+            Task Sujeto=Task(
+              Nombre: 'asdf',
+              Limpio: true,
+              Descripcion: 'sfdf',
+              Dias: List.filled(7, false),
+              Lave: "0",
+            );
+            Tareas.add(Sujeto);
           });
         },
         backgroundColor: Colors.purple,

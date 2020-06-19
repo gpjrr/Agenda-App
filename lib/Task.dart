@@ -6,7 +6,7 @@ class Task {
   String Nombre;
   String Descripcion;
   bool Done;
-  //bool NuevaTarea;
+  bool Limpio;
   List Dias;
   //final dias=List.filled(7, false);
   Task( { this.Nombre,
@@ -14,5 +14,14 @@ class Task {
           this.Done,
           this.Dias,
           this.Lave,
+          this.Limpio
   } );
+  void Hoy(){
+    var now=DateTime.now();
+    int dis;
+    var date=DateTime(now.year,now.month,now.day);
+    var lastMonday = date.subtract(Duration(days: date.weekday -1 )).day;
+    dis=date.day-lastMonday;
+    this.Dias[1+dis]=true;
+  }
 }
