@@ -12,12 +12,19 @@ class _LoadingState extends State<Loading> {
 
   void llena() async{
     for(int i=1;i<=16;i++) {
+      bool tem;
+      if( i%2==0 )
+        tem=true;
+      else tem=false;
+
       Tareas.add(
        Task(
          Nombre:"ejemplo $i",
          Descripcion: "aqui redacto",
          Dias: List.filled(7, false),
-         Lave: "0",
+         Lave: "${i} ",
+         Done: !tem,
+         Tempo: tem,
        )
      );
     }

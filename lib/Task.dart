@@ -2,9 +2,11 @@
 //import 'dart:convert';
 //import 'package:flutter/material.dart';
 class Task {
+
   String Lave;
   String Nombre;
   String Descripcion;
+  bool Tempo;
   bool Done;
   bool Limpio;
   List Dias;
@@ -14,7 +16,8 @@ class Task {
           this.Done,
           this.Dias,
           this.Lave,
-          this.Limpio
+          this.Limpio,
+          this.Tempo,
   } );
   void Hoy(){
     var now=DateTime.now();

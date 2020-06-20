@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:agendaprocrastinacion/Task.dart';
 import 'package:flutter/material.dart';
 
@@ -18,13 +17,14 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     Tareas=Tareas.isNotEmpty?Tareas:ModalRoute.of(context).settings.arguments;
     return Scaffold(
-      backgroundColor: Color.fromRGBO(155,155,155, 1),
+      backgroundColor: Color.fromRGBO(211, 211, 211, 1) ,
       appBar: AppBar(
+        iconTheme: IconThemeData( color: Colors.black ),
         centerTitle: true,
         title: Text(
           'lista de tareas',
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.black,
             fontSize: 25,
             letterSpacing: 1,
             fontFamily: 'Bellota-BoldItalic',
@@ -36,22 +36,36 @@ class _HomeState extends State<Home> {
         child: ListView.builder(
           itemCount: Tareas.length,
           itemBuilder: (context,index){
-            return ListTile(
-              onTap: (){
-                print(" ${Tareas[index].Nombre} ");
-              },
-              leading: Icon( Icons.people ),
-              title: Text(
-                  Tareas[index].Nombre,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30,
-                    letterSpacing: 1,
-                    fontFamily: 'EastSeaDokdo-Regular',
-                    //fontFamily: 'Caveat-Regular',
-                  ),
+            return Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 2,
+                horizontal: 2,
               ),
-              trailing: Icon( Icons.beenhere ),
+              child: Card(
+                //borderOnForeground: true,
+                child: ListTile(
+                  onTap: (){
+                    print(" ${Tareas[index].Nombre} ");
+                  },
+                  leading: Icon( Icons.people ),
+                  title: Text(
+                      Tareas[index].Nombre,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 30,
+                        letterSpacing: 1,
+                        fontFamily: 'EastSeaDokdo-Regular',
+                        //fontFamily: 'Caveat-Regular',
+                      ),
+                  ),
+                  trailing: Icon(
+                    Icons.done,
+                    size: 40,
+                    color: Colors.green,
+                  ),
+
+                ),
+              ),
             );
           },
 
@@ -65,6 +79,7 @@ class _HomeState extends State<Home> {
             Limpio: true,
             Dias: List.filled(7, false),
             Lave: "0",
+            Tempo: true,
           );
 
           Nuevo.Hoy();
@@ -73,6 +88,7 @@ class _HomeState extends State<Home> {
             'Nombre': Nuevo.Nombre ,
             'Descripcion': Nuevo.Descripcion ,
             'Dias':Nuevo.Dias,
+            'Tempo':Nuevo.Tempo,
           } );
           setState( (){
             Task Sujeto=Task(
@@ -85,13 +101,14 @@ class _HomeState extends State<Home> {
             Tareas.add(Sujeto);
           });
         },
-        backgroundColor: Colors.purple,
+        backgroundColor: Colors.blue[700],
         child: Icon(
           Icons.add,
           color: Colors.black87,
         ),
       ),
       drawer: Drawer(
+
         child: ListView(
           children: <Widget>[
             ListTile(
