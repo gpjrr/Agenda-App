@@ -17,8 +17,6 @@ class _EditorTareasState extends State<EditorTareas> {
 
   List<bool> values=List.filled(7,false) ;
   List<bool> BotonTime= List.filled(2, false);
-  String TextoNombre;
-  String TextoDescripcion;
   String Horas="00",Minutos="00";
   TextEditingController ControlDesc= TextEditingController();
   TextEditingController ControlName= TextEditingController();
@@ -95,12 +93,12 @@ class _EditorTareasState extends State<EditorTareas> {
                         //border:  OutlineInputBorder(),
                          //labelText: "Nombre de tarea",
                         //prefixIcon: Icon( Icons.title ),
-                        hintText: "Nombre de Tarea",
+                        //hintText: "Nombre de Tarea",
                         filled: true,
                         fillColor: Colors.white
                       ),
                       onChanged: (String text){
-                        TextoNombre=text;
+                        Nota.Nombre=text;
                       },
                       //autofocus: true,
                     ),
@@ -123,8 +121,8 @@ class _EditorTareasState extends State<EditorTareas> {
                           fillColor: Colors.white
                       ),
                       onChanged: (String text){
-                        TextoDescripcion=text;
-                        //print("$TextoDescripcion $TextoNombre  ");
+                        Nota.Descripcion=text;
+
                         },
                     ),
                     SizedBox( height: 20, width: 20, ),
@@ -155,11 +153,9 @@ class _EditorTareasState extends State<EditorTareas> {
                           // else before you actually flip the value,
                           // it's up to your app's needs.
                           values[index] = !values[index];
-                         /*
-                          for (var i = 0; i < 7; ++i)
-                            print("$i ${values[i]} ");
-                          */
 
+                          for (var i = 0; i < 7; ++i)
+                            Nota.Dias[i]=values[i];
                         });
                         },
         values: values,
@@ -215,6 +211,7 @@ class _EditorTareasState extends State<EditorTareas> {
                             if( BotonTime[index]==false )
                             for(int i=0;i<2;i++)
                               BotonTime[i]=!BotonTime[i];
+                            Nota.Tempo=BotonTime[1];
                           });
                         },
 
@@ -240,12 +237,17 @@ class _EditorTareasState extends State<EditorTareas> {
 
                     SizedBox( height: 20, width: 20, ),
                     Container(
+                      /*decoration: BoxDecoration(
+                      ),*/
                       color: Colors.green,
                       child: FlatButton.icon(
                           onPressed: (){
                             Navigator.pop(context,{
-
-                            });
+                              'Nombre': Nota.Nombre,
+                              'Descripcion': Nota.Descripcion,
+                              'Dias': Nota.Dias,
+                              'Tempo': Nota.Tempo,
+                            } );
                           },
                           label: Text('guardar'),
                           icon: Icon(Icons.save),

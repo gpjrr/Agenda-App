@@ -44,15 +44,36 @@ class _HomeState extends State<Home> {
               child: Card(
                 //borderOnForeground: true,
                 child: ListTile(
-                  onTap: (){
-                    print(" ${Tareas[index].Nombre} ");
+                  onTap: ()async{
+
+                    dynamic cosa2=await Navigator.pushNamed(context,'/editor',arguments: {
+                      'Nombre': Tareas[index].Nombre ,
+                      'Descripcion': Tareas[index].Descripcion ,
+                      'Dias':Tareas[index].Dias,
+                      'Tempo':Tareas[index].Tempo,
+                    } );
+
+                    setState( (){
+
+                      Task Sujeto=Task(
+                        Nombre: cosa2['Nombre'],
+                        Limpio: true,
+                        Descripcion: cosa2['Descripcion'],
+                        Dias:  cosa2['Dias'] ,
+                        Tempo: cosa2['Tempo'],
+                        Lave: "0",
+                      );
+                      Tareas[index]=Sujeto;
+                    });
+
+
                   },
                   leading: Icon( Icons.people ),
                   title: Text(
-                      Tareas[index].Nombre,
+                      Tareas[index].Nombre.substring(0, Tareas[index].Nombre.length>=18?18:Tareas[index].Nombre.length  ),
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 30,
+                        fontSize: 25,
                         letterSpacing: 1,
                         fontFamily: 'EastSeaDokdo-Regular',
                         //fontFamily: 'Caveat-Regular',
@@ -74,17 +95,15 @@ class _HomeState extends State<Home> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async{
           Task Nuevo=Task(
-            Nombre:"pruebaa",
-            Descripcion: "esto es una popo peroo puede funcionar",
+            //Nombre: ,
+            Descripcion: "",
             Limpio: true,
             Dias: List.filled(7, false),
             Lave: "0",
             Tempo: true,
           );
-
           Nuevo.Hoy();
-          Nuevo.Dias[0]=true;
-          await Navigator.pushNamed(context,'/editor',arguments: {
+          dynamic cosa=await Navigator.pushNamed(context,'/editor',arguments: {
             'Nombre': Nuevo.Nombre ,
             'Descripcion': Nuevo.Descripcion ,
             'Dias':Nuevo.Dias,
@@ -92,10 +111,11 @@ class _HomeState extends State<Home> {
           } );
           setState( (){
             Task Sujeto=Task(
-              Nombre: 'asdf',
+              Nombre: cosa['Nombre'],
               Limpio: true,
-              Descripcion: 'sfdf',
-              Dias: List.filled(7, false),
+              Descripcion: cosa['Descripcion'],
+              Dias:  cosa['Dias'] ,
+              Tempo: cosa['Tempo'],
               Lave: "0",
             );
             Tareas.add(Sujeto);

@@ -25,6 +25,6 @@ class Task {
     var date=DateTime(now.year,now.month,now.day);
     var lastMonday = date.subtract(Duration(days: date.weekday -1 )).day;
     dis=date.day-lastMonday;
-    this.Dias[1+dis]=true;
+    this.Dias[ (1+dis)%7 ]=true;
   }
 }

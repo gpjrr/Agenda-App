@@ -11,7 +11,7 @@ class _LoadingState extends State<Loading> {
   List<Task> Tareas=new List();
 
   void llena() async{
-    for(int i=1;i<=16;i++) {
+    for(int i=1;i<=6;i++) {
       bool tem;
       if( i%2==0 )
         tem=true;
