@@ -61,7 +61,7 @@ class _HomeState extends State<Home> {
                         Descripcion: cosa2['Descripcion'],
                         Dias:  cosa2['Dias'] ,
                         Tempo: cosa2['Tempo'],
-                        Lave: "0",
+                        Lave: UniqueKey(),
                       );
                       Tareas[index]=Sujeto;
                     });
@@ -95,11 +95,11 @@ class _HomeState extends State<Home> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async{
           Task Nuevo=Task(
-            //Nombre: ,
+            Nombre: '',
             Descripcion: "",
             Limpio: true,
             Dias: List.filled(7, false),
-            Lave: "0",
+            Lave: UniqueKey(),
             Tempo: true,
           );
           Nuevo.Hoy();
@@ -116,7 +116,7 @@ class _HomeState extends State<Home> {
               Descripcion: cosa['Descripcion'],
               Dias:  cosa['Dias'] ,
               Tempo: cosa['Tempo'],
-              Lave: "0",
+              Lave: UniqueKey(),
             );
             Tareas.add(Sujeto);
           });

@@ -22,7 +22,7 @@ class _LoadingState extends State<Loading> {
          Nombre:"ejemplo $i",
          Descripcion: "aqui redacto",
          Dias: List.filled(7, false),
-         Lave: "${i} ",
+         Lave: UniqueKey(),
          Done: !tem,
          Tempo: tem,
        )

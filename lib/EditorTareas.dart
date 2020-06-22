@@ -91,7 +91,7 @@ class _EditorTareasState extends State<EditorTareas> {
                             borderRadius: BorderRadius.all( Radius.circular(30) )
                         ),*/
                         //border:  OutlineInputBorder(),
-                         //labelText: "Nombre de tarea",
+                         labelText: "Nombre",
                         //prefixIcon: Icon( Icons.title ),
                         //hintText: "Nombre de Tarea",
                         filled: true,
@@ -107,16 +107,9 @@ class _EditorTareasState extends State<EditorTareas> {
                       controller: ControlDesc,
                       maxLines:4,
                       cursorWidth: 5,
+                      ///textAlign: TextAlign.center,
                       decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide( color: Colors.red ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide( color: Colors.green ),
-
-                          ),
-                          //prefixIcon: Icon( Icons.title ),
-                          hintText: "Descripción",
+                          labelText:  "Descripción",
                           filled: true,
                           fillColor: Colors.white
                       ),

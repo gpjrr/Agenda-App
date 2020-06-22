@@ -1,9 +1,13 @@
 //import 'dart:html';
 //import 'dart:convert';
 //import 'package:flutter/material.dart';
-class Task {
+import 'package:flutter/cupertino.dart';
 
-  String Lave;
+class Task {
+  // agregar al constructor
+
+  String Hora,Minu;
+  Key Lave;
   String Nombre;
   String Descripcion;
   bool Tempo;
