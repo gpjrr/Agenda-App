@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:agendaprocrastinacion/Task.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -16,6 +17,8 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     Tareas=Tareas.isNotEmpty?Tareas:ModalRoute.of(context).settings.arguments;
+    for(int i=0;i<Tareas.length;i++)
+      print( " $i =  ${Tareas[i].Nombre}" );
     return Scaffold(
       backgroundColor: Color.fromRGBO(211, 211, 211, 1) ,
       appBar: AppBar(
@@ -32,61 +35,101 @@ class _HomeState extends State<Home> {
         ),
         backgroundColor: Colors.yellow[500],
       ),
+
       body: SafeArea(
+
         child: ListView.builder(
           itemCount: Tareas.length,
           itemBuilder: (context,index){
-            return Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 2,
-                horizontal: 2,
-              ),
-              child: Card(
-                //borderOnForeground: true,
-                child: ListTile(
-                  onTap: ()async{
+            return Dismissible(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 2,
+                  horizontal: 2,
+                ),
+                child: Card(
+                  //borderOnForeground: true,
+                  child: ListTile(
+                    onTap: ()async{
 
-                    dynamic cosa2=await Navigator.pushNamed(context,'/editor',arguments: {
-                      'Nombre': Tareas[index].Nombre ,
-                      'Descripcion': Tareas[index].Descripcion ,
-                      'Dias':Tareas[index].Dias,
-                      'Tempo':Tareas[index].Tempo,
-                    } );
+                      dynamic cosa2=await Navigator.pushNamed(context,'/editor',arguments: {
+                        'Nombre': Tareas[index].Nombre ,
+                        'Descripcion': Tareas[index].Descripcion ,
+                        'Dias':Tareas[index].Dias,
+                        'Tempo':Tareas[index].Tempo,
+                      } );
 
-                    setState( (){
+                      setState( (){
 
-                      Task Sujeto=Task(
-                        Nombre: cosa2['Nombre'],
-                        Limpio: true,
-                        Descripcion: cosa2['Descripcion'],
-                        Dias:  cosa2['Dias'] ,
-                        Tempo: cosa2['Tempo'],
-                        Lave: UniqueKey(),
-                      );
-                      Tareas[index]=Sujeto;
-                    });
+                        Task Sujeto=Task(
+                          Nombre: cosa2['Nombre'],
+                          Limpio: true,
+                          Descripcion: cosa2['Descripcion'],
+                          Dias:  cosa2['Dias'] ,
+                          Tempo: cosa2['Tempo'],
+                          Lave: UniqueKey(),
+                        );
+                        Tareas[index]=Sujeto;
+                      });
 
 
-                  },
-                  leading: Icon( Icons.people ),
-                  title: Text(
-                      Tareas[index].Nombre.substring(0, Tareas[index].Nombre.length>=18?18:Tareas[index].Nombre.length  ),
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 25,
-                        letterSpacing: 1,
-                        fontFamily: 'EastSeaDokdo-Regular',
-                        //fontFamily: 'Caveat-Regular',
-                      ),
+                    },
+                    leading: Icon( Icons.people ),
+                    title: Text(
+                        Tareas[index].Nombre.substring(0, Tareas[index].Nombre.length>=18?18:Tareas[index].Nombre.length  ),
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 25,
+                          letterSpacing: 1,
+                          fontFamily: 'EastSeaDokdo-Regular',
+                          //fontFamily: 'Caveat-Regular',
+                        ),
+                    ),
+                    trailing: Icon(
+                      Icons.done,
+                      size: 40,
+                      color: Colors.green,
+                    ),
+
                   ),
-                  trailing: Icon(
-                    Icons.done,
-                    size: 40,
-                    color: Colors.green,
-                  ),
-
                 ),
               ),
+              key: Tareas[index].Lave,
+              secondaryBackground: Container(
+                color: Colors.red,
+                alignment: Alignment.centerRight,
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  child: Icon(
+
+                    Icons.delete,
+                    color: Colors.black,
+                    size: 40,
+                  ),
+                ),
+              ),
+              background: Container(
+                color: Colors.green,
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  child: Icon(
+
+                    Icons.flag,
+                    color: Colors.black,
+                    size: 40,
+                  ),
+                ),
+              ),
+              onDismissed: ( direction ){
+                if(  direction==DismissDirection.endToStart ){
+                  setState(() {
+                    Tareas.removeAt(index);
+                  });
+                }
+                else
+                  print("right");
+                },
             );
           },
 
