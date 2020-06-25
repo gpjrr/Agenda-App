@@ -11,7 +11,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   List<Task> Tareas=new List();
   @override
-  void initState()  {
+  void initState(){
     super.initState();
   }
   @override
@@ -127,14 +127,21 @@ class _HomeState extends State<Home> {
                     Tareas.removeAt(index);
                   });
                 }
-                else
-                  print("right");
+                else {
+                  setState( ()async {
+                    dynamic cosa=await Navigator.pushNamed(context, '/tiempo' );
+                    // borrar o mover dependee
+                    Tareas.removeAt(index);
+                  });
+                }
+
                 },
             );
           },
 
         ),
       ),
+
       floatingActionButton: FloatingActionButton(
         onPressed: () async{
           Task Nuevo=Task(
@@ -153,15 +160,17 @@ class _HomeState extends State<Home> {
             'Tempo':Nuevo.Tempo,
           } );
           setState( (){
-            Task Sujeto=Task(
-              Nombre: cosa['Nombre'],
-              Limpio: true,
-              Descripcion: cosa['Descripcion'],
-              Dias:  cosa['Dias'] ,
-              Tempo: cosa['Tempo'],
-              Lave: UniqueKey(),
-            );
-            Tareas.add(Sujeto);
+            if( cosa!=null ) {
+              Task Sujeto = Task(
+                Nombre: cosa['Nombre'],
+                Limpio: true,
+                Descripcion: cosa['Descripcion'],
+                Dias: cosa['Dias'],
+                Tempo: cosa['Tempo'],
+                Lave: UniqueKey(),
+              );
+              Tareas.add(Sujeto);
+            }
           });
         },
         backgroundColor: Colors.blue[700],
@@ -170,6 +179,7 @@ class _HomeState extends State<Home> {
           color: Colors.black87,
         ),
       ),
+
       drawer: Drawer(
 
         child: ListView(

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:weekday_selector/weekday_selector.dart';
 import 'package:agendaprocrastinacion/Task.dart';
@@ -71,183 +72,240 @@ class _EditorTareasState extends State<EditorTareas> {
             ),
           ),
           body:
-            Align(
-              alignment: Alignment.center,
-              child: Container(
-                padding: EdgeInsets.all(10),
-                child: ListView(
-                  children: <Widget>[
-                    TextField(
-                      controller: ControlName,
-                      textAlign: TextAlign.center,
-                      cursorWidth: 5,
-                      decoration: InputDecoration(
-                        /*enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide( color: Colors.red ),
-                          borderRadius: BorderRadius.all( Radius.circular(30) )
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide( color: Colors.green ),
+            Builder(
+              builder: (context)=>  Align(
+                alignment: Alignment.center,
+                child: Container(
+                  padding: EdgeInsets.all(7),
+                  child: ListView(
+                    children: <Widget>[
+                      TextField(
+                        controller: ControlName,
+                        textAlign: TextAlign.center,
+                        cursorWidth: 5,
+                        decoration: InputDecoration(
+                          /*enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide( color: Colors.red ),
                             borderRadius: BorderRadius.all( Radius.circular(30) )
-                        ),*/
-                        //border:  OutlineInputBorder(),
-                         labelText: "Nombre",
-                        //prefixIcon: Icon( Icons.title ),
-                        //hintText: "Nombre de Tarea",
-                        filled: true,
-                        fillColor: Colors.white
-                      ),
-                      onChanged: (String text){
-                        Nota.Nombre=text;
-                      },
-                      //autofocus: true,
-                    ),
-                    SizedBox( height: 20, width: 20, ),
-                    TextField(
-                      controller: ControlDesc,
-                      maxLines:4,
-                      cursorWidth: 5,
-                      ///textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                          labelText:  "Descripción",
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide( color: Colors.green ),
+                              borderRadius: BorderRadius.all( Radius.circular(30) )
+                          ),*/
+                          //border:  OutlineInputBorder(),
+                           labelText: "Nombre",
+                          //prefixIcon: Icon( Icons.title ),
+                          //hintText: "Nombre de Tarea",
                           filled: true,
                           fillColor: Colors.white
-                      ),
-                      onChanged: (String text){
-                        Nota.Descripcion=text;
-
+                        ),
+                        onChanged: (String text){
+                          Nota.Nombre=text;
                         },
-                    ),
-                    SizedBox( height: 20, width: 20, ),
-                    Text(
-                      "¿que dias lo vas a hacer?",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        //letterSpacing: 1,
-                        fontFamily: 'Bellota-BoldItalic',
+                        //autofocus: true,
                       ),
-                    ),
-                    SizedBox( height: 20, width: 20, ),
-                     WeekdaySelector(
-                      fillColor: Colors.white,
-                      firstDayOfWeek: 1,
-                      /// letra del color
-                      color: Colors.black,
-                      selectedFillColor: Colors.blue[700],
+                      SizedBox( height: 20, width: 20, ),
+                      TextField(
+                        controller: ControlDesc,
+                        maxLines:4,
+                        cursorWidth: 5,
+                        ///textAlign: TextAlign.center,
+                        decoration: InputDecoration(
+                            labelText:  "Descripción",
+                            filled: true,
+                            fillColor: Colors.white
+                        ),
+                        onChanged: (String text){
+                          Nota.Descripcion=text;
 
-                      onChanged: (int day) {
-                        setState(() {
-                          // Use module % 7 as Sunday's index in the array is 0 and
-                          // DateTime.sunday constant integer value is 7.
-                          final index = day % 7;
-                          // We "flip" the value in this example, but you may also
-                          // perform validation, a DB write, an HTTP call or anything
-                          // else before you actually flip the value,
-                          // it's up to your app's needs.
-                          values[index] = !values[index];
+                          },
+                      ),
+                      SizedBox( height: 20, width: 20, ),
+                      Text(
+                        "¿que dias lo vas a hacer?",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          //letterSpacing: 1,
+                          fontFamily: 'Bellota-BoldItalic',
+                        ),
+                      ),
+                      SizedBox( height: 20, width: 20, ),
+                       WeekdaySelector(
+                        fillColor: Colors.white,
+                        firstDayOfWeek: 1,
+                        /// letra del color
+                        color: Colors.black,
+                        selectedFillColor: Colors.blue[700],
 
-                          for (var i = 0; i < 7; ++i)
-                            Nota.Dias[i]=values[i];
-                        });
-                        },
+                        onChanged: (int day) {
+                          setState(() {
+                            // Use module % 7 as Sunday's index in the array is 0 and
+                            // DateTime.sunday constant integer value is 7.
+                            final index = day % 7;
+                            // We "flip" the value in this example, but you may also
+                            // perform validation, a DB write, an HTTP call or anything
+                            // else before you actually flip the value,
+                            // it's up to your app's needs.
+                            values[index] = !values[index];
+
+                            for (var i = 0; i < 7; ++i)
+                              Nota.Dias[i]=values[i];
+                          });
+                          },
         values: values,
       ),
-                    SizedBox( height: 20, width: 20, ),
-                    Text(
-                      "¿Como quieres medir el tiempo?",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        //letterSpacing: 1,
-                        fontFamily: 'Bellota-BoldItalic',
-                      ),
-                    ),
-                    SizedBox( height: 20, width: 20, ),
-
-                    Center(
-                      heightFactor: 1,
-                      widthFactor: 1,
-                      child: ToggleButtons(
-                        children: <Widget>[
-                          Container(
-                            child:
-                            Text(
-                              "Cronometro",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                //letterSpacing: 1,
-                                fontFamily: 'Bellota-BoldItalic',
-                              ),
-                            ),
-                            ///color: Colors.purple,
-                            margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                          ),
-                          Container(
-                            child:
-                            Text(
-                              "Temporizador",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                //letterSpacing: 1,
-                                fontFamily: 'Bellota-BoldItalic',
-                              ),
-                            ),
-                            margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                          ),
-                        ],
-                        isSelected: BotonTime,
-                        onPressed: (int index){
-                          setState(() {
-                            if( BotonTime[index]==false )
-                            for(int i=0;i<2;i++)
-                              BotonTime[i]=!BotonTime[i];
-                            Nota.Tempo=BotonTime[1];
-                          });
-                        },
-
-                        fillColor: Colors.blue[700],
-                      ),
-                    ),
-                    if( BotonTime[1]==true )
                       SizedBox( height: 20, width: 20, ),
-                    if( BotonTime[1]==true )
+                      Text(
+                        "¿Como quieres medir el tiempo?",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          //letterSpacing: 1,
+                          fontFamily: 'Bellota-BoldItalic',
+                        ),
+                      ),
+                      SizedBox( height: 20, width: 20, ),
+
                       Center(
                         heightFactor: 1,
                         widthFactor: 1,
-                        child: Text(
-                          "$Horas:$Minutos",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 40,
-                            //letterSpacing: 3,
-                            fontFamily: 'Bellota-BoldItalic',
-                          ),
+                        child: ToggleButtons(
+                          children: <Widget>[
+                            Container(
+                              child: Text(
+                                "Cronometro",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  //letterSpacing: 1,
+                                  fontFamily: 'Bellota-BoldItalic',
+                                ),
+                              ),
+                              ///color: Colors.purple,
+                              margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                            ),
+                            Container(
+                              child: Text(
+                                "Temporizador",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  //letterSpacing: 1,
+                                  fontFamily: 'Bellota-BoldItalic',
+                                ),
+                              ),
+                              margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                            ),
+                          ],
+                          isSelected: BotonTime,
+                          onPressed: (int index){
+                            setState(() {
+                              if( BotonTime[index]==false )
+                              for(int i=0;i<2;i++)
+                                BotonTime[i]=!BotonTime[i];
+                              Nota.Tempo=BotonTime[1];
+                            });
+                          },
+
+                          fillColor: Colors.blue[700],
                         ),
                       ),
+                      if( BotonTime[1]==true )
+                        SizedBox( height: 20, width: 20, ),
+                      if( BotonTime[1]==true )
+                        Center(
+                          heightFactor: 1,
+                          widthFactor: 1,
+                          child: Text(
+                            "$Horas:$Minutos",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 40,
+                              //letterSpacing: 3,
+                              fontFamily: 'Bellota-BoldItalic',
+                            ),
+                          ),
+                        ),
 
-                    SizedBox( height: 20, width: 20, ),
-                    Container(
-                      /*decoration: BoxDecoration(
-                      ),*/
-                      color: Colors.green,
-                      child: FlatButton.icon(
-                          onPressed: (){
-                            Navigator.pop(context,{
-                              'Nombre': Nota.Nombre,
-                              'Descripcion': Nota.Descripcion,
-                              'Dias': Nota.Dias,
-                              'Tempo': Nota.Tempo,
-                            } );
-                          },
-                          label: Text('guardar'),
-                          icon: Icon(Icons.save),
+                      SizedBox( height: 20, width: 20, ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Container(
+                            color: Colors.red,
+                            child: FlatButton.icon(
+                              onPressed: (){
+                                Navigator.pop(context,null );
+                              },
+                              label: Text(
+                                'Cancelar',
+                                style: TextStyle(
+                                  fontSize: 30,
+                                  //fontFamily: 'EastSeaDokdo-Regular',
+                                  fontFamily: 'Bellota-BoldItalic',
+                                  //fontFamily: 'Peddana-Regular',
 
+                                ),
+                              ),
+                              icon: Icon(
+                                Icons.cancel,
+                                size: 30,
+                              ),
+
+                            ),
+                          ),
+                          Container(
+                            /*decoration: BoxDecoration(
+                                color: Colors.red,
+                                border: Border.all(
+                                  color: Colors.black,
+                                  width: 8,
+                                ),
+                                borderRadius: BorderRadius.circular(12),
+                              ),*/
+
+                            color: Colors.green,
+                            child: FlatButton.icon(
+                              onPressed: (){
+                                if(Nota.Nombre.isNotEmpty)
+                                  Navigator.pop(context, {
+                                    'Nombre': Nota.Nombre,
+                                    'Descripcion': Nota.Descripcion,
+                                    'Dias': Nota.Dias,
+                                    'Tempo': Nota.Tempo,
+                                  });
+                                else
+                                  Scaffold.of( context ).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                            'Escribe el nombre de la nueva tarea'
+                                        ),
+                                      ),
+                                  );
+
+                              },
+                              label: Text(
+                                  'Guardar',
+                                style: TextStyle(
+                                  fontSize: 30,
+                                  //fontFamily: 'EastSeaDokdo-Regular',
+                                  fontFamily: 'Bellota-BoldItalic',
+                                  //fontFamily: 'Peddana-Regular',
+
+                                ),
+                              ),
+                              icon: Icon(
+                                  Icons.save,
+                                  size: 30,
+                              ),
+
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
