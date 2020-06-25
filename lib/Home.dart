@@ -122,19 +122,12 @@ class _HomeState extends State<Home> {
                 ),
               ),
               onDismissed: ( direction ){
-                if(  direction==DismissDirection.endToStart ){
-                  setState(() {
-                    Tareas.removeAt(index);
-                  });
-                }
-                else {
+                Tareas.removeAt(index);
+                if(  direction==DismissDirection.startToEnd ){
                   setState( ()async {
-                    dynamic cosa=await Navigator.pushNamed(context, '/tiempo' );
-                    // borrar o mover dependee
-                    Tareas.removeAt(index);
+                     await Navigator.pushNamed(context, '/tiempo' );
                   });
                 }
-
                 },
             );
           },

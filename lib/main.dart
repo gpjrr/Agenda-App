@@ -14,7 +14,7 @@ void main() => runApp( MaterialApp(
     '/home': (context) => Home(),
     '/tiplist': (context) => TipList(),
     '/editor': (context) => EditorTareas(),
-    '/tiempo': (context) => Tiempo(),
+    '/tiempo': (context) => CountDownTimer(),
   }
 
 
