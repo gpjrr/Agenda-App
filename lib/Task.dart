@@ -22,6 +22,8 @@ class Task {
           this.Lave,
           this.Limpio,
           this.Tempo,
+          this.Hora,
+          this.Minu,
   } );
   void Hoy(){
     var now=DateTime.now();

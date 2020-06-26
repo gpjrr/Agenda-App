@@ -10,7 +10,7 @@ class CountDownTimer extends StatefulWidget {
 class _CountDownTimerState extends State<CountDownTimer>
     with TickerProviderStateMixin {
   AnimationController controller;
-
+  bool Bandera=false;
   String get timerString {
     Duration duration = controller.duration * controller.value;
     String Horas=(duration.inHours).toString().padLeft(2, '0');
@@ -18,18 +18,27 @@ class _CountDownTimerState extends State<CountDownTimer>
     String Segundos=(duration.inSeconds%60).toString().padLeft(2, '0');
     return '$Horas:$Minutos:$Segundos';
   }
-
+  int Segundos=0;
   @override
   void initState() {
     super.initState();
-    controller = AnimationController(
-      vsync: this,
-      duration: Duration(seconds:7200),
-    );
+
   }
 
   @override
   Widget build(BuildContext context) {
+    if( Bandera==false ){
+      Bandera=true;
+      dynamic cosa=ModalRoute.of(context).settings.arguments;
+      print( " ${cosa['Hora']} == ${cosa['Minu']}" );
+      Segundos= int.parse( cosa['Hora'] )*60+int.parse( cosa["Minu"] );
+      Segundos*=60;
+      controller = AnimationController(
+        vsync: this,
+        duration: Duration(seconds: Segundos ),
+      );
+      print("seg==$Segundos");
+    }
     ThemeData themeData = Theme.of(context);
     return Scaffold(
       backgroundColor: Colors.white10,
@@ -43,8 +52,8 @@ class _CountDownTimerState extends State<CountDownTimer>
                   alignment: Alignment.bottomCenter,
                   child: Container(
                     color: Colors.yellow[500],
-                    height:
-                    controller.value * MediaQuery.of(context).size.height,
+                    height:MediaQuery.of(context).size.height,
+                    //controller.value *
                   ),
                 ),
                 Padding(
@@ -93,24 +102,64 @@ class _CountDownTimerState extends State<CountDownTimer>
                           ),
                         ),
                       ),
-                      AnimatedBuilder(
-                          animation: controller,
-                          builder: (context, child) {
-                            return FloatingActionButton.extended(
-                                onPressed: () {
-                                  if (controller.isAnimating)
-                                    controller.stop();
-                                  else
-                                    controller.reverse(
-                                        from: controller.value == 0.0 ? 1.0 : controller.value
-                                    );
-                                },
-                                icon: Icon(
-                                    controller.isAnimating ? Icons.pause : Icons.play_arrow),
-                                label: Text(
-                                    controller.isAnimating ? "Pause" : "Play")
-                            );
-                          }),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                         children: <Widget>[
+                           Container(
+                             color: Colors.red,
+                             child: FlatButton.icon(
+                               onPressed: (){
+                                 Navigator.pop(context,null );
+                               },
+                               label: Text(
+                                 'Cancelar',
+                                 style: TextStyle(
+                                   fontSize: 20,
+                                   //fontFamily: 'EastSeaDokdo-Regular',
+                                   fontFamily: 'Bellota-BoldItalic',
+                                   //fontFamily: 'Peddana-Regular',
+
+                                 ),
+                               ),
+                               icon: Icon(
+                                 Icons.cancel,
+                                 size: 20,
+                               ),
+
+                             ),
+                           ),
+                           AnimatedBuilder(
+                               animation: controller,
+                               builder: (context, child) {
+                                 return FloatingActionButton.extended(
+                                     onPressed: () {
+                                       if (controller.isAnimating)
+                                         controller.stop();
+                                       else
+                                         controller.reverse(
+                                             from: controller.value == 0.0 ? 1.0 : controller.value
+                                         );
+                                     },
+                                     icon: Icon(
+                                       controller.isAnimating ? Icons.pause : Icons.play_arrow,
+                                       size: 20,
+                                       color: Colors.black,
+                                     ),
+                                     label: Text(
+                                         controller.isAnimating ? "Pause" : "Play",
+                                       style: TextStyle(
+                                         fontSize: 20,
+                                         color: Colors.black,
+                                         //fontFamily: 'EastSeaDokdo-Regular',
+                                         fontFamily: 'Bellota-BoldItalic',
+                                         //fontFamily: 'Peddana-Regular',
+
+                                       ),
+                                     )
+                                 );
+                               }),
+                         ],
+                      ),
                     ],
                   ),
                 ),

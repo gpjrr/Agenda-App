@@ -17,8 +17,8 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     Tareas=Tareas.isNotEmpty?Tareas:ModalRoute.of(context).settings.arguments;
-    for(int i=0;i<Tareas.length;i++)
-      print( " $i =  ${Tareas[i].Nombre}" );
+    /*for(int i=0;i<Tareas.length;i++)
+      print( " $i =  ${Tareas[i].Nombre}" );*/
     return Scaffold(
       backgroundColor: Color.fromRGBO(211, 211, 211, 1) ,
       appBar: AppBar(
@@ -57,6 +57,8 @@ class _HomeState extends State<Home> {
                         'Descripcion': Tareas[index].Descripcion ,
                         'Dias':Tareas[index].Dias,
                         'Tempo':Tareas[index].Tempo,
+                        'Hora':Tareas[index].Hora,
+                        'Minu':Tareas[index].Minu,
                       } );
 
                       setState( (){
@@ -121,14 +123,16 @@ class _HomeState extends State<Home> {
                   ),
                 ),
               ),
-              onDismissed: ( direction ){
-                Tareas.removeAt(index);
-                if(  direction==DismissDirection.startToEnd ){
-                  setState( ()async {
-                     await Navigator.pushNamed(context, '/tiempo' );
+              onDismissed: ( direction )async {
+                  setState(() {
+                    Tareas.removeAt(index);
                   });
-                }
-                },
+                  if(  direction==DismissDirection.startToEnd )
+                     dynamic work= await Navigator.pushNamed(context, '/tiempo',arguments: {
+                     'Hora':Tareas[index].Hora,
+                     'Minu':Tareas[index].Minu,
+                     } );
+                  },
             );
           },
 

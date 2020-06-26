@@ -19,12 +19,15 @@ class _LoadingState extends State<Loading> {
 
       Tareas.add(
        Task(
+
          Nombre:"ejemplo $i",
          Descripcion: "aqui redacto",
          Dias: List.filled(7, false),
          Lave: UniqueKey(),
          Done: !tem,
          Tempo: tem,
+         Hora: "10",
+         Minu: "02",
        )
      );
     }

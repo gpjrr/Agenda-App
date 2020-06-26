@@ -42,6 +42,8 @@ class _EditorTareasState extends State<EditorTareas> {
       setState(() {
         ControlDesc=TextEditingController( text: Nota.Descripcion );
         ControlName=TextEditingController( text: Nota.Nombre );
+        Horas=cosa['Hora'];
+        Minutos=cosa['Minu'];
         //values=Nota.Dias;
         for(int i=0;i<7;i++) {
           values[i]=Nota.Dias[i];
@@ -217,6 +219,7 @@ class _EditorTareasState extends State<EditorTareas> {
                         Center(
                           heightFactor: 1,
                           widthFactor: 1,
+
                           child: Text(
                             "$Horas:$Minutos",
                             style: TextStyle(
@@ -256,15 +259,6 @@ class _EditorTareasState extends State<EditorTareas> {
                             ),
                           ),
                           Container(
-                            /*decoration: BoxDecoration(
-                                color: Colors.red,
-                                border: Border.all(
-                                  color: Colors.black,
-                                  width: 8,
-                                ),
-                                borderRadius: BorderRadius.circular(12),
-                              ),*/
-
                             color: Colors.green,
                             child: FlatButton.icon(
                               onPressed: (){
