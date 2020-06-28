@@ -15,10 +15,12 @@ class _EditorTareasState extends State<EditorTareas> {
       Descripcion: '',
       Done: false,
   );
-
+  bool Cambio=false;
   List<bool> values=List.filled(7,false) ;
   List<bool> BotonTime= List.filled(2, false);
   String Horas="00",Minutos="00";
+  TextEditingController ControlHora= TextEditingController();
+  TextEditingController ControlMinu= TextEditingController();
   TextEditingController ControlDesc= TextEditingController();
   TextEditingController ControlName= TextEditingController();
   TextEditingController ControlTime= TextEditingController();
@@ -38,10 +40,13 @@ class _EditorTareasState extends State<EditorTareas> {
       Nota.Descripcion=cosa['Descripcion'];
       Nota.Limpio=false;
       Nota.Tempo=cosa['Tempo'];
-
+      Nota.Hora=cosa[ 'Hora' ];
+      Nota.Minu=cosa['Minu'];
       setState(() {
         ControlDesc=TextEditingController( text: Nota.Descripcion );
         ControlName=TextEditingController( text: Nota.Nombre );
+        ControlHora=TextEditingController( text: Nota.Hora );
+        ControlMinu=TextEditingController( text: Nota.Minu );
         Horas=cosa['Hora'];
         Minutos=cosa['Minu'];
         //values=Nota.Dias;
@@ -49,6 +54,7 @@ class _EditorTareasState extends State<EditorTareas> {
           values[i]=Nota.Dias[i];
           //print(" val $i = ${values[i]} ");
         }
+        //print("==${Nota.Tempo}");
         if( Nota.Tempo==true )
           BotonTime[1]=true;
         else
@@ -102,6 +108,7 @@ class _EditorTareasState extends State<EditorTareas> {
                           fillColor: Colors.white
                         ),
                         onChanged: (String text){
+                          Cambio=true;
                           Nota.Nombre=text;
                         },
                         //autofocus: true,
@@ -118,6 +125,7 @@ class _EditorTareasState extends State<EditorTareas> {
                             fillColor: Colors.white
                         ),
                         onChanged: (String text){
+                          Cambio=true;
                           Nota.Descripcion=text;
 
                           },
@@ -142,6 +150,7 @@ class _EditorTareasState extends State<EditorTareas> {
 
                         onChanged: (int day) {
                           setState(() {
+                            Cambio=true;
                             // Use module % 7 as Sunday's index in the array is 0 and
                             // DateTime.sunday constant integer value is 7.
                             final index = day % 7;
@@ -203,9 +212,11 @@ class _EditorTareasState extends State<EditorTareas> {
                           isSelected: BotonTime,
                           onPressed: (int index){
                             setState(() {
-                              if( BotonTime[index]==false )
-                              for(int i=0;i<2;i++)
-                                BotonTime[i]=!BotonTime[i];
+                              if( BotonTime[index]==false ) {
+                                Cambio=true;
+                                for (int i = 0; i < 2; i++)
+                                  BotonTime[i] = !BotonTime[i];
+                              }
                               Nota.Tempo=BotonTime[1];
                             });
                           },
@@ -215,7 +226,7 @@ class _EditorTareasState extends State<EditorTareas> {
                       ),
                       if( BotonTime[1]==true )
                         SizedBox( height: 20, width: 20, ),
-                      if( BotonTime[1]==true )
+                if( BotonTime[1]==true )
                         Center(
                           heightFactor: 1,
                           widthFactor: 1,
@@ -231,6 +242,7 @@ class _EditorTareasState extends State<EditorTareas> {
                           ),
                         ),
 
+
                       SizedBox( height: 20, width: 20, ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -239,7 +251,66 @@ class _EditorTareasState extends State<EditorTareas> {
                             color: Colors.red,
                             child: FlatButton.icon(
                               onPressed: (){
-                                Navigator.pop(context,null );
+                                if( Cambio==true )
+                                showDialog(
+                                  context: context,
+                                  builder: (context)=> AlertDialog(
+                                    /*title: Text(
+                                      'Salir',
+                                      style: TextStyle(
+                                      fontSize: 30,
+                                      //fontFamily: 'EastSeaDokdo-Regular',
+                                      fontFamily: 'Bellota-BoldItalic',
+                                      //fontFamily: 'Peddana-Regular',
+                                      ),
+                                    ),*/
+                                    content: Text(
+                                      'Deseas salir sin guardar los cambios?',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        //fontFamily: 'EastSeaDokdo-Regular',
+                                        fontFamily: 'Bellota-BoldItalic',
+                                        //fontFamily: 'Peddana-Regular',
+
+                                      ),
+                                    ),
+                                    actions: <Widget>[
+                                      FlatButton(
+                                        child: Text(
+                                          "No",
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            //fontFamily: 'EastSeaDokdo-Regular',
+                                            fontFamily: 'Bellota-BoldItalic',
+                                            //fontFamily: 'Peddana-Regular',
+
+                                          ),
+                                        ),
+                                        onPressed: (){
+                                          Navigator.pop(context,null );
+                                        },
+                                      ),
+                                      FlatButton(
+                                        child: Text(
+                                          'Si',
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            //fontFamily: 'EastSeaDokdo-Regular',
+                                            fontFamily: 'Bellota-BoldItalic',
+                                            //fontFamily: 'Peddana-Regular',
+
+                                          ),
+                                        ),
+                                        onPressed: (){
+                                          Navigator.pop(context,null );
+                                          Navigator.pop(context,null );
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                );
+                                else
+                                  Navigator.pop(context,null );
                               },
                               label: Text(
                                 'Cancelar',

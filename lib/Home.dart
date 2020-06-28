@@ -145,16 +145,21 @@ class _HomeState extends State<Home> {
             Nombre: '',
             Descripcion: "",
             Limpio: true,
+            Hora: "00",
+            Minu: "00",
             Dias: List.filled(7, false),
             Lave: UniqueKey(),
-            Tempo: true,
+            Tempo: false,
           );
+          ///print("=-=${Nuevo.Tempo}");
           Nuevo.Hoy();
           dynamic cosa=await Navigator.pushNamed(context,'/editor',arguments: {
             'Nombre': Nuevo.Nombre ,
             'Descripcion': Nuevo.Descripcion ,
             'Dias':Nuevo.Dias,
             'Tempo':Nuevo.Tempo,
+            'Hora':Nuevo.Hora,
+            'Minu':Nuevo.Minu,
           } );
           setState( (){
             if( cosa!=null ) {
