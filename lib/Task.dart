@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 
 class Task {
   // agregar al constructor
-
+  bool Today;
   String Hora,Minu;
   Key Lave;
   String Nombre;
@@ -24,6 +24,7 @@ class Task {
           this.Tempo,
           this.Hora,
           this.Minu,
+          this.Today,
   } );
   void Hoy(){
     var now=DateTime.now();

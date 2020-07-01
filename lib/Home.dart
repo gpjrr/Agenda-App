@@ -59,6 +59,7 @@ class _HomeState extends State<Home> {
                         'Tempo':Tareas[index].Tempo,
                         'Hora':Tareas[index].Hora,
                         'Minu':Tareas[index].Minu,
+                        'Today':Tareas[index].Today
                       } );
 
                       setState( (){
@@ -70,6 +71,7 @@ class _HomeState extends State<Home> {
                           Dias:  cosa2['Dias'] ,
                           Tempo: cosa2['Tempo'],
                           Lave: UniqueKey(),
+                          Today: cosa2['Today']
                         );
                         Tareas[index]=Sujeto;
                       });
@@ -150,6 +152,7 @@ class _HomeState extends State<Home> {
             Dias: List.filled(7, false),
             Lave: UniqueKey(),
             Tempo: false,
+            Today:true,
           );
           ///print("=-=${Nuevo.Tempo}");
           Nuevo.Hoy();
@@ -160,6 +163,7 @@ class _HomeState extends State<Home> {
             'Tempo':Nuevo.Tempo,
             'Hora':Nuevo.Hora,
             'Minu':Nuevo.Minu,
+            'Today':Nuevo.Today,
           } );
           setState( (){
             if( cosa!=null ) {
@@ -170,6 +174,7 @@ class _HomeState extends State<Home> {
                 Dias: cosa['Dias'],
                 Tempo: cosa['Tempo'],
                 Lave: UniqueKey(),
+                Today: cosa['Today'],
               );
               Tareas.add(Sujeto);
             }
