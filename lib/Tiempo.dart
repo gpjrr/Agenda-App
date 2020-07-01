@@ -73,7 +73,7 @@ class _CountDownTimerState extends State<CountDownTimer>
                                       painter: CustomTimerPainter(
                                         animation: controller,
                                         backgroundColor: Colors.black,
-                                        color: themeData.indicatorColor,
+                                        color: Colors.blue[700],
                                       )),
                                 ),
                                 Align(

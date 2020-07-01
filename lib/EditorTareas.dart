@@ -15,6 +15,7 @@ class _EditorTareasState extends State<EditorTareas> {
       Descripcion: '',
       Done: false,
   );
+  double caja=200;
   bool Cambio=false;
   List<bool> values=List.filled(7,false) ;
   List<bool> BotonTime= List.filled(2, false);
@@ -47,6 +48,8 @@ class _EditorTareasState extends State<EditorTareas> {
         ControlName=TextEditingController( text: Nota.Nombre );
         ControlHora=TextEditingController( text: Nota.Hora );
         ControlMinu=TextEditingController( text: Nota.Minu );
+        ControlHora.selection = TextSelection.fromPosition(TextPosition(offset: ControlHora.text.length));
+        ControlMinu.selection = TextSelection.fromPosition(TextPosition(offset: ControlMinu.text.length));
         Horas=cosa['Hora'];
         Minutos=cosa['Minu'];
         //values=Nota.Dias;
@@ -86,6 +89,7 @@ class _EditorTareasState extends State<EditorTareas> {
                 child: Container(
                   padding: EdgeInsets.all(7),
                   child: ListView(
+
                     children: <Widget>[
                       TextField(
                         controller: ControlName,
@@ -164,8 +168,8 @@ class _EditorTareasState extends State<EditorTareas> {
                               Nota.Dias[i]=values[i];
                           });
                           },
-        values: values,
-      ),
+                        values: values,
+                       ),
                       SizedBox( height: 20, width: 20, ),
                       Text(
                         "¿Como quieres medir el tiempo?",
@@ -225,155 +229,110 @@ class _EditorTareasState extends State<EditorTareas> {
                         ),
                       ),
                       if( BotonTime[1]==true )
-                        SizedBox( height: 20, width: 20, ),
-                if( BotonTime[1]==true )
-                        Center(
-                          heightFactor: 1,
-                          widthFactor: 1,
+                        SizedBox( height: 10, width: 10, ),
+                      if( BotonTime[1]==true )
+                        Text('Hora'),
+                      if( BotonTime[1]==true )
+                        Container(
+                          padding: EdgeInsets.fromLTRB(140, 0, 140, 0),
+                          child: Row(
+                            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Expanded(
+                                flex: 2,
+                                child: TextField(
 
-                          child: Text(
-                            "$Horas:$Minutos",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 40,
-                              //letterSpacing: 3,
-                              fontFamily: 'Bellota-BoldItalic',
-                            ),
+                                  controller: ControlHora,
+                                  textAlign: TextAlign.center,
+                                  //cursorWidth: 5,
+                                  keyboardType: TextInputType.number,
+                                  maxLength: 4,
+                                  maxLines: 1,
+
+                                  onChanged: (String text){
+                                    ControlHora.selection = TextSelection.fromPosition(TextPosition(offset: ControlHora.text.length));
+                                    print(text);
+                                    Cambio=true;
+                                    Nota.Hora=text;
+
+                                  },
+                                  style: TextStyle(
+                                    fontSize: 40
+                                  ),
+                                  //autofocus: true,
+                                ),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: Text(":",
+                                style: TextStyle(
+                                  fontSize: 40,
+                                ),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: TextField(
+                                  controller: ControlHora,
+                                  textAlign: TextAlign.center,
+                                  //cursorWidth: 5,
+                                  keyboardType: TextInputType.number,
+                                  maxLength: 2,
+                                  maxLines: 1,
+
+                                  onChanged: (String text){
+                                    print(text);
+                                    Cambio=true;
+                                    Nota.Hora=text;
+                                  },
+                                  style: TextStyle(
+                                      fontSize: 40
+                                  ),
+                                  //autofocus: true,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
 
-
-                      SizedBox( height: 20, width: 20, ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Container(
-                            color: Colors.red,
-                            child: FlatButton.icon(
-                              onPressed: (){
-                                if( Cambio==true )
-                                showDialog(
-                                  context: context,
-                                  builder: (context)=> AlertDialog(
-                                    /*title: Text(
-                                      'Salir',
-                                      style: TextStyle(
-                                      fontSize: 30,
-                                      //fontFamily: 'EastSeaDokdo-Regular',
-                                      fontFamily: 'Bellota-BoldItalic',
-                                      //fontFamily: 'Peddana-Regular',
-                                      ),
-                                    ),*/
-                                    content: Text(
-                                      'Deseas salir sin guardar los cambios?',
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        //fontFamily: 'EastSeaDokdo-Regular',
-                                        fontFamily: 'Bellota-BoldItalic',
-                                        //fontFamily: 'Peddana-Regular',
-
-                                      ),
-                                    ),
-                                    actions: <Widget>[
-                                      FlatButton(
-                                        child: Text(
-                                          "No",
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            //fontFamily: 'EastSeaDokdo-Regular',
-                                            fontFamily: 'Bellota-BoldItalic',
-                                            //fontFamily: 'Peddana-Regular',
-
-                                          ),
-                                        ),
-                                        onPressed: (){
-                                          Navigator.pop(context,null );
-                                        },
-                                      ),
-                                      FlatButton(
-                                        child: Text(
-                                          'Si',
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            //fontFamily: 'EastSeaDokdo-Regular',
-                                            fontFamily: 'Bellota-BoldItalic',
-                                            //fontFamily: 'Peddana-Regular',
-
-                                          ),
-                                        ),
-                                        onPressed: (){
-                                          Navigator.pop(context,null );
-                                          Navigator.pop(context,null );
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                );
-                                else
-                                  Navigator.pop(context,null );
-                              },
-                              label: Text(
-                                'Cancelar',
-                                style: TextStyle(
-                                  fontSize: 30,
-                                  //fontFamily: 'EastSeaDokdo-Regular',
-                                  fontFamily: 'Bellota-BoldItalic',
-                                  //fontFamily: 'Peddana-Regular',
-
-                                ),
-                              ),
-                              icon: Icon(
-                                Icons.cancel,
-                                size: 30,
-                              ),
-
-                            ),
-                          ),
-                          Container(
-                            color: Colors.green,
-                            child: FlatButton.icon(
-                              onPressed: (){
-                                if(Nota.Nombre.isNotEmpty)
-                                  Navigator.pop(context, {
-                                    'Nombre': Nota.Nombre,
-                                    'Descripcion': Nota.Descripcion,
-                                    'Dias': Nota.Dias,
-                                    'Tempo': Nota.Tempo,
-                                  });
-                                else
-                                  Scaffold.of( context ).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                            'Escribe el nombre de la nueva tarea'
-                                        ),
-                                      ),
-                                  );
-
-                              },
-                              label: Text(
-                                  'Guardar',
-                                style: TextStyle(
-                                  fontSize: 30,
-                                  //fontFamily: 'EastSeaDokdo-Regular',
-                                  fontFamily: 'Bellota-BoldItalic',
-                                  //fontFamily: 'Peddana-Regular',
-
-                                ),
-                              ),
-                              icon: Icon(
-                                  Icons.save,
-                                  size: 30,
-                              ),
-
-                            ),
-                          ),
-                        ],
-                      ),
                     ],
                   ),
                 ),
               ),
+
             ),
-          );
+          floatingActionButton: Builder(
+            builder: (context)=>
+            FloatingActionButton(
+              backgroundColor: Colors.green,
+              child: Icon(
+                Icons.save,
+                size: 30,
+                color: Colors.white,
+              ),
+              onPressed: (){
+                if(Nota.Nombre.isNotEmpty)
+                  Navigator.pop(context, {
+                    'Nombre': Nota.Nombre,
+                    'Descripcion': Nota.Descripcion,
+                    'Dias': Nota.Dias,
+                    'Tempo': Nota.Tempo,
+                  });
+                else {
+                  //print("ya jalaa");
+                  Scaffold.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                          'Escribe el nombre de la nueva tarea'
+                      ),
+                    ),
+                  );
+                }
+              },
+
+            ),
+          ),
+
+    );
   }
 }
