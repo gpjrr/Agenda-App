@@ -30,7 +30,7 @@ class _CountDownTimerState extends State<CountDownTimer>
     if( Bandera==false ){
       Bandera=true;
       dynamic cosa=ModalRoute.of(context).settings.arguments;
-      print( " ${cosa['Hora']} == ${cosa['Minu']}" );
+      print( " ${cosa['Hora']} =__= ${cosa['Minu']}" );
       Segundos= int.parse( cosa['Hora'] )*60+int.parse( cosa["Minu"] );
       Segundos*=60;
       controller = AnimationController(

@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui';
 import 'package:agendaprocrastinacion/Task.dart';
 import 'package:flutter/cupertino.dart';
@@ -61,7 +62,7 @@ class _HomeState extends State<Home> {
                         'Minu':Tareas[index].Minu,
                         'Today':Tareas[index].Today
                       } );
-
+                      //print(cosa2);
                       setState( (){
 
                         Task Sujeto=Task(
@@ -71,8 +72,11 @@ class _HomeState extends State<Home> {
                           Dias:  cosa2['Dias'] ,
                           Tempo: cosa2['Tempo'],
                           Lave: UniqueKey(),
-                          Today: cosa2['Today']
+                          Today: cosa2['Today'],
+                          Hora: cosa2['Hora'],
+                          Minu: cosa2['Minu'],
                         );
+                        print("H=${Sujeto.Hora} M=${Sujeto.Minu}  ");
                         Tareas[index]=Sujeto;
                       });
 
@@ -125,15 +129,23 @@ class _HomeState extends State<Home> {
                   ),
                 ),
               ),
-              onDismissed: ( direction )async {
-                  setState(() {
-                    Tareas.removeAt(index);
+              onDismissed: ( direction ) async{
+                if(  direction==DismissDirection.startToEnd ) {
+                  dynamic work = await Navigator.pushNamed(
+                      context, '/tiempo', arguments: {
+                    'Hora': Tareas[index].Hora,
+                    'Minu': Tareas[index].Minu,
                   });
-                  if(  direction==DismissDirection.startToEnd )
-                     dynamic work= await Navigator.pushNamed(context, '/tiempo',arguments: {
-                     'Hora':Tareas[index].Hora,
-                     'Minu':Tareas[index].Minu,
-                     } );
+                }
+
+                  setState(() {
+                    print("tam== ${Tareas.length} I=$index");
+                    print("${Tareas[index].Tempo}");
+                    print("${Tareas[index].Hora} ${Tareas[index].Minu}");
+                    Tareas.removeAt(index);
+
+                  });
+
                   },
             );
           },
@@ -175,6 +187,8 @@ class _HomeState extends State<Home> {
                 Tempo: cosa['Tempo'],
                 Lave: UniqueKey(),
                 Today: cosa['Today'],
+                Hora: cosa['Hora'],
+                Minu: cosa['Minu'],
               );
               Tareas.add(Sujeto);
             }

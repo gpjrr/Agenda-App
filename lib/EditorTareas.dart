@@ -15,18 +15,18 @@ class _EditorTareasState extends State<EditorTareas> {
     Descripcion: '',
     Done: false,
   );
-  double caja=200;
+  double betw=15;
   bool Cambio=false;
   List<bool> values=List.filled(7,false) ;
   List<bool> BotonTime= List.filled(2, false);
+  List<bool> BotonMinutos= List.filled(4, false);
   String Horas="00",Minutos="00";
-  TextEditingController ControlHora= TextEditingController();
-  TextEditingController ControlMinu= TextEditingController();
   TextEditingController ControlDesc= TextEditingController();
   TextEditingController ControlName= TextEditingController();
-  TextEditingController ControlTime= TextEditingController();
   String opcion;
   List<String> OpcionDias=['Solo hoy','Otros Dias'];
+  int HoraTemp,MinuTemp;
+  List<int> MinutosArr=[1,5,15,60];
   @override
   void initState() {
     super.initState();
@@ -45,15 +45,12 @@ class _EditorTareasState extends State<EditorTareas> {
       Nota.Hora=cosa[ 'Hora' ];
       Nota.Minu=cosa['Minu'];
       Nota.Today=cosa['Today'];
+      ///print("H=${Nota.Hora} ___ M=${Nota.Minu}");
       setState(() {
         ControlDesc=TextEditingController( text: Nota.Descripcion );
         ControlName=TextEditingController( text: Nota.Nombre );
-        ControlHora=TextEditingController( text: Nota.Hora );
-        ControlMinu=TextEditingController( text: Nota.Minu );
-        ControlHora.selection = TextSelection.fromPosition(TextPosition(offset: ControlHora.text.length));
-        ControlMinu.selection = TextSelection.fromPosition(TextPosition(offset: ControlMinu.text.length));
-        Horas=cosa['Hora'];
-        Minutos=cosa['Minu'];
+        //Horas=cosa['Hora'];
+        //Minutos=cosa['Minu'];
         //values=Nota.Dias;
         for(int i=0;i<7;i++) {
           values[i]=Nota.Dias[i];
@@ -67,7 +64,7 @@ class _EditorTareasState extends State<EditorTareas> {
           opcion=OpcionDias[0];
         else
           opcion=OpcionDias[1];
-        print("===- $opcion");
+        //print("===- $opcion");
       });
     }
     return Scaffold(
@@ -217,11 +214,12 @@ class _EditorTareasState extends State<EditorTareas> {
                   },
                   //autofocus: true,
                 ),
-                SizedBox( height: 20, width: 20, ),
+                SizedBox( height: betw, width: betw, ),
                 TextField(
                   controller: ControlDesc,
                   maxLines:4,
-                  cursorWidth: 5,
+                  textInputAction: TextInputAction.done,
+                  //cursorWidth: 5,
                   ///textAlign: TextAlign.center,
                   decoration: InputDecoration(
                       labelText:  "Descripción",
@@ -234,7 +232,7 @@ class _EditorTareasState extends State<EditorTareas> {
 
                   },
                 ),
-                SizedBox( height: 20, width: 20, ),
+                SizedBox( height: betw, width: betw, ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
@@ -283,7 +281,7 @@ class _EditorTareasState extends State<EditorTareas> {
                   ],
                 ),
                 if( OpcionDias[1].compareTo( opcion )==0 )
-                SizedBox( height: 20, width: 20, ),
+                  SizedBox( height: betw, width: betw, ),
                 if( OpcionDias[1].compareTo( opcion )==0 )
                   Text(
                   "Selecciona otros dias",
@@ -295,7 +293,7 @@ class _EditorTareasState extends State<EditorTareas> {
                   ),
                 ),
                 if( OpcionDias[1].compareTo( opcion )==0 )
-                SizedBox( height: 20, width: 20, ),
+                  SizedBox( height: betw, width: betw, ),
                 if( OpcionDias[1].compareTo( opcion )==0 )
                 WeekdaySelector(
                   fillColor: Colors.white,
@@ -323,7 +321,7 @@ class _EditorTareasState extends State<EditorTareas> {
                   values: values,
                 ),
 
-                SizedBox( height: 20, width: 20, ),
+                SizedBox( height: betw, width: betw, ),
                 Text(
                   "¿Como quieres medir el tiempo?",
                   style: TextStyle(
@@ -333,7 +331,7 @@ class _EditorTareasState extends State<EditorTareas> {
                     fontFamily: 'Bellota-BoldItalic',
                   ),
                 ),
-                SizedBox( height: 20, width: 20, ),
+                SizedBox( height: betw, width: betw, ),
 
                 Center(
                   heightFactor: 1,
@@ -382,70 +380,176 @@ class _EditorTareasState extends State<EditorTareas> {
                   ),
                 ),
                 if( BotonTime[1]==true )
-                  SizedBox( height: 10, width: 10, ),
+                  SizedBox( height: betw, width: betw, ),
                 if( BotonTime[1]==true )
-                  Text('Hora'),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text('Hora'),
+                      SizedBox( width: 40, ),
+                      Text('Minutos'),
+                    ],
+                  ),
                 if( BotonTime[1]==true )
-                  Container(
-                    padding: EdgeInsets.fromLTRB(140, 0, 140, 0),
-                    child: Row(
-                      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Expanded(
-                          flex: 2,
-                          child: TextField(
-
-                            controller: ControlHora,
-                            textAlign: TextAlign.center,
-                            //cursorWidth: 5,
-                            keyboardType: TextInputType.number,
-                            maxLength: 4,
-                            maxLines: 1,
-
-                            onChanged: (String text){
-                              ControlHora.selection = TextSelection.fromPosition(TextPosition(offset: ControlHora.text.length));
-                              print(text);
-                              Cambio=true;
-                              Nota.Hora=text;
-
-                            },
-                            style: TextStyle(
-                                fontSize: 40
-                            ),
-                            //autofocus: true,
-                          ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        "${Nota.Hora}:${Nota.Minu}",
+                        style: TextStyle(
+                          fontSize: 50,
                         ),
-                        Expanded(
-                          flex: 1,
-                          child: Text(":",
-                            style: TextStyle(
-                              fontSize: 40,
-                            ),
+                      ),
+                      Builder(
+                        builder: (context) =>
+                        IconButton(
+                          icon: Icon(
+                            Icons.edit,
+                            size:30,
+                            color: Colors.red[700],
                           ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: TextField(
-                            controller: ControlHora,
-                            textAlign: TextAlign.center,
-                            //cursorWidth: 5,
-                            keyboardType: TextInputType.number,
-                            maxLength: 2,
-                            maxLines: 1,
+                          onPressed: (){
+                            setState(() async{
+                              //.toString().padLeft(2, '0');
+                              HoraTemp=int.parse(Nota.Hora);
+                              MinuTemp=int.parse(Nota.Minu);
+                              await showDialog(
+                                context: context,
+                                builder: (ontext){
+                                  return StatefulBuilder(
+                                    builder: (context,setState){
+                                      return AlertDialog(
 
-                            onChanged: (String text){
-                              print(text);
-                              Cambio=true;
-                              Nota.Hora=text;
-                            },
-                            style: TextStyle(
-                                fontSize: 40
-                            ),
-                            //autofocus: true,
-                          ),
+                                        content: Column(
+                                          //mainAxisAlignment: MainAxisAlignment.spaceA,
+                                          children: <Widget>[
+                                            Text(
+                                              'Configura el Tiempo',
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                //fontFamily: 'EastSeaDokdo-Regular',
+                                                fontFamily: 'Bellota-BoldItalic',
+                                                //fontFamily: 'Peddana-Regular',
+
+                                              ),
+                                            ),
+                                            Text(
+                                              "${Nota.Hora}:${Nota.Minu}",
+                                              style: TextStyle(
+                                                fontSize: 30,
+                                              ),
+                                            ),
+                                            ToggleButtons(
+                                              children: <Widget>[
+                                                Text(
+                                                  "1m",
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 20,
+                                                    //letterSpacing: 1,
+                                                    fontFamily: 'Bellota-BoldItalic',
+                                                  ),
+                                                ),
+                                                Text(
+                                                  "5m",
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 20,
+                                                    //letterSpacing: 1,
+                                                    fontFamily: 'Bellota-BoldItalic',
+                                                  ),
+                                                ),
+                                                Text(
+                                                  "15m",
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 20,
+                                                    //letterSpacing: 1,
+                                                    fontFamily: 'Bellota-BoldItalic',
+                                                  ),
+                                                ),
+                                                Text(
+                                                  "60m",
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 20,
+                                                    //letterSpacing: 1,
+                                                    fontFamily: 'Bellota-BoldItalic',
+                                                  ),
+                                                ),
+                                              ],
+                                              isSelected: BotonMinutos,
+                                              onPressed: (int index){
+                                                setState(() {
+                                                  //print(index);
+                                                  MinuTemp+=MinutosArr[index];
+                                                  if( MinuTemp>=60 ) {
+                                                    HoraTemp++;
+                                                    MinuTemp-=60;
+                                                  }
+                                                  Nota.Hora=(HoraTemp).toString().padLeft(2, '0');
+                                                  Nota.Minu=(MinuTemp).toString().padLeft(2, '0');
+                                                  //print(" ${Nota.Hora} ${Nota.Minu} ");
+
+                                                });
+                                              },
+                                              fillColor: Colors.blue[700],
+                                            ),
+
+                                          ],
+                                        ),
+                                        actions: <Widget>[
+                                          FlatButton(
+                                            child: Text(
+                                              "reset",
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                //fontFamily: 'EastSeaDokdo-Regular',
+                                                fontFamily: 'Bellota-BoldItalic',
+                                                //fontFamily: 'Peddana-Regular',
+                                                color: Colors.blue[700],
+                                              ),
+                                            ),
+                                            onPressed: (){
+                                              setState(() {
+                                                HoraTemp=0; MinuTemp=0;
+                                                Nota.Hora=(HoraTemp).toString().padLeft(2, '0');
+                                                Nota.Minu=(MinuTemp).toString().padLeft(2, '0');
+                                              });
+                                            },
+                                          ),
+                                          FlatButton(
+                                            child: Text(
+                                              'Guardar',
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                //fontFamily: 'EastSeaDokdo-Regular',
+                                                fontFamily: 'Bellota-BoldItalic',
+                                                //fontFamily: 'Peddana-Regular',
+                                                color: Colors.blue[700],
+                                              ),
+                                            ),
+                                            onPressed: (){
+                                              Navigator.pop(context,null );
+                                              //Navigator.pop(context,null );
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                }
+                              );
+                              Nota.Hora=(HoraTemp).toString().padLeft(2, '0');
+                              Nota.Minu=(MinuTemp).toString().padLeft(2, '0');
+                              //print(" ${Nota.Hora}===${Nota.Minu} ");
+                              super.setState(() { });
+                            }
+                            );
+                          },
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
 
               ],
@@ -471,6 +575,8 @@ class _EditorTareasState extends State<EditorTareas> {
                     'Dias': Nota.Dias,
                     'Tempo': Nota.Tempo,
                     'Today': Nota.Today,
+                    'Hora':Nota.Hora,
+                    'Minu':Nota.Minu,
                   });
                 else {
                   //print("ya jalaa");
