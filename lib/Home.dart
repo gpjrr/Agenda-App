@@ -139,11 +139,12 @@ class _HomeState extends State<Home> {
                 }
 
                   setState(() {
+                    /*
                     print("tam== ${Tareas.length} I=$index");
                     print("${Tareas[index].Tempo}");
                     print("${Tareas[index].Hora} ${Tareas[index].Minu}");
+                    */
                     Tareas.removeAt(index);
-
                   });
 
                   },

@@ -419,84 +419,89 @@ class _EditorTareasState extends State<EditorTareas> {
                                   return StatefulBuilder(
                                     builder: (context,setState){
                                       return AlertDialog(
+                                        content: Container(
+                                          height: 200,
+                                          width: 200,
+                                          child: Column(
+                                            //mainAxisAlignment: MainAxisAlignment.spaceA,
+                                            children: <Widget>[
+                                              Text(
+                                                'Configura el Tiempo',
+                                                style: TextStyle(
+                                                  fontSize: 20,
+                                                  //fontFamily: 'EastSeaDokdo-Regular',
+                                                  fontFamily: 'Bellota-BoldItalic',
+                                                  //fontFamily: 'Peddana-Regular',
 
-                                        content: Column(
-                                          //mainAxisAlignment: MainAxisAlignment.spaceA,
-                                          children: <Widget>[
-                                            Text(
-                                              'Configura el Tiempo',
-                                              style: TextStyle(
-                                                fontSize: 20,
-                                                //fontFamily: 'EastSeaDokdo-Regular',
-                                                fontFamily: 'Bellota-BoldItalic',
-                                                //fontFamily: 'Peddana-Regular',
-
+                                                ),
                                               ),
-                                            ),
-                                            Text(
-                                              "${Nota.Hora}:${Nota.Minu}",
-                                              style: TextStyle(
-                                                fontSize: 30,
+                                              SizedBox(height: 20, width: 20,),
+                                              Text(
+                                                "${Nota.Hora}:${Nota.Minu}",
+                                                style: TextStyle(
+                                                  fontSize: 50,
+                                                ),
                                               ),
-                                            ),
-                                            ToggleButtons(
-                                              children: <Widget>[
-                                                Text(
-                                                  "1m",
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 20,
-                                                    //letterSpacing: 1,
-                                                    fontFamily: 'Bellota-BoldItalic',
+                                              SizedBox(height: 20, width: 20,),
+                                              ToggleButtons(
+                                                children: <Widget>[
+                                                  Text(
+                                                    "1m",
+                                                    style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 20,
+                                                      //letterSpacing: 1,
+                                                      fontFamily: 'Bellota-BoldItalic',
+                                                    ),
                                                   ),
-                                                ),
-                                                Text(
-                                                  "5m",
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 20,
-                                                    //letterSpacing: 1,
-                                                    fontFamily: 'Bellota-BoldItalic',
+                                                  Text(
+                                                    "5m",
+                                                    style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 20,
+                                                      //letterSpacing: 1,
+                                                      fontFamily: 'Bellota-BoldItalic',
+                                                    ),
                                                   ),
-                                                ),
-                                                Text(
-                                                  "15m",
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 20,
-                                                    //letterSpacing: 1,
-                                                    fontFamily: 'Bellota-BoldItalic',
+                                                  Text(
+                                                    "15m",
+                                                    style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 20,
+                                                      //letterSpacing: 1,
+                                                      fontFamily: 'Bellota-BoldItalic',
+                                                    ),
                                                   ),
-                                                ),
-                                                Text(
-                                                  "60m",
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 20,
-                                                    //letterSpacing: 1,
-                                                    fontFamily: 'Bellota-BoldItalic',
+                                                  Text(
+                                                    "60m",
+                                                    style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 20,
+                                                      //letterSpacing: 1,
+                                                      fontFamily: 'Bellota-BoldItalic',
+                                                    ),
                                                   ),
-                                                ),
-                                              ],
-                                              isSelected: BotonMinutos,
-                                              onPressed: (int index){
-                                                setState(() {
-                                                  //print(index);
-                                                  MinuTemp+=MinutosArr[index];
-                                                  if( MinuTemp>=60 ) {
-                                                    HoraTemp++;
-                                                    MinuTemp-=60;
-                                                  }
-                                                  Nota.Hora=(HoraTemp).toString().padLeft(2, '0');
-                                                  Nota.Minu=(MinuTemp).toString().padLeft(2, '0');
-                                                  //print(" ${Nota.Hora} ${Nota.Minu} ");
+                                                ],
+                                                isSelected: BotonMinutos,
+                                                onPressed: (int index){
+                                                  setState(() {
+                                                    //print(index);
+                                                    MinuTemp+=MinutosArr[index];
+                                                    if( MinuTemp>=60 ) {
+                                                      HoraTemp++;
+                                                      MinuTemp-=60;
+                                                    }
+                                                    Nota.Hora=(HoraTemp).toString().padLeft(2, '0');
+                                                    Nota.Minu=(MinuTemp).toString().padLeft(2, '0');
+                                                    //print(" ${Nota.Hora} ${Nota.Minu} ");
 
-                                                });
-                                              },
-                                              fillColor: Colors.blue[700],
-                                            ),
-
-                                          ],
+                                                  });
+                                                },
+                                                fillColor: Colors.blue[700],
+                                              ),
+                                              //SizedBox(height: 20, width: 20,),
+                                            ],
+                                          ),
                                         ),
                                         actions: <Widget>[
                                           FlatButton(
@@ -589,10 +594,8 @@ class _EditorTareasState extends State<EditorTareas> {
                   );
                 }
               },
-
             ),
       ),
-
     );
   }
 }
