@@ -1,6 +1,6 @@
 //import 'dart:html';
 //import 'dart:convert';
-//import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 class Task {
@@ -13,7 +13,7 @@ class Task {
   bool Tempo;
   bool Done;
   bool Limpio;
-  List Dias;
+  List<bool> Dias;
   Icon Reloj;
   //Icon Reloj;
   //final dias=List.filled(7, false);
@@ -29,7 +29,8 @@ class Task {
           this.Today,
   } );
   void Hoy(){
-//// ano nuevo
+///// ano nuevo
+    this.Dias=List.filled(7, false);
     var now=DateTime.now();
     int dis;
     var date=DateTime(now.year,now.month,now.day);
@@ -50,5 +51,19 @@ class Task {
     //print(date.day);
     //print(lastMonday);
     //print( (1+dis)%7 );
+  }
+  void RelojIcono(){
+    if( this.Tempo==true )
+      this.Reloj=Icon(
+        Icons.timelapse,
+        size: 40,
+        color: Colors.black,
+      );
+    else
+      this.Reloj=Icon(
+        Icons.timer,
+        size: 40,
+        color: Colors.black,
+      );
   }
 }

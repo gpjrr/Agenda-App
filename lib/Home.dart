@@ -4,6 +4,7 @@ import 'package:agendaprocrastinacion/Task.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:agendaprocrastinacion/TipList.dart';
+import 'package:weekday_selector/weekday_selector.dart';
 //import 'package:flutter/cur';
 class Home extends StatefulWidget {
   @override
@@ -102,7 +103,6 @@ class _HomeState extends State<Home> {
                         //borderOnForeground: true,
                         child: ListTile(
                           onTap: ()async{
-
                             dynamic cosa2=await Navigator.pushNamed(context,'/editor',arguments: {
                               'Nombre': Tareas[index].Nombre ,
                               'Descripcion': Tareas[index].Descripcion ,
@@ -114,7 +114,6 @@ class _HomeState extends State<Home> {
                             } );
                             //print(cosa2);
                             setState( (){
-
                               Task Sujeto=Task(
                                 Nombre: cosa2['Nombre'],
                                 Limpio: true,
@@ -126,25 +125,11 @@ class _HomeState extends State<Home> {
                                 Hora: cosa2['Hora'],
                                 Minu: cosa2['Minu'],
                               );
-                              //print("H=${Sujeto.Hora} M=${Sujeto.Minu}  ");
-                              if( Sujeto.Tempo==true )
-                                Sujeto.Reloj=Icon(
-                                  Icons.timelapse,
-                                  size: 40,
-                                  color: Colors.black,
-                                );
-                              else
-                                Sujeto.Reloj=Icon(
-                                  Icons.timer,
-                                  size: 40,
-                                  color: Colors.black,
-                                );
+                              Sujeto.RelojIcono();
                               Tareas[index]=Sujeto;
                             });
                           },
-                          leading: Icon(
-                            Icons.people,
-                          ),
+                          leading:Tareas[index].Reloj,
                           title: Text(
                             Tareas[index].Nombre.substring(0, Tareas[index].Nombre.length>=18?18:Tareas[index].Nombre.length  ),
                             style: TextStyle(
@@ -155,11 +140,19 @@ class _HomeState extends State<Home> {
                               //fontFamily: 'Caveat-Regular',
                             ),
                           ),
-                          trailing: Tareas[index].Reloj,
-                          subtitle: Row(
-                            children: <Widget>[
-                              
-                            ],
+                          //trailing: Tareas[index].Reloj,
+                          subtitle: WeekdaySelector(
+                            fillColor: Colors.white,
+                            firstDayOfWeek: 1,
+                            /// letra del color
+                            color: Colors.black,
+                            selectedFillColor: Colors.blue[700],
+
+                            onChanged: (int day) {
+                              setState(() {
+                              });
+                            },
+                            values: Tareas[index].Dias,
                           ),
                         ),
                       ),
@@ -260,18 +253,7 @@ class _HomeState extends State<Home> {
                   Hora: cosa['Hora'],
                   Minu: cosa['Minu'],
                 );
-                if( Sujeto.Tempo==true )
-                Sujeto.Reloj=Icon(
-                  Icons.timelapse,
-                  size: 40,
-                  color: Colors.black,
-                );
-                else
-                  Sujeto.Reloj=Icon(
-                    Icons.timer,
-                    size: 40,
-                    color: Colors.black,
-                  );
+                Sujeto.RelojIcono();
                 Tareas.add(Sujeto);
 
               }
