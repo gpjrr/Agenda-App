@@ -14,6 +14,8 @@ class Task {
   bool Done;
   bool Limpio;
   List Dias;
+  Icon Reloj;
+  //Icon Reloj;
   //final dias=List.filled(7, false);
   Task( { this.Nombre,
           this.Descripcion,

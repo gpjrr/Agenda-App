@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:agendaprocrastinacion/Task.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:agendaprocrastinacion/TipList.dart';
 //import 'package:flutter/cur';
 class Home extends StatefulWidget {
   @override
@@ -10,7 +11,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  bool ban=false;
   List<Task> Tareas=new List();
+  //List<Icon> iconos=new List();
   int TabIndex=0;
   @override
   void initState(){
@@ -18,7 +21,24 @@ class _HomeState extends State<Home> {
   }
   @override
   Widget build(BuildContext context) {
-    Tareas=Tareas.isNotEmpty?Tareas:ModalRoute.of(context).settings.arguments;
+
+    if( ban==false ){
+      Tareas=ModalRoute.of(context).settings.arguments;
+      ban=true;
+      for(int i=0;i<Tareas.length;i++)
+        if( Tareas[i].Tempo==true )
+          Tareas[i].Reloj=Icon(
+            Icons.timelapse,
+            size: 40,
+            color: Colors.black,
+          );
+        else
+          Tareas[i].Reloj=Icon(
+            Icons.timer,
+            size: 40,
+            color: Colors.black,
+          );
+    }
     /*for(int i=0;i<Tareas.length;i++)
       print( " $i =  ${Tareas[i].Nombre}" );*/
     return DefaultTabController(
@@ -69,7 +89,6 @@ class _HomeState extends State<Home> {
         body: TabBarView(
           children: <Widget>[
             SafeArea(
-
               child: ListView.builder(
                 itemCount: Tareas.length,
                 itemBuilder: (context,index){
@@ -107,13 +126,25 @@ class _HomeState extends State<Home> {
                                 Hora: cosa2['Hora'],
                                 Minu: cosa2['Minu'],
                               );
-                              print("H=${Sujeto.Hora} M=${Sujeto.Minu}  ");
+                              //print("H=${Sujeto.Hora} M=${Sujeto.Minu}  ");
+                              if( Sujeto.Tempo==true )
+                                Sujeto.Reloj=Icon(
+                                  Icons.timelapse,
+                                  size: 40,
+                                  color: Colors.black,
+                                );
+                              else
+                                Sujeto.Reloj=Icon(
+                                  Icons.timer,
+                                  size: 40,
+                                  color: Colors.black,
+                                );
                               Tareas[index]=Sujeto;
                             });
-
-
                           },
-                          leading: Icon( Icons.people ),
+                          leading: Icon(
+                            Icons.people,
+                          ),
                           title: Text(
                             Tareas[index].Nombre.substring(0, Tareas[index].Nombre.length>=18?18:Tareas[index].Nombre.length  ),
                             style: TextStyle(
@@ -124,12 +155,12 @@ class _HomeState extends State<Home> {
                               //fontFamily: 'Caveat-Regular',
                             ),
                           ),
-                          trailing: Icon(
-                            Icons.done,
-                            size: 40,
-                            color: Colors.green,
+                          trailing: Tareas[index].Reloj,
+                          subtitle: Row(
+                            children: <Widget>[
+                              
+                            ],
                           ),
-
                         ),
                       ),
                     ),
@@ -229,8 +260,22 @@ class _HomeState extends State<Home> {
                   Hora: cosa['Hora'],
                   Minu: cosa['Minu'],
                 );
+                if( Sujeto.Tempo==true )
+                Sujeto.Reloj=Icon(
+                  Icons.timelapse,
+                  size: 40,
+                  color: Colors.black,
+                );
+                else
+                  Sujeto.Reloj=Icon(
+                    Icons.timer,
+                    size: 40,
+                    color: Colors.black,
+                  );
                 Tareas.add(Sujeto);
+
               }
+
             });
           },
           backgroundColor: Colors.blue[700],
@@ -241,7 +286,6 @@ class _HomeState extends State<Home> {
         ),
 
         drawer: Drawer(
-
           child: ListView(
             children: <Widget>[
               ListTile(
@@ -259,7 +303,9 @@ class _HomeState extends State<Home> {
                   color: Colors.brown,
                 ),
                 onTap: (){
-                  Navigator.pushNamed(context, '/TipList'  );
+                  Navigator.push(context, new MaterialPageRoute(
+                      builder: (context) => new TipList() )
+                  );
                 },
               ),
             ],

@@ -11,7 +11,7 @@ class _LoadingState extends State<Loading> {
   List<Task> Tareas=new List();
 
   void llena() async{
-    for(int i=1;i<=6;i++) {
+    for(int i=1;i<=15;i++) {
 
       Tareas.add(
        Task(
@@ -20,7 +20,7 @@ class _LoadingState extends State<Loading> {
          Dias: List.filled(7, false),
          Lave: UniqueKey(),
          Done: 1*(i%2)==true?true:false,
-         Tempo: true,
+         Tempo: (i%2)==1?true:false,
          Hora: "01",
          Minu: "22",
        )
