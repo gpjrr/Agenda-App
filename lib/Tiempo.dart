@@ -1,6 +1,5 @@
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
-
 import 'CustomTimerPainter.dart';
 class CountDownTimer extends StatefulWidget {
   @override
@@ -27,6 +26,7 @@ class _CountDownTimerState extends State<CountDownTimer>
 
   @override
   Widget build(BuildContext context) {
+    //print("hola");
     if( Bandera==false ){
       Bandera=true;
       dynamic cosa=ModalRoute.of(context).settings.arguments;

@@ -21,8 +21,8 @@ class _LoadingState extends State<Loading> {
          Lave: UniqueKey(),
          Done: 1*(i%2)==true?true:false,
          Tempo: (i%2)==1?true:false,
-         Hora: "01",
-         Minu: "22",
+         Hora: "00",
+         Minu: "01",
        )
      );
     }

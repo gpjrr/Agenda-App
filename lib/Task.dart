@@ -66,4 +66,7 @@ class Task {
         color: Colors.black,
       );
   }
+  Task.fromJson( Map<String,dynamic> json ){
+    
+  }
 }
