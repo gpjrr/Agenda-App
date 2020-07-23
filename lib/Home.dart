@@ -185,14 +185,6 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     onDismissed: ( direction ) async{
-                      if(  direction==DismissDirection.startToEnd ) {
-                        dynamic work = await Navigator.pushNamed(
-                            context, '/tiempo', arguments: {
-                          'Hora': Tareas[index].Hora,
-                          'Minu': Tareas[index].Minu,
-                        });
-                      }
-
                       setState(() {
                         /*
                       print("tam== ${Tareas.length} I=$index");
@@ -201,6 +193,15 @@ class _HomeState extends State<Home> {
                       */
                         Tareas.removeAt(index);
                       });
+                      if(  direction==DismissDirection.startToEnd ) {
+                        dynamic work = await Navigator.pushNamed(
+                            context, '/tiempo', arguments: {
+                          'Hora': Tareas[index].Hora,
+                          'Minu': Tareas[index].Minu,
+                        });
+                      }
+
+
 
                     },
                   );

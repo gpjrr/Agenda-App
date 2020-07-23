@@ -15,6 +15,15 @@ class _CountDownTimerState extends State<CountDownTimer>
     String Horas=(duration.inHours).toString().padLeft(2, '0');
     String Minutos=(duration.inMinutes-duration.inHours*60).toString().padLeft(2, '0');
     String Segundos=(duration.inSeconds%60).toString().padLeft(2, '0');
+    print(" $Segundos  $Bandera");
+    String limpio="00:00:00";
+    if( limpio.compareTo('$Horas:$Minutos:$Segundos')==true && Bandera==true ) {
+      print(" fin");
+      setState((){
+        Navigator.pushReplacementNamed(context,'/tiplist' );
+        Navigator.pop(context);
+      });
+    }
     return '$Horas:$Minutos:$Segundos';
   }
   int Segundos=0;
