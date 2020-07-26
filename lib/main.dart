@@ -1,6 +1,7 @@
 import 'package:agendaprocrastinacion/EditorTareas.dart';
 import 'package:agendaprocrastinacion/Home.dart';
 import 'package:agendaprocrastinacion/Loading.dart';
+import 'package:agendaprocrastinacion/Resultado.dart';
 import 'package:agendaprocrastinacion/Tiempo.dart';
 import 'package:agendaprocrastinacion/TipList.dart';
 import 'package:agendaprocrastinacion/EditorTareas.dart';
@@ -15,6 +16,7 @@ void main() => runApp( MaterialApp(
     '/tiplist': (context) => TipList(),
     '/editor': (context) => EditorTareas(),
     '/tiempo': (context) => CountDownTimer(),
+    '/resultado': (context) => Resultado(),
   }
 
 

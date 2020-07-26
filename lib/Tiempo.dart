@@ -1,3 +1,4 @@
+import 'package:agendaprocrastinacion/Resultado.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'CustomTimerPainter.dart';
@@ -10,25 +11,29 @@ class _CountDownTimerState extends State<CountDownTimer>
     with TickerProviderStateMixin {
   AnimationController controller;
   bool Bandera=false;
+  bool Arranque=false;
+  bool Final=false;
   String get timerString {
     Duration duration = controller.duration * controller.value;
     String Horas=(duration.inHours).toString().padLeft(2, '0');
     String Minutos=(duration.inMinutes-duration.inHours*60).toString().padLeft(2, '0');
     String Segundos=(duration.inSeconds%60).toString().padLeft(2, '0');
-    print(" $Segundos  $Bandera");
+
     String limpio="00:00:00";
-    if( limpio.compareTo('$Horas:$Minutos:$Segundos')==true && Bandera==true ) {
+    //print(" $Segundos  = $Horas:$Minutos:$Segundos ${limpio.compareTo('$Horas:$Minutos:$Segundos')}");
+    if( limpio.compareTo('$Horas:$Minutos:$Segundos')==0 && Arranque==true ) {
       print(" fin");
-      setState((){
-        Navigator.pushReplacementNamed(context,'/tiplist' );
-        Navigator.pop(context);
+      setState(() {
+        Final=true;
       });
+
     }
     return '$Horas:$Minutos:$Segundos';
   }
   int Segundos=0;
   @override
   void initState() {
+    Bandera=false;
     super.initState();
 
   }
@@ -48,11 +53,15 @@ class _CountDownTimerState extends State<CountDownTimer>
       );
       print("seg==$Segundos");
     }
+    if( Final==true){
+      Navigator.pushReplacement(context, new MaterialPageRoute(
+          builder: (context) => new Resultado() )
+      );
+    }
     ThemeData themeData = Theme.of(context);
     return Scaffold(
       backgroundColor: Colors.white10,
-      body:
-      AnimatedBuilder(
+      body: AnimatedBuilder(
           animation: controller,
           builder: (context, child) {
             return Stack(
@@ -142,6 +151,9 @@ class _CountDownTimerState extends State<CountDownTimer>
                                builder: (context, child) {
                                  return FloatingActionButton.extended(
                                      onPressed: () {
+                                       setState(() {
+                                         Arranque=true;
+                                       });
                                        if (controller.isAnimating)
                                          controller.stop();
                                        else
