@@ -199,7 +199,10 @@ class _HomeState extends State<Home> {
                           'Hora': Tareas[index].Hora,
                           'Minu': Tareas[index].Minu,
                         });
+
                       }
+                        /// aqui borramos la tarea peroo creo no requiere
+
 
 
 

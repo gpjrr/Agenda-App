@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:agendaprocrastinacion/Resultado.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
@@ -23,9 +25,8 @@ class _CountDownTimerState extends State<CountDownTimer>
     //print(" $Segundos  = $Horas:$Minutos:$Segundos ${limpio.compareTo('$Horas:$Minutos:$Segundos')}");
     if( limpio.compareTo('$Horas:$Minutos:$Segundos')==0 && Arranque==true ) {
       print(" fin");
-      setState(() {
-        Final=true;
-      });
+      controller.reset();
+      Final=true;
 
     }
     return '$Horas:$Minutos:$Segundos';
@@ -54,6 +55,8 @@ class _CountDownTimerState extends State<CountDownTimer>
       print("seg==$Segundos");
     }
     if( Final==true){
+      print('terminoo');
+      //Navigator.pop();
       Navigator.pushReplacement(context, new MaterialPageRoute(
           builder: (context) => new Resultado() )
       );
