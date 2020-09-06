@@ -5,21 +5,33 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:agendaprocrastinacion/TipList.dart';
 import 'package:weekday_selector/weekday_selector.dart';
-//import 'package:flutter/cur';
+import 'package:agendaprocrastinacion/Meta.dart';
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  bool ban=false;
-  List<Task> Tareas=new List();
   //List<Icon> iconos=new List();
-  int TabIndex=0;
+  bool ban=false;
   @override
   void initState(){
+    /// construyendo metas ficticias
+    for(int i=0;i<5;i++) {
+      List<String> prro=['paso1','ps2','p3','sad'];
+      Metas.add(Meta(
+        Days: i,
+        StepD: prro,
+        Why: 'quiero crecer',
+        StepN: 4,
+        Name:'Terminar app $i',
+      ));
+    }
     super.initState();
   }
+  List<Task> Tareas=new List();
+  List<Meta> Metas=new List();
+  int TabIndex=0;
   @override
   Widget build(BuildContext context) {
 
@@ -213,9 +225,34 @@ class _HomeState extends State<Home> {
               ),
             ),
             SafeArea(
-              child: Container(
-                color: Colors.blue,
-              ),
+              child: ListView.builder(
+                  itemCount: Metas.length,
+                  itemBuilder: (context,index){
+                    return Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: 2,
+                        horizontal: 2,
+                      ),
+                      child: Card(
+                        child: ListTile(
+                          onTap: (){
+
+                          },
+                          title: Text(
+                            Metas[index].Name,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 25,
+                              letterSpacing: 1,
+                              fontFamily: 'EastSeaDokdo-Regular',
+                              //fontFamily: 'Caveat-Regular',
+                            ),
+                          )
+                        ),
+                      ),
+                    );
+                  }
+              )
             )
           ],
         ),
@@ -297,6 +334,7 @@ class _HomeState extends State<Home> {
             ],
           ),
         ),
+
       ),
     );
 
