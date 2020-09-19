@@ -10,10 +10,10 @@ class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
 }
-
 class _HomeState extends State<Home> {
   //List<Icon> iconos=new List();
   bool ban=false;
+
   @override
   void initState(){
     /// construyendo metas ficticias
@@ -26,12 +26,14 @@ class _HomeState extends State<Home> {
         StepN: 4,
         Name:'Terminar app $i',
       ));
-    }
+    } ///esta maaal checaar
+    //_tabController.addListener(() { activo=_tabController.index; });
     super.initState();
   }
   List<Task> Tareas=new List();
   List<Meta> Metas=new List();
   int TabIndex=0;
+  TabController _tabController;
   @override
   Widget build(BuildContext context) {
 
@@ -52,10 +54,12 @@ class _HomeState extends State<Home> {
             color: Colors.black,
           );
     }
+
     /*for(int i=0;i<Tareas.length;i++)
       print( " $i =  ${Tareas[i].Nombre}" );*/
     return DefaultTabController(
       length: 2,
+
       child: Scaffold(
         backgroundColor: Color.fromRGBO(211, 211, 211, 1) ,
         appBar: AppBar(
@@ -72,6 +76,11 @@ class _HomeState extends State<Home> {
           ),
           backgroundColor: Colors.yellow[500],
           bottom: TabBar(
+            ///controller: _tabController,
+            onTap: (index){
+              print("val==${index}");
+              TabIndex=index;
+              },
             tabs: <Widget>[
               Tab(
                 child: Text(
@@ -100,6 +109,7 @@ class _HomeState extends State<Home> {
         ),
 
         body: TabBarView(
+         /// controller: _tabController,
           children: <Widget>[
             SafeArea(
               child: ListView.builder(
@@ -256,48 +266,77 @@ class _HomeState extends State<Home> {
             )
           ],
         ),
-
         floatingActionButton: FloatingActionButton(
           onPressed: () async{
-            Task Nuevo=Task(
-              Nombre: '',
-              Descripcion: "",
-              Limpio: true,
-              Hora: "00",
-              Minu: "00",
-              Dias: List.filled(7, false),
-              Lave: UniqueKey(),
-              Tempo: false,
-              Today:true,
-            );
-            ///print("=-=${Nuevo.Tempo}");
-            Nuevo.Hoy();
-            dynamic cosa=await Navigator.pushNamed(context,'/editor',arguments: {
-              'Nombre': Nuevo.Nombre ,
-              'Descripcion': Nuevo.Descripcion ,
-              'Dias':Nuevo.Dias,
-              'Tempo':Nuevo.Tempo,
-              'Hora':Nuevo.Hora,
-              'Minu':Nuevo.Minu,
-              'Today':Nuevo.Today,
-            } );
+            dynamic cosa;
+            /// tabindex==0 tareas en 1 metas
+            if( TabIndex==0 ) {
+              Task Nuevo = Task(
+                Nombre: '',
+                Descripcion: "",
+                Limpio: true,
+                Hora: "00",
+                Minu: "00",
+                Dias: List.filled(7, false),
+                Lave: UniqueKey(),
+                Tempo: false,
+                Today: true,
+              );
+              ///print("=-=${Nuevo.Tempo}");
+              Nuevo.Hoy();
+              cosa = await Navigator.pushNamed(
+                  context, '/editor', arguments: {
+                'Nombre': Nuevo.Nombre,
+                'Descripcion': Nuevo.Descripcion,
+                'Dias': Nuevo.Dias,
+                'Tempo': Nuevo.Tempo,
+                'Hora': Nuevo.Hora,
+                'Minu': Nuevo.Minu,
+                'Today': Nuevo.Today,
+              });
+            }
+            else{
+
+              Meta Nuevo=new Meta(
+                    Days:0,
+                    Why:'',
+                    StepD: new List(10),
+                    StepN: 0,
+                    Name: '',
+                  );
+              cosa=await Navigator.pushNamed(context, '/editormeta' , arguments: {
+                'Days':Nuevo.Days,
+                'Name':Nuevo.Name,
+                'Why':Nuevo.Why,
+                'StepN':Nuevo.StepN,
+                'StepD':Nuevo.StepD,
+                'Progress':Nuevo.Progress,
+              });
+            }
             setState( (){
-              if( cosa!=null ) {
-                Task Sujeto = Task(
-                  Nombre: cosa['Nombre'],
-                  Limpio: true,
-                  Descripcion: cosa['Descripcion'],
-                  Dias: cosa['Dias'],
-                  Tempo: cosa['Tempo'],
-                  Lave: UniqueKey(),
-                  Today: cosa['Today'],
-                  Hora: cosa['Hora'],
-                  Minu: cosa['Minu'],
-                );
-                Sujeto.RelojIcono();
-                Tareas.add(Sujeto);
+              print(' indice=${TabIndex}');
+              if( TabIndex==0 ) {
+                if (cosa != null) {
+                  Task Sujeto = Task(
+                    Nombre: cosa['Nombre'],
+                    Limpio: true,
+                    Descripcion: cosa['Descripcion'],
+                    Dias: cosa['Dias'],
+                    Tempo: cosa['Tempo'],
+                    Lave: UniqueKey(),
+                    Today: cosa['Today'],
+                    Hora: cosa['Hora'],
+                    Minu: cosa['Minu'],
+                  );
+                  Sujeto.RelojIcono();
+                  Tareas.add(Sujeto);
+                }
+              }
+              else {
 
               }
+
+
 
             });
           },
@@ -334,7 +373,6 @@ class _HomeState extends State<Home> {
             ],
           ),
         ),
-
       ),
     );
 

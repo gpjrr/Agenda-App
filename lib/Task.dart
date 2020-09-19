@@ -67,6 +67,15 @@ class Task {
       );
   }
   Task.fromJson( Map<String,dynamic> json ){
-    
+    Nombre=json['Nombre'];
+    Descripcion=json['Descripcion'];
+    Done=json['Done'];
+    Dias=json['Dias'];
+    Lave=json['Lave'];
+    Limpio=json['Limpio'];
+    Tempo=json['Tempo'];
+    Hora=json['Hora'];
+    Minu=json['Minu'];
+    Today=json['Today'];
   }
 }
