@@ -1,5 +1,6 @@
 import 'package:agendaprocrastinacion/Meta.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class EditorMetas extends StatefulWidget {
   @override
@@ -19,6 +20,24 @@ class _EditorMetasState extends State<EditorMetas> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.red,
+      body: PageView(
+        scrollDirection: Axis.horizontal,
+        children: <Widget>[
+          Scaffold(
+            backgroundColor: Colors.yellow,
+            appBar: AppBar(
+              title: Text('sdfsdf'),
+            ),
+          ),
+          Scaffold(
+            backgroundColor: Colors.blue,
+            appBar: AppBar(
+              title: Text('prueba2'),
+            ),
+          ),
+
+        ],
+      ),
     );
   }
 }
