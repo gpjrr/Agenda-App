@@ -67,6 +67,7 @@ class _EditorTareasState extends State<EditorTareas> {
         //print("===- $opcion");
       });
     }
+
     return Scaffold(
       backgroundColor: Color.fromRGBO(150,150,150, 1),
       appBar: AppBar(
@@ -183,7 +184,7 @@ class _EditorTareasState extends State<EditorTareas> {
       ),
       body: Builder(
         builder: (context)=>  Align(
-          alignment: Alignment.center,
+          alignment: Alignment.topCenter,
           child: Container(
             padding: EdgeInsets.all(7),
             child: ListView(

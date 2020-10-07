@@ -26,8 +26,8 @@ class _CountDownTimerState extends State<CountDownTimer>
     if( limpio.compareTo('$Horas:$Minutos:$Segundos')==0 && Arranque==true ) {
       print(" fin");
       controller.reset();
-      Final=true;
-
+        Final=true;
+        controller.dispose();
     }
     return '$Horas:$Minutos:$Segundos';
   }
@@ -55,11 +55,8 @@ class _CountDownTimerState extends State<CountDownTimer>
       print("seg==$Segundos");
     }
     if( Final==true){
-      print('terminoo');
-      //Navigator.pop();
-      Navigator.pushReplacement(context, new MaterialPageRoute(
-          builder: (context) => new Resultado() )
-      );
+      WidgetsBinding.instance.addPostFrameCallback((_)=>Fun(context));
+
     }
     ThemeData themeData = Theme.of(context);
     return Scaffold(
@@ -125,64 +122,64 @@ class _CountDownTimerState extends State<CountDownTimer>
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                         children: <Widget>[
-                           Container(
-                             color: Colors.red,
-                             child: FlatButton.icon(
-                               onPressed: (){
-                                 Navigator.pop(context,null );
-                               },
-                               label: Text(
-                                 'Cancelar',
-                                 style: TextStyle(
-                                   fontSize: 20,
-                                   //fontFamily: 'EastSeaDokdo-Regular',
-                                   fontFamily: 'Bellota-BoldItalic',
-                                   //fontFamily: 'Peddana-Regular',
+                        children: <Widget>[
+                          Container(
+                            color: Colors.red,
+                            child: FlatButton.icon(
+                              onPressed: (){
+                                Navigator.pop(context,null );
+                              },
+                              label: Text(
+                                'Cancelar',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  //fontFamily: 'EastSeaDokdo-Regular',
+                                  fontFamily: 'Bellota-BoldItalic',
+                                  //fontFamily: 'Peddana-Regular',
 
-                                 ),
-                               ),
-                               icon: Icon(
-                                 Icons.cancel,
-                                 size: 20,
-                               ),
+                                ),
+                              ),
+                              icon: Icon(
+                                Icons.cancel,
+                                size: 20,
+                              ),
 
-                             ),
-                           ),
-                           AnimatedBuilder(
-                               animation: controller,
-                               builder: (context, child) {
-                                 return FloatingActionButton.extended(
-                                     onPressed: () {
-                                       setState(() {
-                                         Arranque=true;
-                                       });
-                                       if (controller.isAnimating)
-                                         controller.stop();
-                                       else
-                                         controller.reverse(
-                                             from: controller.value == 0.0 ? 1.0 : controller.value
-                                         );
-                                     },
-                                     icon: Icon(
-                                       controller.isAnimating ? Icons.pause : Icons.play_arrow,
-                                       size: 20,
-                                       color: Colors.black,
-                                     ),
-                                     label: Text(
-                                         controller.isAnimating ? "Pause" : "Play",
-                                       style: TextStyle(
-                                         fontSize: 20,
-                                         color: Colors.black,
-                                         //fontFamily: 'EastSeaDokdo-Regular',
-                                         fontFamily: 'Bellota-BoldItalic',
-                                         //fontFamily: 'Peddana-Regular',
+                            ),
+                          ),
+                          AnimatedBuilder(
+                              animation: controller,
+                              builder: (context, child) {
+                                return FloatingActionButton.extended(
+                                    onPressed: () {
+                                      setState(() {
+                                        Arranque=true;
+                                      });
+                                      if (controller.isAnimating)
+                                        controller.stop();
+                                      else
+                                        controller.reverse(
+                                            from: controller.value == 0.0 ? 1.0 : controller.value
+                                        );
+                                    },
+                                    icon: Icon(
+                                      controller.isAnimating ? Icons.pause : Icons.play_arrow,
+                                      size: 20,
+                                      color: Colors.black,
+                                    ),
+                                    label: Text(
+                                      controller.isAnimating ? "Pause" : "Play",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.black,
+                                        //fontFamily: 'EastSeaDokdo-Regular',
+                                        fontFamily: 'Bellota-BoldItalic',
+                                        //fontFamily: 'Peddana-Regular',
 
-                                       ),
-                                     )
-                                 );
-                               }),
-                         ],
+                                      ),
+                                    )
+                                );
+                              }),
+                        ],
                       ),
                     ],
                   ),
@@ -193,3 +190,14 @@ class _CountDownTimerState extends State<CountDownTimer>
     );
   }
 }
+
+
+void Fun( BuildContext context ){
+
+    print('terminoo');
+    //Navigator.pop();
+    Navigator.pushReplacement(context, new MaterialPageRoute(
+        builder: (context) => new Resultado() )
+    );
+
+  }

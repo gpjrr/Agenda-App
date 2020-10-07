@@ -25,8 +25,28 @@ class _EditorMetasState extends State<EditorMetas> {
         children: <Widget>[
           Scaffold(
             backgroundColor: Colors.yellow,
-            appBar: AppBar(
-              title: Text('sdfsdf'),
+            body: Builder(
+              builder: (context)=> Align(
+                alignment: Alignment.topCenter,
+                child: Container(
+                  padding:  EdgeInsets.all(7),
+                  child: ListView(
+                    children: <Widget>[
+                      Text(
+                        'Nombre de la meta',
+                        style: TextStyle(
+                          color: Colors.purple,
+                          fontSize: 50,
+                            letterSpacing: 1,
+                          //fontFamily: 'Bellota-BoldItalic',
+                          fontFamily: 'Caveat-Regular',
+                        ),
+                      ),
+
+                    ],
+                  ),
+                ),
+              ),
             ),
           ),
           Scaffold(

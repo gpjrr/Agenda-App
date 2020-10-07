@@ -80,7 +80,7 @@ class _HomeState extends State<Home> {
             onTap: (index){
               print("val==${index}");
               TabIndex=index;
-              },
+            },
             tabs: <Widget>[
               Tab(
                 child: Text(
@@ -109,7 +109,7 @@ class _HomeState extends State<Home> {
         ),
 
         body: TabBarView(
-         /// controller: _tabController,
+          /// controller: _tabController,
           children: <Widget>[
             SafeArea(
               child: ListView.builder(
@@ -223,7 +223,7 @@ class _HomeState extends State<Home> {
                         });
 
                       }
-                        /// aqui borramos la tarea peroo creo no requiere
+                      /// aqui borramos la tarea peroo creo no requiere
 
 
 
@@ -235,34 +235,34 @@ class _HomeState extends State<Home> {
               ),
             ),
             SafeArea(
-              child: ListView.builder(
-                  itemCount: Metas.length,
-                  itemBuilder: (context,index){
-                    return Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 2,
-                        horizontal: 2,
-                      ),
-                      child: Card(
-                        child: ListTile(
-                          onTap: (){
-
-                          },
-                          title: Text(
-                            Metas[index].Name,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 25,
-                              letterSpacing: 1,
-                              fontFamily: 'EastSeaDokdo-Regular',
-                              //fontFamily: 'Caveat-Regular',
-                            ),
-                          )
+                child: ListView.builder(
+                    itemCount: Metas.length,
+                    itemBuilder: (context,index){
+                      return Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: 2,
+                          horizontal: 2,
                         ),
-                      ),
-                    );
-                  }
-              )
+                        child: Card(
+                          child: ListTile(
+                              onTap: (){
+
+                              },
+                              title: Text(
+                                Metas[index].Name,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 25,
+                                  letterSpacing: 1,
+                                  fontFamily: 'EastSeaDokdo-Regular',
+                                  //fontFamily: 'Caveat-Regular',
+                                ),
+                              )
+                          ),
+                        ),
+                      );
+                    }
+                )
             )
           ],
         ),
@@ -298,12 +298,12 @@ class _HomeState extends State<Home> {
             else{
 
               Meta Nuevo=new Meta(
-                    Days:0,
-                    Why:'',
-                    StepD: new List(10),
-                    StepN: 0,
-                    Name: '',
-                  );
+                Days:0,
+                Why:'',
+                StepD: new List(10),
+                StepN: 0,
+                Name: '',
+              );
               cosa=await Navigator.pushNamed(context, '/editormeta' , arguments: {
                 'Days':Nuevo.Days,
                 'Name':Nuevo.Name,

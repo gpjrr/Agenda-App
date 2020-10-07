@@ -11,6 +11,7 @@ class _LoadingState extends State<Loading> {
   List<Task> Tareas=new List();
 
   void llena() async{
+    // probando con algo vaio
     for(int i=1;i<=15;i++) {
 
       Tareas.add(
