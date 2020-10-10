@@ -1,9 +1,9 @@
 import 'dart:ffi';
-
 import 'package:agendaprocrastinacion/Resultado.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'CustomTimerPainter.dart';
+
 class CountDownTimer extends StatefulWidget {
   @override
   _CountDownTimerState createState() => _CountDownTimerState();
@@ -199,5 +199,4 @@ void Fun( BuildContext context ){
     Navigator.pushReplacement(context, new MaterialPageRoute(
         builder: (context) => new Resultado() )
     );
-
   }
