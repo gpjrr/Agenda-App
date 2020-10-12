@@ -1,4 +1,5 @@
 import 'package:agendaprocrastinacion/Meta.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -18,16 +19,18 @@ class _EditorMetasState extends State<EditorMetas> {
     StepN: 0,
     Name: '',
   );
+  TextEditingController ControlDias=TextEditingController();
   TextEditingController ControlNameG= TextEditingController();
   @override
   Widget build(BuildContext context) {
     if( inicio==false ){
       /// cargamos la informacion de la meta
       ControlNameG.text='adsf';
+      ControlDias.text='12312';
       inicio=true;
     }
     return Scaffold(
-      backgroundColor: Colors.red,
+      //backgroundColor: Colors.red,
       body: PageView(
         scrollDirection: Axis.horizontal,
         children: <Widget>[
@@ -99,19 +102,87 @@ class _EditorMetasState extends State<EditorMetas> {
                          //fontFamily: 'Peddana-Regular',
                        ),
                     ),
-
-
                   ],
                 ),
               ),
             ),
           ),
           Scaffold(
-            backgroundColor: Colors.blue,
-            appBar: AppBar(
-              title: Text('prueba2'),
+            backgroundColor: Colors.orange[500],
+            body: Builder(
+              builder: (context)=> Align(
+                alignment: Alignment.center,
+                child: Container(
+                    padding: EdgeInsets.fromLTRB(10, 40, 10, 10),
+                    child: ListView(
+                      //shrinkWrap: true,
+                      children:[
+                        Center(
+                          heightFactor: 1,
+                          widthFactor: 1,
+                          child: Text(
+                            '¿Cuantos dias necesitas?',
+                            style: TextStyle(
+                              color: Colors.purple[800],
+                              fontSize: 43,
+                              letterSpacing: 1,
+                              //fontFamily: 'Bellota-BoldItalic',
+                              fontFamily: 'Caveat-Regular',
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 40,width: 40,),
+/*
+                        Row(
+                          ///crossAxisAlignment: CrossAxisAlignment.stretch,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            TextField(
+                              textInputAction: TextInputAction.done,
+                              maxLines: 1,
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                //border:  OutlineInputBorder(),
+                                  labelText: "Nombre",
+                                  ///prefixIcon: Icon( Icons.title ),
+                                  //hintText: "Nombre de Tarea",
+                                  filled: false,
+                                  fillColor: Colors.white
+                              ),
+                            ),
+                            Text(
+                              'Dias.',
+                              style: TextStyle(
+                                fontSize: 50,
+                                height: 1,
+                                color: Colors.grey[600],
+                                fontFamily: 'EastSeaDokdo-Regular',
+                                //fontFamily: 'Bellota-BoldItalic',
+                                //fontFamily: 'Peddana-Regular',
+                              ),
+                            ),
+                          ],
+                        ),
+*/
+                        SizedBox(height: 40,width: 40,),
+                        Text(
+                          'define un plazo de tiempo, para ser concreto con tus metas',
+                          style: TextStyle(
+                            fontSize: 60,
+                            height: 1,
+                            color: Colors.grey[600],
+                            fontFamily: 'EastSeaDokdo-Regular',
+                            //fontFamily: 'Bellota-BoldItalic',
+                            //fontFamily: 'Peddana-Regular',
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+              ),
             ),
-          ),
+            ),
+
 
         ],
       ),
