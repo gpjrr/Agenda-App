@@ -132,38 +132,49 @@ class _EditorMetasState extends State<EditorMetas> {
                           ),
                         ),
                         SizedBox(height: 40,width: 40,),
-/*
+
                         Row(
                           ///crossAxisAlignment: CrossAxisAlignment.stretch,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            TextField(
-                              textInputAction: TextInputAction.done,
-                              maxLines: 1,
-                              keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                //border:  OutlineInputBorder(),
-                                  labelText: "Nombre",
-                                  ///prefixIcon: Icon( Icons.title ),
-                                  //hintText: "Nombre de Tarea",
-                                  filled: false,
-                                  fillColor: Colors.white
-                              ),
+                            Flexible(
+                              flex: 6,
+                              child: TextField(
+                                onChanged: (String text){
+                                  logro.Days=int.parse( text );
+                                  print(' ${logro.Days} ');
+                                },
+                                  textInputAction: TextInputAction.done,
+                                  maxLines: 1,
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                    //border:  OutlineInputBorder(),
+                                      //labelText: "Nombre",
+                                      ///prefixIcon: Icon( Icons.title ),
+                                      //hintText: "Nombre de Tarea",
+                                      filled: false,
+                                      fillColor: Colors.white
+                                  ),
+                                ),
                             ),
-                            Text(
-                              'Dias.',
-                              style: TextStyle(
-                                fontSize: 50,
-                                height: 1,
-                                color: Colors.grey[600],
-                                fontFamily: 'EastSeaDokdo-Regular',
-                                //fontFamily: 'Bellota-BoldItalic',
-                                //fontFamily: 'Peddana-Regular',
+
+                            Flexible(
+                              flex: 4,
+                              child: Text(
+                                'Dias.',
+                                style: TextStyle(
+                                  fontSize: 50,
+                                  height: 1,
+                                  color: Colors.grey[600],
+                                  fontFamily: 'EastSeaDokdo-Regular',
+                                  //fontFamily: 'Bellota-BoldItalic',
+                                  //fontFamily: 'Peddana-Regular',
+                                ),
                               ),
                             ),
                           ],
                         ),
-*/
+
                         SizedBox(height: 40,width: 40,),
                         Text(
                           'define un plazo de tiempo, para ser concreto con tus metas',
