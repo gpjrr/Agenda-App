@@ -132,7 +132,6 @@ class _EditorMetasState extends State<EditorMetas> {
                           ),
                         ),
                         SizedBox(height: 40,width: 40,),
-
                         Row(
                           ///crossAxisAlignment: CrossAxisAlignment.stretch,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -144,18 +143,26 @@ class _EditorMetasState extends State<EditorMetas> {
                                   logro.Days=int.parse( text );
                                   print(' ${logro.Days} ');
                                 },
-                                  textInputAction: TextInputAction.done,
-                                  maxLines: 1,
-                                  keyboardType: TextInputType.number,
-                                  decoration: InputDecoration(
+                                textInputAction: TextInputAction.done,
+                                maxLines: 1,
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
                                     //border:  OutlineInputBorder(),
-                                      //labelText: "Nombre",
-                                      ///prefixIcon: Icon( Icons.title ),
+                                  //labelText: "Nombre",
+                                  ///prefixIcon: Icon( Icons.title ),
                                       //hintText: "Nombre de Tarea",
-                                      filled: false,
-                                      fillColor: Colors.white
-                                  ),
+                                    filled: false,
+                                    fillColor: Colors.white
                                 ),
+                                style: TextStyle(
+                                fontSize: 50,
+                                height: 1,
+                                color: Colors.black,
+                                fontFamily: 'EastSeaDokdo-Regular',
+                                //fontFamily: 'Bellota-BoldItalic',
+                                //fontFamily: 'Peddana-Regular',
+                              ),
+                              ),
                             ),
 
                             Flexible(
@@ -193,7 +200,26 @@ class _EditorMetasState extends State<EditorMetas> {
               ),
             ),
             ),
+          Scaffold(
+           backgroundColor: Colors.red[500],
+            appBar: AppBar(
+              centerTitle: true,
+              title:Text(
+                'Componentes',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 30,
+                ),
+              ),
+              backgroundColor: Colors.red[400],
+            ),
+            body: Builder(
+              builder: (context)=>Container(
+                padding:  EdgeInsets.fromLTRB(10, 40, 10, 10),
 
+              ),
+            ),
+          )
 
         ],
       ),

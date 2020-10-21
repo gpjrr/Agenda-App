@@ -1,21 +1,38 @@
+import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 import 'dart:ui';
 import 'package:agendaprocrastinacion/Task.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:agendaprocrastinacion/TipList.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:weekday_selector/weekday_selector.dart';
 import 'package:agendaprocrastinacion/Meta.dart';
+
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
 }
+
 class _HomeState extends State<Home> {
+  List<Task> Tareas=new List();
+  List<Meta> Metas=new List();
+  int TabIndex=0;
+  TabController _tabController;
+
   //List<Icon> iconos=new List();
   bool ban=false;
 
+  /*
+  void setState(fn){
+    super.setState( fn );
+
+  }
+  */
   @override
   void initState(){
+    ///File Save=Archivo();
     /// construyendo metas ficticias
     for(int i=0;i<5;i++) {
       List<String> prro=['paso1','ps2','p3','sad'];
@@ -30,10 +47,26 @@ class _HomeState extends State<Home> {
     //_tabController.addListener(() { activo=_tabController.index; });
     super.initState();
   }
-  List<Task> Tareas=new List();
-  List<Meta> Metas=new List();
-  int TabIndex=0;
-  TabController _tabController;
+
+  writeTask() async {
+    print('no haces ni mais\n');
+    try {
+      print('p1\n');
+      final direc = await getApplicationDocumentsDirectory();
+      print('p2\n');
+      File archivo = File('${direc.path}/SaveTasks.json');
+      print('p3\n');
+      String JsonText = jsonEncode(Tareas);
+      print('p4\n');
+      print('cambio= ${JsonText} \n');
+      await archivo.writeAsString(JsonText);
+    }
+    catch(e){
+      print('no jaloo por ${e}');
+      }
+
+    }
+
   @override
   Widget build(BuildContext context) {
 
@@ -59,7 +92,6 @@ class _HomeState extends State<Home> {
       print( " $i =  ${Tareas[i].Nombre}" );*/
     return DefaultTabController(
       length: 2,
-
       child: Scaffold(
         backgroundColor: Color.fromRGBO(211, 211, 211, 1) ,
         appBar: AppBar(
@@ -107,7 +139,6 @@ class _HomeState extends State<Home> {
             ],
           ),
         ),
-
         body: TabBarView(
           /// controller: _tabController,
           children: <Widget>[
@@ -149,6 +180,7 @@ class _HomeState extends State<Home> {
                               );
                               Sujeto.RelojIcono();
                               Tareas[index]=Sujeto;
+                              writeTask();
                             });
                           },
                           leading:Tareas[index].Reloj,
@@ -330,6 +362,8 @@ class _HomeState extends State<Home> {
                   );
                   Sujeto.RelojIcono();
                   Tareas.add(Sujeto);
+                  print('voy a guardar\n');
+                  writeTask();
                 }
               }
               else {
@@ -346,7 +380,6 @@ class _HomeState extends State<Home> {
             color: Colors.black87,
           ),
         ),
-
         drawer: Drawer(
           child: ListView(
             children: <Widget>[

@@ -1,6 +1,11 @@
+import 'dart:io';
+import 'dart:convert';
+//import 'dart:html';
+import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:agendaprocrastinacion/Task.dart';
+
 class Loading extends StatefulWidget {
   @override
   _LoadingState createState() => _LoadingState();
@@ -8,12 +13,32 @@ class Loading extends StatefulWidget {
 
 
 class _LoadingState extends State<Loading> {
-  List<Task> Tareas=new List();
+  List<Task> Tareas=new List(0);
 
+  ///void
+  void readtask() async{
+    try {
+      final direc = await getApplicationDocumentsDirectory();
+
+      File doc = File('${direc.path}/SaveTasks.json');
+
+      print(' ===${ doc.readAsString() }');
+      List Jarr;
+      Jarr = jsonDecode(await doc.readAsString());
+      for (var item in Jarr) {
+        Tareas.add(new Task.fromJson(item));
+      }
+    } catch(e){
+      print('no jaloo por $e');
+      Tareas=[];
+    }
+
+    Navigator.pushReplacementNamed(context, '/home',arguments: Tareas);
+  }
+  /*
   void llena() async{
     // probando con algo vaio
     for(int i=1;i<=15;i++) {
-
       Tareas.add(
        Task(
          Nombre:"ejemplo $i",
@@ -28,13 +53,12 @@ class _LoadingState extends State<Loading> {
      );
     }
     await new Future.delayed(const Duration(seconds : 1));
-    Navigator.pushReplacementNamed(context, '/home',arguments: Tareas);
-  }
+  }*/
 
   @override
   void initState() {
     super.initState();
-    llena();
+    readtask();
   }
   @override
   Widget build(BuildContext context) {
@@ -48,4 +72,5 @@ class _LoadingState extends State<Loading> {
       ),
     );
   }
+
 }

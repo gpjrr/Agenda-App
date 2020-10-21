@@ -66,16 +66,31 @@ class Task {
         color: Colors.black,
       );
   }
-  Task.fromJson( Map<String,dynamic> json ){
-    Nombre=json['Nombre'];
-    Descripcion=json['Descripcion'];
-    Done=json['Done'];
-    Dias=json['Dias'];
-    Lave=json['Lave'];
-    Limpio=json['Limpio'];
-    Tempo=json['Tempo'];
-    Hora=json['Hora'];
-    Minu=json['Minu'];
+  Task.fromJson( Map<String,dynamic> json )
+    :Nombre=json['Nombre'],
+    Descripcion=json['Descripcion'],
+    Done=json['Done'],
+    Dias=json['Dias'],
+    Lave=json['Lave'],
+    Limpio=json['Limpio'],
+    Tempo=json['Tempo'],
+    Hora=json['Hora'],
+    Minu=json['Minu'],
     Today=json['Today'];
+
+  Map<String,dynamic> toJson() {
+    return {
+      'Nombre': Nombre,
+      'Descripcion': Descripcion,
+      'Done': Done,
+      'Dias': Dias,
+      'Lave': Lave,
+      'Limpio': Limpio,
+      'Tempo': Tempo,
+      'Hora': Hora,
+      'Minu': Minu,
+      'Today': Today,
+    };
   }
+
 }
