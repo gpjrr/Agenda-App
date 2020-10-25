@@ -49,17 +49,17 @@ class _HomeState extends State<Home> {
   }
 
   writeTask() async {
-    print('no haces ni mais\n');
     try {
-      print('p1\n');
+      ///print('p1\n');
       final direc = await getApplicationDocumentsDirectory();
-      print('p2\n');
+      //print('p2\n');
       File archivo = File('${direc.path}/SaveTasks.json');
-      print('p3\n');
-      String JsonText = jsonEncode(Tareas);
-      print('p4\n');
-      print('cambio= ${JsonText} \n');
-      await archivo.writeAsString(JsonText);
+      //print('p3 ${ Tareas[0].toJson() } \n');
+
+      String jText = jsonEncode( Tareas );
+      //print('p4\n');
+      //print('cambio= ${jText} \n');
+      await archivo.writeAsString(jText);
     }
     catch(e){
       print('no jaloo por ${e}');
@@ -86,6 +86,8 @@ class _HomeState extends State<Home> {
             size: 40,
             color: Colors.black,
           );
+        for(int i=0;i<Tareas.length;i++)
+          Tareas[i].Lave=UniqueKey();
     }
 
     /*for(int i=0;i<Tareas.length;i++)

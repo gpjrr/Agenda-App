@@ -24,10 +24,13 @@ class _LoadingState extends State<Loading> {
 
       print(' ===${ doc.readAsString() }');
       List Jarr;
-      Jarr = jsonDecode(await doc.readAsString());
+      Jarr = json.decode(await doc.readAsString());
+      print('leyo= $Jarr \n');
       for (var item in Jarr) {
         Tareas.add(new Task.fromJson(item));
       }
+      for( int i=0;i<Tareas.length;i++)
+        print(' $i = ${ Tareas[i] } ');
     } catch(e){
       print('no jaloo por $e');
       Tareas=[];
