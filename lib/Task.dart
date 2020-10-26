@@ -1,5 +1,6 @@
 //import 'dart:html';
 //import 'dart:convert';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -71,17 +72,27 @@ class Task {
       );
   }
 
-  Task.fromJson(Map<String, dynamic> json)
-      :Nombre=json['Nombre'],
-        Descripcion=json['Descripcion'],
-        Done=json['Done'],
-        Dias=json['Dias'],
+   Task from(Map<String, dynamic> jsn){
+     Task mapota = new Task(
+       Nombre: jsn['Nombre'],
+       Descripcion: jsn['Descripcion'],
+       Done: jsn['Done'],
+       //  Dias: json['Dias'],
        // Lave=json['Lave'],
-        Limpio=json['Limpio'],
-        Tempo=json['Tempo'],
-        Hora=json['Hora'],
-        Minu=json['Minu'],
-        Today=json['Today'];
+       Limpio: jsn['Limpio'],
+       Tempo: jsn['Tempo'],
+       Hora: jsn['Hora'],
+       Minu: jsn['Minu'],
+       Today: jsn['Today'],
+     );
+        mapota.Dias = new List.filled(7, false);
+        var tem = jsn['Dias'];
+        for (int i = 0; i < 7; i++)
+          mapota.Dias[i] = (tem[i]);
+        print('MP=${mapota.Dias}\n');
+     return mapota;
+  }
+
 
   Map<String, dynamic> toJson() {
     Map<String ,dynamic> MDias={};
@@ -99,7 +110,7 @@ class Task {
       'Minu': Minu,
       'Today': Today,
     };
-    print("\n mapita=$mapita \n");
+//    print("\n mapita=$mapita \n");
     return mapita;
     }
 

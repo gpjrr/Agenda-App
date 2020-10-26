@@ -13,21 +13,24 @@ class Loading extends StatefulWidget {
 
 
 class _LoadingState extends State<Loading> {
-  List<Task> Tareas=new List(0);
+  List<Task> Tareas=new List();
 
   ///void
   void readtask() async{
     try {
       final direc = await getApplicationDocumentsDirectory();
-
       File doc = File('${direc.path}/SaveTasks.json');
 
-      print(' ===${ doc.readAsString() }');
+      //print(' ===${ doc.readAsString() }');
       List Jarr;
       Jarr = json.decode(await doc.readAsString());
-      print('leyo= $Jarr \n');
+      //print('leyo= $Jarr \n');
       for (var item in Jarr) {
-        Tareas.add(new Task.fromJson(item));
+        print('erw=${ item['Dias'] }');
+        Task Tem= new Task().from( item );
+        print('tempo=${Tem}');
+        print('item=${Tem.Dias}');
+        Tareas.add(Tem);
       }
       for( int i=0;i<Tareas.length;i++)
         print(' $i = ${ Tareas[i] } ');
