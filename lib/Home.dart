@@ -100,7 +100,7 @@ class _HomeState extends State<Home> {
           iconTheme: IconThemeData( color: Colors.black ),
           centerTitle: true,
           title: Text(
-            'lista de tareas',
+            'Home',
             style: TextStyle(
               color: Colors.black,
               fontSize: 25,
@@ -241,21 +241,26 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     onDismissed: ( direction ) async{
+                      Task tem=Tareas[index];
                       setState(() {
-                        /*
+
                       print("tam== ${Tareas.length} I=$index");
-                      print("${Tareas[index].Tempo}");
+                      //print("${Tareas[index].Tempo}");
                       print("${Tareas[index].Hora} ${Tareas[index].Minu}");
-                      */
+
                         Tareas.removeAt(index);
                       });
                       if(  direction==DismissDirection.startToEnd ) {
-                        dynamic work = await Navigator.pushNamed(
-                            context, '/tiempo', arguments: {
-                          'Hora': Tareas[index].Hora,
-                          'Minu': Tareas[index].Minu,
-                        });
-
+                        try {
+                          dynamic work = await Navigator.pushNamed(
+                              context, '/tiempo', arguments: {
+                            'Hora': tem.Hora,
+                            'Minu': tem.Minu,
+                          });
+                        }
+                        catch(e){
+                          print('no jalo por $e');
+                        }
                       }
                       /// aqui borramos la tarea peroo creo no requiere
 
@@ -328,6 +333,7 @@ class _HomeState extends State<Home> {
                 'Minu': Nuevo.Minu,
                 'Today': Nuevo.Today,
               });
+              print('tempo--${Nuevo.Tempo}');
             }
             else{
 
