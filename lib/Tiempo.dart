@@ -15,21 +15,24 @@ class _CountDownTimerState extends State<CountDownTimer>
   bool Bandera=false;
   bool Arranque=false;
   bool Final=false;
-  String get timerString {
+
+
+  String TimeOver(){
     Duration duration = controller.duration * controller.value;
     String Horas=(duration.inHours).toString().padLeft(2, '0');
     String Minutos=(duration.inMinutes-duration.inHours*60).toString().padLeft(2, '0');
     String Segundos=(duration.inSeconds%60).toString().padLeft(2, '0');
-
-    String limpio="00:00:00";
-    //print(" $Segundos  = $Horas:$Minutos:$Segundos ${limpio.compareTo('$Horas:$Minutos:$Segundos')}");
-    if( limpio.compareTo('$Horas:$Minutos:$Segundos')==0 && Arranque==true ) {
-      print(" fin");
-      controller.reset();
-        Final=true;
-        controller.dispose();
-    }
     return '$Horas:$Minutos:$Segundos';
+  }
+  String get timerString {
+    String limpio='00:00:00';
+    if( limpio.compareTo( TimeOver() )==0 && Arranque==true ) {
+        Final=true;
+      controller.stop();
+      WidgetsBinding.instance.addPostFrameCallback((_) => Fun(context));
+    }
+
+    return TimeOver();
   }
   int Segundos=0;
   @override
@@ -46,6 +49,7 @@ class _CountDownTimerState extends State<CountDownTimer>
       Bandera=true;
       dynamic cosa=ModalRoute.of(context).settings.arguments;
       print( " ${cosa['Hora']} =__= ${cosa['Minu']}" );
+
       Segundos= int.parse( cosa['Hora'] )*60+int.parse( cosa["Minu"] );
       Segundos*=60;
       controller = AnimationController(
@@ -54,10 +58,15 @@ class _CountDownTimerState extends State<CountDownTimer>
       );
       print("seg==$Segundos");
     }
-    if( Final==true){
-      WidgetsBinding.instance.addPostFrameCallback((_)=>Fun(context));
-
-    }
+    /*if( Final==true){
+      try {
+        WidgetsBinding.instance.addPostFrameCallback((_) => Fun(context));
+      }
+      catch(e){
+        print(' jalo por $e');
+      }
+      }
+    */
     ThemeData themeData = Theme.of(context);
     return Scaffold(
       backgroundColor: Colors.white10,
@@ -127,7 +136,61 @@ class _CountDownTimerState extends State<CountDownTimer>
                             color: Colors.red,
                             child: FlatButton.icon(
                               onPressed: (){
-                                Navigator.pop(context,null );
+                                String limpio='00:00:00';
+                                if( controller.isAnimating!=true )
+                                  Navigator.pop( context,null );
+                                else {
+
+                                    //// warning
+                                    showDialog(
+                                      context: context,
+                                      builder: (context)=> AlertDialog(
+                                        content: Text(
+                                          'Deseas salir sin terminar el tiempo ?',
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            //fontFamily: 'EastSeaDokdo-Regular',
+                                            fontFamily: 'Bellota-BoldItalic',
+                                            //fontFamily: 'Peddana-Regular',
+                                          ),
+                                        ),
+                                        actions: <Widget>[
+                                          FlatButton(
+                                            child: Text(
+                                              "No",
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                //fontFamily: 'EastSeaDokdo-Regular',
+                                                fontFamily: 'Bellota-BoldItalic',
+                                                //fontFamily: 'Peddana-Regular',
+
+                                              ),
+                                            ),
+                                            onPressed: (){
+                                              Navigator.pop(context,null );
+                                            },
+                                          ),
+                                          FlatButton(
+                                            child: Text(
+                                              'Si',
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                //fontFamily: 'EastSeaDokdo-Regular',
+                                                fontFamily: 'Bellota-BoldItalic',
+                                                //fontFamily: 'Peddana-Regular',
+
+                                              ),
+                                            ),
+                                            onPressed: (){
+                                              Navigator.pop(context,null );
+                                              Navigator.pop(context,null );
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                }
+
                               },
                               label: Text(
                                 'Cancelar',

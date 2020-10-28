@@ -26,10 +26,10 @@ class _LoadingState extends State<Loading> {
       Jarr = json.decode(await doc.readAsString());
       //print('leyo= $Jarr \n');
       for (var item in Jarr) {
-        print('erw=${ item['Dias'] }');
+       // print('erw=${ item['Dias'] }');
         Task Tem= new Task().from( item );
-        print('tempo=${Tem}');
-        print('item=${Tem.Dias}');
+        //print('tempo=${Tem}');
+        //print('item=${Tem.Dias}');
         Tareas.add(Tem);
       }
       for( int i=0;i<Tareas.length;i++)
