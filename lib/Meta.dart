@@ -15,4 +15,24 @@ class Meta{
     this.StepD,
     this.Progress
   } );
+
+  Meta from(Map<String, dynamic> jsn){
+    Meta mapota = new Meta(
+    );
+    return mapota;
+  }
+
+
+  Map<String, dynamic> toJson() {
+
+    Map<String, dynamic> mapita= {
+
+    };
+//    print("\n mapita=$mapita \n");
+    return mapita;
+  }
+
+
+
+
 }

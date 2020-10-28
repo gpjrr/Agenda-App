@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:convert';
 //import 'dart:html';
+import 'package:agendaprocrastinacion/Meta.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -11,60 +12,48 @@ class Loading extends StatefulWidget {
   _LoadingState createState() => _LoadingState();
 }
 
-
 class _LoadingState extends State<Loading> {
   List<Task> Tareas=new List();
+  List<Meta> Metas=new List();
 
-  ///void
-  void readtask() async{
+  void readData() async{
     try {
       final direc = await getApplicationDocumentsDirectory();
       File doc = File('${direc.path}/SaveTasks.json');
-
-      //print(' ===${ doc.readAsString() }');
       List Jarr;
       Jarr = json.decode(await doc.readAsString());
-      //print('leyo= $Jarr \n');
       for (var item in Jarr) {
-       // print('erw=${ item['Dias'] }');
         Task Tem= new Task().from( item );
-        //print('tempo=${Tem}');
-        //print('item=${Tem.Dias}');
         Tareas.add(Tem);
       }
       for( int i=0;i<Tareas.length;i++)
         print(' $i = ${ Tareas[i] } ');
     } catch(e){
-      print('no jaloo por $e');
+      //print('no jaloo por $e');
       Tareas=[];
     }
 
-    Navigator.pushReplacementNamed(context, '/home',arguments: Tareas);
-  }
-  /*
-  void llena() async{
-    // probando con algo vaio
-    for(int i=1;i<=15;i++) {
-      Tareas.add(
-       Task(
-         Nombre:"ejemplo $i",
-         Descripcion: "aqui redacto",
-         Dias: List.filled(7, false),
-         Lave: UniqueKey(),
-         Done: 1*(i%2)==true?true:false,
-         Tempo: (i%2)==1?true:false,
-         Hora: "00",
-         Minu: "01",
-       )
-     );
+    for(int i=0;i<5;i++) {
+      List<String> prro = ['paso1', 'ps2', 'p3', 'sad'];
+      Metas.add(Meta(
+        Days: i,
+        StepD: prro,
+        Why: 'quiero crecer',
+        StepN: 4,
+        Name: 'Terminar__app ${i+3}',
+      ));
     }
-    await new Future.delayed(const Duration(seconds : 1));
-  }*/
+
+    Navigator.pushReplacementNamed(context, '/home',arguments: {
+      'Tareas':Tareas,
+      'Metas':Metas,
+    } );
+  }
 
   @override
   void initState() {
     super.initState();
-    readtask();
+     readData();
   }
   @override
   Widget build(BuildContext context) {

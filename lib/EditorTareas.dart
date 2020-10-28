@@ -68,7 +68,7 @@ class _EditorTareasState extends State<EditorTareas> {
       });
     }
     return WillPopScope(
-      onWillPop: (){
+      onWillPop: () {
         if( Cambio==true )
           showDialog(
             context: context,

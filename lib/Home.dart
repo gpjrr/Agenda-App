@@ -24,26 +24,8 @@ class _HomeState extends State<Home> {
   //List<Icon> iconos=new List();
   bool ban=false;
 
-  /*
-  void setState(fn){
-    super.setState( fn );
-
-  }
-  */
   @override
   void initState(){
-    ///File Save=Archivo();
-    /// construyendo metas ficticias
-    for(int i=0;i<5;i++) {
-      List<String> prro=['paso1','ps2','p3','sad'];
-      Metas.add(Meta(
-        Days: i,
-        StepD: prro,
-        Why: 'quiero crecer',
-        StepN: 4,
-        Name:'Terminar app $i',
-      ));
-    } ///esta maaal checaar
     //_tabController.addListener(() { activo=_tabController.index; });
     super.initState();
   }
@@ -71,27 +53,16 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
 
     if( ban==false ){
-      Tareas=ModalRoute.of(context).settings.arguments;
+      dynamic cosas=ModalRoute.of(context).settings.arguments;
+      Tareas=cosas['Tareas'];
+      Metas=cosas['Metas'];
       ban=true;
-      for(int i=0;i<Tareas.length;i++)
-        if( Tareas[i].Tempo==true )
-          Tareas[i].Reloj=Icon(
-            Icons.timelapse,
-            size: 40,
-            color: Colors.black,
-          );
-        else
-          Tareas[i].Reloj=Icon(
-            Icons.timer,
-            size: 40,
-            color: Colors.black,
-          );
-        for(int i=0;i<Tareas.length;i++)
-          Tareas[i].Lave=UniqueKey();
+      for(int i=0;i<Tareas.length;i++) {
+        Tareas[i].RelojIcono();
+        Tareas[i].Lave = UniqueKey();
+      }
     }
 
-    /*for(int i=0;i<Tareas.length;i++)
-      print( " $i =  ${Tareas[i].Nombre}" );*/
     return DefaultTabController(
       length: 2,
       child: Scaffold(
