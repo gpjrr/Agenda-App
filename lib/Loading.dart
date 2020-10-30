@@ -39,7 +39,7 @@ class _LoadingState extends State<Loading> {
         Days: i,
         StepD: prro,
         Why: 'quiero crecer',
-        StepN: 4,
+        //StepN: 4,
         Name: 'Terminar__app ${i+3}',
       ));
     }

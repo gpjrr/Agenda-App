@@ -16,18 +16,24 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<Task> Tareas=new List();
-  List<Meta> Metas=new List();
-  int TabIndex=0;
+  List<Task> Tareas = new List();
+  List<Meta> Metas = new List();
+  int TabIndex = 0;
   TabController _tabController;
 
   //List<Icon> iconos=new List();
-  bool ban=false;
+  bool ban = false;
 
   @override
-  void initState(){
+  void initState() {
     //_tabController.addListener(() { activo=_tabController.index; });
     super.initState();
+  }
+
+  WriteMeta() async {
+    try {} catch (e) {
+      print('No grabo meta por $e ');
+    }
   }
 
   writeTask() async {
@@ -38,26 +44,23 @@ class _HomeState extends State<Home> {
       File archivo = File('${direc.path}/SaveTasks.json');
       //print('p3 ${ Tareas[0].toJson() } \n');
 
-      String jText = jsonEncode( Tareas );
+      String jText = jsonEncode(Tareas);
       //print('p4\n');
       //print('cambio= ${jText} \n');
       await archivo.writeAsString(jText);
-    }
-    catch(e){
+    } catch (e) {
       print('no jaloo por ${e}');
-      }
-
     }
+  }
 
   @override
   Widget build(BuildContext context) {
-
-    if( ban==false ){
-      dynamic cosas=ModalRoute.of(context).settings.arguments;
-      Tareas=cosas['Tareas'];
-      Metas=cosas['Metas'];
-      ban=true;
-      for(int i=0;i<Tareas.length;i++) {
+    if (ban == false) {
+      dynamic cosas = ModalRoute.of(context).settings.arguments;
+      Tareas = cosas['Tareas'];
+      Metas = cosas['Metas'];
+      ban = true;
+      for (int i = 0; i < Tareas.length; i++) {
         Tareas[i].RelojIcono();
         Tareas[i].Lave = UniqueKey();
       }
@@ -66,9 +69,9 @@ class _HomeState extends State<Home> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        backgroundColor: Color.fromRGBO(211, 211, 211, 1) ,
+        backgroundColor: Color.fromRGBO(211, 211, 211, 1),
         appBar: AppBar(
-          iconTheme: IconThemeData( color: Colors.black ),
+          iconTheme: IconThemeData(color: Colors.black),
           centerTitle: true,
           title: Text(
             'Home',
@@ -82,9 +85,9 @@ class _HomeState extends State<Home> {
           backgroundColor: Colors.yellow[500],
           bottom: TabBar(
             ///controller: _tabController,
-            onTap: (index){
+            onTap: (index) {
               print("val==${index}");
-              TabIndex=index;
+              TabIndex = index;
             },
             tabs: <Widget>[
               Tab(
@@ -118,7 +121,7 @@ class _HomeState extends State<Home> {
             SafeArea(
               child: ListView.builder(
                 itemCount: Tareas.length,
-                itemBuilder: (context,index){
+                itemBuilder: (context, index) {
                   return Dismissible(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
@@ -128,23 +131,25 @@ class _HomeState extends State<Home> {
                       child: Card(
                         //borderOnForeground: true,
                         child: ListTile(
-                          onTap: ()async{
-                            dynamic cosa2=await Navigator.pushNamed(context,'/editor',arguments: {
-                              'Nombre': Tareas[index].Nombre ,
-                              'Descripcion': Tareas[index].Descripcion ,
-                              'Dias':Tareas[index].Dias,
-                              'Tempo':Tareas[index].Tempo,
-                              'Hora':Tareas[index].Hora,
-                              'Minu':Tareas[index].Minu,
-                              'Today':Tareas[index].Today
-                            } );
+                          onTap: () async {
+                            dynamic cosa2 = await Navigator.pushNamed(
+                                context, '/editor',
+                                arguments: {
+                                  'Nombre': Tareas[index].Nombre,
+                                  'Descripcion': Tareas[index].Descripcion,
+                                  'Dias': Tareas[index].Dias,
+                                  'Tempo': Tareas[index].Tempo,
+                                  'Hora': Tareas[index].Hora,
+                                  'Minu': Tareas[index].Minu,
+                                  'Today': Tareas[index].Today
+                                });
                             //print(cosa2);
-                            setState( (){
-                              Task Sujeto=Task(
+                            setState(() {
+                              Task Sujeto = Task(
                                 Nombre: cosa2['Nombre'],
                                 Limpio: true,
                                 Descripcion: cosa2['Descripcion'],
-                                Dias:  cosa2['Dias'] ,
+                                Dias: cosa2['Dias'],
                                 Tempo: cosa2['Tempo'],
                                 Lave: UniqueKey(),
                                 Today: cosa2['Today'],
@@ -152,13 +157,17 @@ class _HomeState extends State<Home> {
                                 Minu: cosa2['Minu'],
                               );
                               Sujeto.RelojIcono();
-                              Tareas[index]=Sujeto;
+                              Tareas[index] = Sujeto;
                               writeTask();
                             });
                           },
-                          leading:Tareas[index].Reloj,
+                          leading: Tareas[index].Reloj,
                           title: Text(
-                            Tareas[index].Nombre.substring(0, Tareas[index].Nombre.length>=18?18:Tareas[index].Nombre.length  ),
+                            Tareas[index].Nombre.substring(
+                                0,
+                                Tareas[index].Nombre.length >= 18
+                                    ? 18
+                                    : Tareas[index].Nombre.length),
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 25,
@@ -171,13 +180,13 @@ class _HomeState extends State<Home> {
                           subtitle: WeekdaySelector(
                             fillColor: Colors.white,
                             firstDayOfWeek: 1,
+
                             /// letra del color
                             color: Colors.black,
                             selectedFillColor: Colors.blue[700],
 
                             onChanged: (int day) {
-                              setState(() {
-                              });
+                              setState(() {});
                             },
                             values: Tareas[index].Dias,
                           ),
@@ -191,7 +200,6 @@ class _HomeState extends State<Home> {
                       child: Container(
                         padding: EdgeInsets.all(10),
                         child: Icon(
-
                           Icons.delete,
                           color: Colors.black,
                           size: 40,
@@ -204,50 +212,44 @@ class _HomeState extends State<Home> {
                       child: Container(
                         padding: EdgeInsets.all(10),
                         child: Icon(
-
                           Icons.flag,
                           color: Colors.black,
                           size: 40,
                         ),
                       ),
                     ),
-                    onDismissed: ( direction ) async{
-                      Task tem=Tareas[index];
+                    onDismissed: (direction) async {
+                      Task tem = Tareas[index];
                       setState(() {
-
-                      print("tam== ${Tareas.length} I=$index");
-                      //print("${Tareas[index].Tempo}");
-                      print("${Tareas[index].Hora} ${Tareas[index].Minu}");
+                        print("tam== ${Tareas.length} I=$index");
+                        //print("${Tareas[index].Tempo}");
+                        print("${Tareas[index].Hora} ${Tareas[index].Minu}");
 
                         Tareas.removeAt(index);
                       });
-                      if(  direction==DismissDirection.startToEnd ) {
+                      if (direction == DismissDirection.startToEnd) {
                         try {
                           dynamic work = await Navigator.pushNamed(
-                              context, '/tiempo', arguments: {
-                            'Hora': tem.Hora,
-                            'Minu': tem.Minu,
-                          });
-                        }
-                        catch(e){
+                              context, '/tiempo',
+                              arguments: {
+                                'Hora': tem.Hora,
+                                'Minu': tem.Minu,
+                              });
+                        } catch (e) {
                           print('no jalo por $e');
                         }
                       }
+
                       /// aqui borramos la tarea peroo creo no requiere
-
-
-
-
                     },
                   );
                 },
-
               ),
             ),
             SafeArea(
                 child: ListView.builder(
                     itemCount: Metas.length,
-                    itemBuilder: (context,index){
+                    itemBuilder: (context, index) {
                       return Padding(
                         padding: EdgeInsets.symmetric(
                           vertical: 2,
@@ -255,8 +257,25 @@ class _HomeState extends State<Home> {
                         ),
                         child: Card(
                           child: ListTile(
-                              onTap: (){
-
+                              onTap: () async {
+                                dynamic cosam = await Navigator.pushNamed(
+                                    context, '/editormeta',
+                                    arguments: {
+                                      'Name': Metas[index].Name,
+                                      'Days': Metas[index].Days,
+                                      //'Why':Metas[index].Why,
+                                      //'StepN':Metas[index].StepN,
+                                      'StepD': Metas[index].StepD,
+                                    });
+                                setState(() {
+                                  Meta Sujeto = Meta(
+                                    Name: cosam['Name'],
+                                    Days: cosam['Days'],
+                                    // StepN: cosam['StepN'],
+                                    StepD: cosam['StepD'],
+                                  );
+                                  Metas[index] = Sujeto;
+                                });
                               },
                               title: Text(
                                 Metas[index].Name,
@@ -267,20 +286,18 @@ class _HomeState extends State<Home> {
                                   fontFamily: 'EastSeaDokdo-Regular',
                                   //fontFamily: 'Caveat-Regular',
                                 ),
-                              )
-                          ),
+                              )),
                         ),
                       );
-                    }
-                )
-            )
+                    }))
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () async{
+          onPressed: () async {
             dynamic cosa;
+
             /// tabindex==0 tareas en 1 metas
-            if( TabIndex==0 ) {
+            if (TabIndex == 0) {
               Task Nuevo = Task(
                 Nombre: '',
                 Descripcion: "",
@@ -292,10 +309,10 @@ class _HomeState extends State<Home> {
                 Tempo: false,
                 Today: true,
               );
+
               ///print("=-=${Nuevo.Tempo}");
               Nuevo.Hoy();
-              cosa = await Navigator.pushNamed(
-                  context, '/editor', arguments: {
+              cosa = await Navigator.pushNamed(context, '/editor', arguments: {
                 'Nombre': Nuevo.Nombre,
                 'Descripcion': Nuevo.Descripcion,
                 'Dias': Nuevo.Dias,
@@ -305,29 +322,29 @@ class _HomeState extends State<Home> {
                 'Today': Nuevo.Today,
               });
               print('tempo--${Nuevo.Tempo}');
-            }
-            else{
-
-              Meta Nuevo=new Meta(
-                Days:0,
-                Why:'',
-                StepD: new List(10),
-                StepN: 0,
+            } else {
+              Meta Nuevo = new Meta(
                 Name: '',
+                Days: 0,
+                StepD: new List(10),
+                Why: '',
+                //StepN: 0,
               );
-              cosa=await Navigator.pushNamed(context, '/editormeta' , arguments: {
-                'Days':Nuevo.Days,
-                'Name':Nuevo.Name,
-                'Why':Nuevo.Why,
-                'StepN':Nuevo.StepN,
-                'StepD':Nuevo.StepD,
-                'Progress':Nuevo.Progress,
+              cosa =
+                  await Navigator.pushNamed(context, '/editormeta', arguments: {
+                'Name': Nuevo.Name,
+                'Days': Nuevo.Days,
+                'Why': Nuevo.Why,
+                'StepD': Nuevo.StepD,
+                //'Progress':Nuevo.Progress, no mandas progreso,
+                ///el progreso se calcula y si se regresa
+                //'StepN':Nuevo.StepN,
               });
             }
-            setState( (){
+            setState(() {
               print(' indice=${TabIndex}');
-              if( TabIndex==0 ) {
-                if (cosa != null) {
+              if (cosa != null) {
+                if (TabIndex == 0) {
                   Task Sujeto = Task(
                     Nombre: cosa['Nombre'],
                     Limpio: true,
@@ -343,14 +360,11 @@ class _HomeState extends State<Home> {
                   Tareas.add(Sujeto);
                   print('voy a guardar\n');
                   writeTask();
+                } else {
+                  /// guardamos lo. que regresa el editor de la meta
+
                 }
               }
-              else {
-
-              }
-
-
-
             });
           },
           backgroundColor: Colors.blue[700],
@@ -376,10 +390,11 @@ class _HomeState extends State<Home> {
                   Icons.book,
                   color: Colors.brown,
                 ),
-                onTap: (){
-                  Navigator.push(context, new MaterialPageRoute(
-                      builder: (context) => new TipList() )
-                  );
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => new TipList()));
                 },
               ),
             ],
@@ -387,7 +402,5 @@ class _HomeState extends State<Home> {
         ),
       ),
     );
-
-
   }
 }

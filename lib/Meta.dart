@@ -4,11 +4,11 @@ class Meta{
   int Days;
   String Name;
   String Why;
-  int StepN;
+  ///  int StepN;
   List< String > StepD;
   Double Progress;
   Meta( {
-    this.StepN,
+    //this.StepN,
     this.Days,
     this.Name,
     this.Why,

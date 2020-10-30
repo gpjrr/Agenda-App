@@ -297,12 +297,5 @@ class _CountDownTimerState extends State<CountDownTimer>
 
 
 void Fun( BuildContext context ,int tem){
-    //print('terminoo');
-    //Navigator.pop();
-    /*
-    Navigator.pushReplacement(context, new MaterialPageRoute(
-        builder: (context) => new Resultado(),arguments:{ } )
-    );
-    */
   Navigator.pushReplacementNamed(context,'/resultado' ,arguments: tem );
-  }
+}

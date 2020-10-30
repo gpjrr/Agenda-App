@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Resultado extends StatefulWidget {
@@ -54,6 +55,36 @@ class _ResultadoState extends State<Resultado > {
                       fontFamily: 'Bellota-BoldItalic',
                     ),
                     textAlign: TextAlign.center,
+                  ),
+                  SizedBox(
+                    height: 40,
+                    //width: 30,
+                  ),
+                  FlatButton.icon(
+                      onPressed: (){
+                        Navigator.pop(context);
+                      },
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                          side: BorderSide(color: Colors.black)
+                      ),
+                      label: Text(
+                        'Home',
+                        style: TextStyle(
+                          fontSize: 30,
+                          letterSpacing: 1,
+                          color: Colors.black,
+                          fontFamily: 'Bellota-BoldItalic',
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      color: Colors.blue[600],
+                      icon: Icon(
+                        Icons.home,
+                        color: Colors.black,
+                        size: 50,
+
+                      )
                   ),
                 ],
               ),

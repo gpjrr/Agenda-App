@@ -16,7 +16,7 @@ class _EditorMetasState extends State<EditorMetas> {
     Days:0,
     Why:'',
     StepD: new List(10),
-    StepN: 0,
+    //StepN: 0,
     Name: '',
   );
   TextEditingController ControlDias=TextEditingController();
@@ -25,9 +25,17 @@ class _EditorMetasState extends State<EditorMetas> {
   Widget build(BuildContext context) {
     if( inicio==false ){
       /// cargamos la informacion de la meta
-      ControlNameG.text='adsf';
-      ControlDias.text='12312';
-      inicio=true;
+      dynamic cosa=ModalRoute.of(context).settings.arguments;
+      logro.Name=cosa['Name'];
+      logro.Days=cosa['Days'];
+      logro.StepD=cosa['StepD'];
+      setState(() {
+        ControlNameG.text=logro.Name;
+        print('los dias son ${logro.Days}');
+        ControlDias.text=logro.Days.toString();
+        inicio=true;
+      });
+
     }
     return Scaffold(
       //backgroundColor: Colors.red,
@@ -81,8 +89,8 @@ class _EditorMetasState extends State<EditorMetas> {
                       ),
                       onChanged: (String text){
                         logro.Name=text;
-                        print('${logro.Name}\n');
-                        },
+                        ///print('${logro.Name}\n');
+                      },
                       style: TextStyle(
                         fontSize: 20,
                         color: Colors.purple,
@@ -141,7 +149,7 @@ class _EditorMetasState extends State<EditorMetas> {
                               child: TextField(
                                 onChanged: (String text){
                                   logro.Days=int.parse( text );
-                                  print(' ${logro.Days} ');
+                                  //print(' ${logro.Days} ');
                                 },
                                 textInputAction: TextInputAction.done,
                                 maxLines: 1,
