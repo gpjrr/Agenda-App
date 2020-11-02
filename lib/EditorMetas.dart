@@ -29,7 +29,7 @@ class _EditorMetasState extends State<EditorMetas> {
     switch(_page) {
       case 0:
         return Scaffold(
-        backgroundColor: Colors.yellow,
+        backgroundColor: Colors.blue[700],
         body: Builder(
           builder: (context)=> Container(
             padding:  EdgeInsets.fromLTRB(10, 40, 10, 10),
@@ -41,7 +41,7 @@ class _EditorMetasState extends State<EditorMetas> {
                   child: Text(
                     'Nombre de la meta',
                     style: TextStyle(
-                      color: Colors.purple[600],
+                      color: Colors.white,
                       fontSize: 50,
                       letterSpacing: 1,
                       //fontFamily: 'Bellota-BoldItalic',
@@ -59,11 +59,11 @@ class _EditorMetasState extends State<EditorMetas> {
                   maxLines: 1,
                   decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide( color: Colors.red ),
+                          borderSide: BorderSide( color: Colors.black ),
                           borderRadius: BorderRadius.all( Radius.circular(10) )
                       ),
                       focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide( color: Colors.green ),
+                          borderSide: BorderSide( color: Colors.white ),
                           borderRadius: BorderRadius.all( Radius.circular(10) )
                       ),
                       border:  OutlineInputBorder(),
@@ -79,7 +79,7 @@ class _EditorMetasState extends State<EditorMetas> {
                   },
                   style: TextStyle(
                     fontSize: 20,
-                    color: Colors.purple,
+                    color: Colors.black,
 
                   ),
                   //autofocus: true,
@@ -90,7 +90,7 @@ class _EditorMetasState extends State<EditorMetas> {
                   style: TextStyle(
                     fontSize: 60,
                     height: 1,
-                    color: Colors.grey[600],
+                    color: Colors.white,
                     fontFamily: 'EastSeaDokdo-Regular',
                     //fontFamily: 'Bellota-BoldItalic',
                     //fontFamily: 'Peddana-Regular',
@@ -103,7 +103,7 @@ class _EditorMetasState extends State<EditorMetas> {
       );
       case 1:
         return  Scaffold(
-          backgroundColor: Colors.orange[500],
+          backgroundColor: Colors.blue[700],
           body: Builder(
             builder: (context)=> Align(
               alignment: Alignment.center,
@@ -117,8 +117,9 @@ class _EditorMetasState extends State<EditorMetas> {
                       widthFactor: 1,
                       child: Text(
                         '¿Cuantos dias necesitas?',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: Colors.purple[800],
+                          color: Colors.white,
                           fontSize: 43,
                           letterSpacing: 1,
                           //fontFamily: 'Bellota-BoldItalic',
@@ -134,6 +135,7 @@ class _EditorMetasState extends State<EditorMetas> {
                         Flexible(
                           flex: 6,
                           child: TextField(
+                            controller: ControlDias,
                             onChanged: (String text){
                               logro.Days=int.parse( text );
                               //print(' ${logro.Days} ');
@@ -152,7 +154,7 @@ class _EditorMetasState extends State<EditorMetas> {
                             style: TextStyle(
                               fontSize: 50,
                               height: 1,
-                              color: Colors.black,
+                              color: Colors.white,
                               fontFamily: 'EastSeaDokdo-Regular',
                               //fontFamily: 'Bellota-BoldItalic',
                               //fontFamily: 'Peddana-Regular',
@@ -167,7 +169,7 @@ class _EditorMetasState extends State<EditorMetas> {
                             style: TextStyle(
                               fontSize: 50,
                               height: 1,
-                              color: Colors.grey[600],
+                              color: Colors.white,
                               fontFamily: 'EastSeaDokdo-Regular',
                               //fontFamily: 'Bellota-BoldItalic',
                               //fontFamily: 'Peddana-Regular',
@@ -183,7 +185,7 @@ class _EditorMetasState extends State<EditorMetas> {
                       style: TextStyle(
                         fontSize: 60,
                         height: 1,
-                        color: Colors.grey[600],
+                        color: Colors.white,
                         fontFamily: 'EastSeaDokdo-Regular',
                         //fontFamily: 'Bellota-BoldItalic',
                         //fontFamily: 'Peddana-Regular',
@@ -197,7 +199,7 @@ class _EditorMetasState extends State<EditorMetas> {
         );
       case 2:
         return Scaffold(
-          backgroundColor: Colors.red[500],
+          backgroundColor: Colors.blue[700],
           appBar: AppBar(
             centerTitle: true,
             title:Text(
@@ -230,6 +232,7 @@ class _EditorMetasState extends State<EditorMetas> {
         ControlNameG.text = logro.Name;
         print('los dias son ${logro.Days}');
         ControlDias.text = logro.Days.toString();
+        //ControlDias.text = '12';
         inicio = true;
       });
     }
@@ -246,6 +249,8 @@ class _EditorMetasState extends State<EditorMetas> {
             _page = index;
           });
         },
+        //color: Colors.blue[700],
+        backgroundColor: Colors.blue[700],
       ),
       body: seleccionador(),
     );
