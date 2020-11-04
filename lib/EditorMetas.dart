@@ -133,7 +133,7 @@ class _EditorMetasState extends State<EditorMetas> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Flexible(
-                          flex: 6,
+                          flex: 2,
                           child: TextField(
                             controller: ControlDias,
                             onChanged: (String text){
@@ -151,6 +151,7 @@ class _EditorMetasState extends State<EditorMetas> {
                                 filled: false,
                                 fillColor: Colors.white
                             ),
+                            textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 50,
                               height: 1,
@@ -163,7 +164,7 @@ class _EditorMetasState extends State<EditorMetas> {
                         ),
 
                         Flexible(
-                          flex: 4,
+                          flex: 8,
                           child: Text(
                             'Dias.',
                             style: TextStyle(
