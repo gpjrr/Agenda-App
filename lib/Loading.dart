@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:convert';
 //import 'dart:html';
 import 'package:agendaprocrastinacion/Meta.dart';
+import 'package:agendaprocrastinacion/UserData.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -15,8 +16,19 @@ class Loading extends StatefulWidget {
 class _LoadingState extends State<Loading> {
   List<Task> Tareas=new List();
   List<Meta> Metas=new List();
-
+  UserData Yo;
   void readData() async{
+    try{
+      final direc = await getApplicationDocumentsDirectory();
+      File doc = File('${direc.path}/SaveUser.json');
+      dynamic tem=json.decode(await doc.readAsString());
+      Yo=UserData().from(tem);
+    }
+    catch(e){
+      print('usuario error $e');
+      /// llevarlo al manual primer acercamiento
+    }
+
     try {
       final direc = await getApplicationDocumentsDirectory();
       File doc = File('${direc.path}/SaveTasks.json');
@@ -43,6 +55,8 @@ class _LoadingState extends State<Loading> {
         Name: 'Terminar__app ${i+3}',
       ));
     }
+
+
 
     Navigator.pushReplacementNamed(context, '/home',arguments: {
       'Tareas':Tareas,

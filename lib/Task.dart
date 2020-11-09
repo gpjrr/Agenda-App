@@ -3,11 +3,13 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 class Task {
-
-  bool Today;
+  List<int> WDay= List.filled(380, 0);
+  bool Today; /// para saber si la tarea solo es para hoy
+  ///int year=Jiffy().dayOfYear;
   String Hora, Minu;
   Key Lave;
   String Nombre;
@@ -26,6 +28,7 @@ class Task {
   });
 
   void Hoy() {
+//    print('ano= $YearDay ');
 
     this.Dias = List.filled(7, false);
     var now = DateTime.now();
@@ -49,6 +52,8 @@ class Task {
     //print(date.day);
     //print(lastMonday);
     //print( (1+dis)%7 );
+
+
   }
 
   void RelojIcono() {
@@ -71,8 +76,7 @@ class Task {
        Nombre: jsn['Nombre'],
        Descripcion: jsn['Descripcion'],
        Done: jsn['Done'],
-       //  Dias: json['Dias'],
-       // Lave=json['Lave'],
+       //Lave=json['Lave'],
        Limpio: jsn['Limpio'],
        Tempo: jsn['Tempo'],
        Hora: jsn['Hora'],
@@ -97,7 +101,7 @@ class Task {
       'Descripcion': Descripcion,
       'Done': Done,
       'Dias': Dias,
-     // 'Lave': Lave,
+      'Lave': Lave,
       'Limpio': Limpio,
       'Tempo': Tempo,
       'Hora': Hora,

@@ -63,6 +63,7 @@ class _HomeState extends State<Home> {
       for (int i = 0; i < Tareas.length; i++) {
         Tareas[i].RelojIcono();
         Tareas[i].Lave = UniqueKey();
+        print( ' nor=${Tareas[i].Lave} rara=${ UniqueKey() } ' );
       }
     }
 
