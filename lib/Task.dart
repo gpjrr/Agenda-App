@@ -10,6 +10,7 @@ class Task {
   List<int> WDay= List.filled(380, 0);
   bool Today; /// para saber si la tarea solo es para hoy
   ///int year=Jiffy().dayOfYear;
+  int ID;
   String Hora, Minu;
   Key Lave;
   String Nombre;
@@ -25,6 +26,7 @@ class Task {
     this.Lave, this.Limpio,
     this.Tempo, this.Hora,
     this.Minu, this.Today,
+    this.ID,  this.WDay,  this.Reloj
   });
 
   void Hoy() {
@@ -82,6 +84,7 @@ class Task {
        Hora: jsn['Hora'],
        Minu: jsn['Minu'],
        Today: jsn['Today'],
+       ID:jsn['ID'],
      );
         mapota.Dias = new List.filled(7, false);
         var tem = jsn['Dias'];
@@ -101,12 +104,13 @@ class Task {
       'Descripcion': Descripcion,
       'Done': Done,
       'Dias': Dias,
-      'Lave': Lave,
+      //'Lave': Lave,
       'Limpio': Limpio,
       'Tempo': Tempo,
       'Hora': Hora,
       'Minu': Minu,
       'Today': Today,
+      'ID':ID,
     };
 //    print("\n mapita=$mapita \n");
     return mapita;

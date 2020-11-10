@@ -31,6 +31,7 @@ class _LoadingState extends State<Loading> {
 
     
   }
+
   void readData() async{
     try{
       final direc = await getApplicationDocumentsDirectory();
@@ -63,10 +64,11 @@ class _LoadingState extends State<Loading> {
         Task Tem= new Task().from( item );
         Tareas.add(Tem);
       }
+      print('Tareas leidas ${Tareas.length}');
       for( int i=0;i<Tareas.length;i++)
         print(' $i = ${ Tareas[i] } ');
     } catch(e){
-      //print('no jaloo por $e');
+      print('no jaloo por $e');
       Tareas=[];
     }
 

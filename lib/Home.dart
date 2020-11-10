@@ -32,23 +32,36 @@ class _HomeState extends State<Home> {
     super.initState();
   }
 
-  WriteMeta() async {
+  void WriteMeta() async {
     try {} catch (e) {
       print('No grabo meta por $e ');
     }
   }
+  void WriteUser()async{
 
-  writeTask() async {
     try {
-      ///print('p1\n');
       final direc = await getApplicationDocumentsDirectory();
-      //print('p2\n');
+      File archivo = File('${direc.path}/SaveUser.json');
+      String jText = jsonEncode(Yo);
+      print('esto es el yo=$jText');
+      await archivo.writeAsString(jText);
+    } catch (e) {
+      print('no jaloo por ${e}');
+    }
+
+
+  }
+  void WriteTask() async {
+    try {
+      print('p1\n');
+      final direc = await getApplicationDocumentsDirectory();
+      print('p2\n');
       File archivo = File('${direc.path}/SaveTasks.json');
-      //print('p3 ${ Tareas[0].toJson() } \n');
+      print('p3 ${ Tareas[0].toJson() } \n');
 
       String jText = jsonEncode(Tareas);
-      //print('p4\n');
-      //print('cambio= ${jText} \n');
+      print('p4\n');
+      print('cambio= ${jText} \n');
       await archivo.writeAsString(jText);
     } catch (e) {
       print('no jaloo por ${e}');
@@ -59,16 +72,18 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     if (ban == false) {
       dynamic cosas = ModalRoute.of(context).settings.arguments;
+      print('tareaaa=${Tareas.length}');
       Tareas = cosas['Tareas'];
       Metas = cosas['Metas'];
       Yo=cosas['Yo'];
-      print('nombreeeee=${Yo.NombreU}');
+      print('yo=${Yo.TaskCont}');
       ban = true;
       for (int i = 0; i < Tareas.length; i++) {
         Tareas[i].RelojIcono();
         Tareas[i].Lave = UniqueKey();
         print( ' nor=${Tareas[i].Lave} rara=${ UniqueKey() } ' );
       }
+
     }
 
     return DefaultTabController(
@@ -80,6 +95,7 @@ class _HomeState extends State<Home> {
           centerTitle: true,
           title: Text(
             'Hola ${Yo.NombreU}',
+            //'Hola ${Yo.NombreU} ${Yo.TaskCont}',
             style: TextStyle(
               color: Colors.black,
               fontSize: 25,
@@ -163,9 +179,11 @@ class _HomeState extends State<Home> {
                               );
                               Sujeto.RelojIcono();
                               Tareas[index] = Sujeto;
-                              writeTask();
+                              WriteTask();
                             });
                           },
+                          tileColor: Colors.blue,
+                          trailing: Text('${Tareas[index].ID}'),
                           leading: Tareas[index].Reloj,
                           title: Text(
                             Tareas[index].Nombre.substring(
@@ -185,7 +203,7 @@ class _HomeState extends State<Home> {
                           subtitle: WeekdaySelector(
                             fillColor: Colors.white,
                             firstDayOfWeek: 1,
-
+                          //selectedColor: ,
                             /// letra del color
                             color: Colors.black,
                             selectedFillColor: Colors.blue[700],
@@ -195,6 +213,7 @@ class _HomeState extends State<Home> {
                             },
                             values: Tareas[index].Dias,
                           ),
+
                         ),
                       ),
                     ),
@@ -313,9 +332,9 @@ class _HomeState extends State<Home> {
                 Lave: UniqueKey(),
                 Tempo: false,
                 Today: true,
+                ID: Yo.TaskCont,
               );
-
-              ///print("=-=${Nuevo.Tempo}");
+             //// print("=-=${Nuevo.ID}");
               Nuevo.Hoy();
               cosa = await Navigator.pushNamed(context, '/editor', arguments: {
                 'Nombre': Nuevo.Nombre,
@@ -325,8 +344,9 @@ class _HomeState extends State<Home> {
                 'Hora': Nuevo.Hora,
                 'Minu': Nuevo.Minu,
                 'Today': Nuevo.Today,
+                'ID':Nuevo.ID,
               });
-              print('tempo--${Nuevo.Tempo}');
+              ///print('tempo--${Nuevo.ID}');
             } else {
               Meta Nuevo = new Meta(
                 Name: '',
@@ -360,11 +380,14 @@ class _HomeState extends State<Home> {
                     Today: cosa['Today'],
                     Hora: cosa['Hora'],
                     Minu: cosa['Minu'],
+                    //ID: cosa['ID'],
                   );
+                  Sujeto.ID= Yo.TaskCont++;
                   Sujeto.RelojIcono();
                   Tareas.add(Sujeto);
                   print('voy a guardar\n');
-                  writeTask();
+                  WriteTask();
+                  WriteUser();
                 } else {
                   /// guardamos lo. que regresa el editor de la meta
 
