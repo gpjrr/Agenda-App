@@ -106,7 +106,6 @@ class _EditorTareasState extends State<EditorTareas> {
                       //fontFamily: 'EastSeaDokdo-Regular',
                       fontFamily: 'Bellota-BoldItalic',
                       //fontFamily: 'Peddana-Regular',
-
                     ),
                   ),
                   onPressed: (){

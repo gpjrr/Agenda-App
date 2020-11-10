@@ -1,5 +1,6 @@
 import 'package:agendaprocrastinacion/EditorMetas.dart';
 import 'package:agendaprocrastinacion/EditorTareas.dart';
+import 'package:agendaprocrastinacion/FirstView.dart';
 import 'package:agendaprocrastinacion/Home.dart';
 import 'package:agendaprocrastinacion/Loading.dart';
 import 'package:agendaprocrastinacion/Resultado.dart';
@@ -18,7 +19,8 @@ void main() => runApp( MaterialApp(
     '/editor': (context) => EditorTareas(),
     '/tiempo': (context) => CountDownTimer(),
     '/resultado': (context) => Resultado(),
-      '/editormeta':(context)=> EditorMetas(),
+    '/editormeta':(context)=> EditorMetas(),
+    '/FirstView':(context)=> FirstView(),
   }
 
 

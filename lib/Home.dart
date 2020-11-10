@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:math';
 import 'dart:ui';
 import 'package:agendaprocrastinacion/Task.dart';
+import 'package:agendaprocrastinacion/UserData.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:agendaprocrastinacion/TipList.dart';
@@ -19,6 +20,7 @@ class _HomeState extends State<Home> {
   List<Task> Tareas = new List();
   List<Meta> Metas = new List();
   int TabIndex = 0;
+  UserData Yo;
   TabController _tabController;
 
   //List<Icon> iconos=new List();
@@ -59,6 +61,8 @@ class _HomeState extends State<Home> {
       dynamic cosas = ModalRoute.of(context).settings.arguments;
       Tareas = cosas['Tareas'];
       Metas = cosas['Metas'];
+      Yo=cosas['Yo'];
+      print('nombreeeee=${Yo.NombreU}');
       ban = true;
       for (int i = 0; i < Tareas.length; i++) {
         Tareas[i].RelojIcono();
@@ -75,7 +79,7 @@ class _HomeState extends State<Home> {
           iconTheme: IconThemeData(color: Colors.black),
           centerTitle: true,
           title: Text(
-            'Home',
+            'Hola ${Yo.NombreU}',
             style: TextStyle(
               color: Colors.black,
               fontSize: 25,

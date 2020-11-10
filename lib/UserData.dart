@@ -17,7 +17,9 @@ class UserData{
   }
   Map<String, dynamic> toJson(){
     Map<String, dynamic> mapita= {
-
+      'DailyTime':DailyTime,
+      'NombreU':NombreU,
+      'TaskCont':TaskCont,
     };
     return mapita;
   }

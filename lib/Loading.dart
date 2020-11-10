@@ -17,16 +17,41 @@ class _LoadingState extends State<Loading> {
   List<Task> Tareas=new List();
   List<Meta> Metas=new List();
   UserData Yo;
+  void WriteUser()async{
+
+    try {
+      final direc = await getApplicationDocumentsDirectory();
+      File archivo = File('${direc.path}/SaveUser.json');
+      String jText = jsonEncode(Yo);
+      print('esto es el yo=$jText');
+      await archivo.writeAsString(jText);
+    } catch (e) {
+      print('no jaloo por ${e}');
+    }
+
+    
+  }
   void readData() async{
     try{
       final direc = await getApplicationDocumentsDirectory();
       File doc = File('${direc.path}/SaveUser.json');
       dynamic tem=json.decode(await doc.readAsString());
+      print("tem=$tem");
       Yo=UserData().from(tem);
+      print('nombreeeee=${Yo.NombreU}');
     }
     catch(e){
       print('usuario error $e');
       /// llevarlo al manual primer acercamiento
+      dynamic cosa2 = await Navigator.pushNamed(context,'/FirstView');
+      String Nambre=cosa2['Nombre'];
+      Yo=new UserData(
+        TaskCont: 0,
+        NombreU: Nambre,
+      );
+      print('$Nambre');
+      await WriteUser();
+
     }
 
     try {
@@ -56,11 +81,10 @@ class _LoadingState extends State<Loading> {
       ));
     }
 
-
-
     Navigator.pushReplacementNamed(context, '/home',arguments: {
       'Tareas':Tareas,
       'Metas':Metas,
+      'Yo':Yo,
     } );
   }
 
