@@ -21,12 +21,9 @@ class Task {
   List<bool> Dias;
   Icon Reloj;
 
-  Task({ this.Nombre, this.Descripcion,
-    this.Done, this.Dias,
-    this.Lave, this.Limpio,
-    this.Tempo, this.Hora,
-    this.Minu, this.Today,
-    this.ID,  this.WDay,  this.Reloj
+  Task({ this.Nombre, this.Descripcion, this.Done, this.Dias,
+    this.Lave, this.Limpio, this.Tempo, this.Hora, this.Minu,
+    this.Today, this.ID,  this.WDay,  this.Reloj
   });
 
   void Hoy() {
@@ -37,10 +34,7 @@ class Task {
     int dis;
     var date = DateTime(now.year, now.month, now.day);
     var UltimoDiaMes = DateTime(now.year, now.month + 1, 0);
-
-    var lastMonday = date
-        .subtract(Duration(days: date.weekday - 1))
-        .day;
+    var lastMonday = date.subtract(Duration(days: date.weekday - 1)).day;
     dis = date.day - lastMonday;
 
     if (date.day >= lastMonday) {

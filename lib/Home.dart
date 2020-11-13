@@ -4,9 +4,11 @@ import 'dart:math';
 import 'dart:ui';
 import 'package:agendaprocrastinacion/Task.dart';
 import 'package:agendaprocrastinacion/UserData.dart';
+import 'package:agendaprocrastinacion/WeekView.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:agendaprocrastinacion/TipList.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:weekday_selector/weekday_selector.dart';
 import 'package:agendaprocrastinacion/Meta.dart';
@@ -19,13 +21,15 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   List<Task> Tareas = new List();
   List<Meta> Metas = new List();
+  List< WeekView > Week= new List();
   int TabIndex = 0;
   UserData Yo;
   TabController _tabController;
 
+  List<int> colores= [0,2,-1,0,1,3,2];
+
   //List<Icon> iconos=new List();
   bool ban = false;
-
   @override
   void initState() {
     //_tabController.addListener(() { activo=_tabController.index; });
@@ -77,11 +81,16 @@ class _HomeState extends State<Home> {
       Metas = cosas['Metas'];
       Yo=cosas['Yo'];
       print('yo=${Yo.TaskCont}');
+      Yo.DaysWeek();
+      print('yoDias=${Yo.WeekDay }');
+      print('hoyDias=${ Jiffy().dayOfYear }');
+
       ban = true;
       for (int i = 0; i < Tareas.length; i++) {
         Tareas[i].RelojIcono();
         Tareas[i].Lave = UniqueKey();
         print( ' nor=${Tareas[i].Lave} rara=${ UniqueKey() } ' );
+        Week.add( new WeekView( valores: colores ) );
       }
 
     }
@@ -182,8 +191,8 @@ class _HomeState extends State<Home> {
                               WriteTask();
                             });
                           },
-                          tileColor: Colors.blue,
-                          trailing: Text('${Tareas[index].ID}'),
+                          //tileColor: Colors.blue,
+                         /// trailing: Text('${Tareas[index].ID}'),
                           leading: Tareas[index].Reloj,
                           title: Text(
                             Tareas[index].Nombre.substring(
@@ -200,19 +209,7 @@ class _HomeState extends State<Home> {
                             ),
                           ),
                           //trailing: Tareas[index].Reloj,
-                          subtitle: WeekdaySelector(
-                            fillColor: Colors.white,
-                            firstDayOfWeek: 1,
-                          //selectedColor: ,
-                            /// letra del color
-                            color: Colors.black,
-                            selectedFillColor: Colors.blue[700],
-
-                            onChanged: (int day) {
-                              setState(() {});
-                            },
-                            values: Tareas[index].Dias,
-                          ),
+                          subtitle:Week[index].Semana(),
 
                         ),
                       ),
