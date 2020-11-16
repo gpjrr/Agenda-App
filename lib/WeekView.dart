@@ -15,7 +15,7 @@ class WeekView {
     0:Colors.black,
     -1:Colors.black,
     1:Colors.black,
-    2:Colors.black,
+    2:Colors.black87,
   };
 
   WeekView({

@@ -18,22 +18,29 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   List<Task> Tareas = new List();
   List<Meta> Metas = new List();
   List< WeekView > Week= new List();
   int TabIndex = 0;
   UserData Yo;
-  TabController _tabController;
-
   List<int> colores= [0,2,-1,0,1,3,2];
-
   //List<Icon> iconos=new List();
   bool ban = false;
+
+  TabController _tabController;
   @override
   void initState() {
     //_tabController.addListener(() { activo=_tabController.index; });
     super.initState();
+    _tabController = TabController(length: 2, vsync: this );
+
+    _tabController.addListener(() {
+      setState(() {
+        TabIndex = _tabController.index;
+      });
+      print("Selected Index: " + _tabController.index.toString());
+     });
   }
 
   void WriteMeta() async {
@@ -112,12 +119,30 @@ class _HomeState extends State<Home> {
               fontFamily: 'Bellota-BoldItalic',
             ),
           ),
+          actions: <Widget>[
+            Padding(
+                padding: EdgeInsets.only(right: 20.0),
+                child: GestureDetector(
+                  onTap: () {},
+                  child: Icon(
+                    Icons.search,
+                    size: 26.0,
+                  ),
+                )
+            ),
+            Padding(
+                padding: EdgeInsets.only(right: 20.0),
+                child: PopupMenuButton(
+
+                ),
+            ),
+          ],
           backgroundColor: Colors.yellow[500],
           bottom: TabBar(
-            ///controller: _tabController,
+            controller: _tabController,
             onTap: (index) {
-              print("val==${index}");
-              TabIndex = index;
+            //  print("val==${index}");
+///              TabIndex = index;
             },
             tabs: <Widget>[
               Tab(
@@ -146,7 +171,7 @@ class _HomeState extends State<Home> {
           ),
         ),
         body: TabBarView(
-          /// controller: _tabController,
+           controller: _tabController,
           children: <Widget>[
             SafeArea(
               child: ListView.builder(
@@ -313,6 +338,8 @@ class _HomeState extends State<Home> {
                     }))
           ],
         ),
+
+
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
             dynamic cosa;
@@ -344,7 +371,8 @@ class _HomeState extends State<Home> {
                 'ID':Nuevo.ID,
               });
               ///print('tempo--${Nuevo.ID}');
-            } else {
+            }
+            else {
               Meta Nuevo = new Meta(
                 Name: '',
                 Days: 0,
@@ -363,6 +391,7 @@ class _HomeState extends State<Home> {
                 //'StepN':Nuevo.StepN,
               });
             }
+
             setState(() {
               print(' indice=${TabIndex}');
               if (cosa != null) {
