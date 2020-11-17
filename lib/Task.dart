@@ -84,10 +84,9 @@ class Task {
         var tem = jsn['Dias'];
         for (int i = 0; i < 7; i++)
           mapota.Dias[i] = (tem[i]);
-        print('MP=${mapota.Dias}\n');
+        print('NOMBRE=${mapota.Nombre} MP=${mapota.Dias}\n');
      return mapota;
   }
-
 
   Map<String, dynamic> toJson() {
     Map<String ,dynamic> MDias={};

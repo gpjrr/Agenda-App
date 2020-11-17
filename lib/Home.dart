@@ -82,6 +82,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     if (ban == false) {
+      print("dia del ano= ${Jiffy().dayOfYear}");
       dynamic cosas = ModalRoute.of(context).settings.arguments;
       print('tareaaa=${Tareas.length}');
       Tareas = cosas['Tareas'];
@@ -89,7 +90,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       Yo=cosas['Yo'];
       print('yo=${Yo.TaskCont}');
       Yo.DaysWeek();
-      print('yoDias=${Yo.WeekDay }');
+     // print('yoDias=${Yo.WeekDay }');
       print('hoyDias=${ Jiffy().dayOfYear }');
 
       ban = true;
@@ -110,7 +111,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           iconTheme: IconThemeData(color: Colors.black),
           centerTitle: true,
           title: Text(
-            'Hola ${Yo.NombreU}',
+            'Hola ${Yo.NombreU}=${Yo.DailyTime[Jiffy().dayOfYear]}',
             //'Hola ${Yo.NombreU} ${Yo.TaskCont}',
             style: TextStyle(
               color: Colors.black,
@@ -120,7 +121,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             ),
           ),
           actions: <Widget>[
-            Padding(
+            /*Padding(
                 padding: EdgeInsets.only(right: 20.0),
                 child: GestureDetector(
                   onTap: () {},
@@ -129,11 +130,49 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     size: 26.0,
                   ),
                 )
-            ),
+            ),*/
             Padding(
                 padding: EdgeInsets.only(right: 20.0),
                 child: PopupMenuButton(
+                  itemBuilder: (context) => [
+                    PopupMenuItem(
+                      value: 1,
+                      child: Text("Editar Nombre",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 15,
+                          letterSpacing: 1,
+                          fontFamily: 'Bellota-BoldItalic',
+                        ),
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: 2,
+                      child: Text("Salir",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 15,
+                          letterSpacing: 1,
+                          fontFamily: 'Bellota-BoldItalic',
+                        ),
+                      ),
+                    ),
+                  ],
+                  onSelected: (value) {
+                    print("value:$value");
+                    if( value==2 )
+                      exit(0);
+                    else {
+                      setState(() async{
+                        dynamic cosa2 = await Navigator.pushNamed(context,'/FirstView');
+                        String Nambre=cosa2['Nombre'];
+                        Yo.NombreU=Nambre;
+                        WriteUser();
+                      });
 
+
+                    }
+                  },
                 ),
             ),
           ],
@@ -280,6 +319,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                               arguments: {
                                 'Hora': tem.Hora,
                                 'Minu': tem.Minu,
+                                'ID':tem.ID,
                               });
                         } catch (e) {
                           print('no jalo por $e');
@@ -414,6 +454,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   print('voy a guardar\n');
                   WriteTask();
                   WriteUser();
+                  Week.add(new WeekView( valores:colores ));
                 } else {
                   /// guardamos lo. que regresa el editor de la meta
 

@@ -1,7 +1,7 @@
 import 'package:jiffy/jiffy.dart';
 
 class UserData{
-  List<int> DailyTime =List.filled(400,0);
+  List<int> DailyTime;
   String NombreU;
   int TaskCont;
   List<int> WeekDay= List.filled(7,0);
@@ -29,6 +29,9 @@ class UserData{
   }
 
   void DaysWeek(){
+    if( DailyTime==null )
+        DailyTime=new List.filled(500, 0);
+        
 
     List<bool> Dias = List.filled(7, false);
     var now = DateTime.now();

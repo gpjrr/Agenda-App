@@ -31,8 +31,25 @@ class _LoadingState extends State<Loading> {
 
     
   }
-
-  void readData() async{
+  void ReadTask()async {
+    try {
+      final direc = await getApplicationDocumentsDirectory();
+      File doc = File('${direc.path}/SaveTasks.json');
+      List Jarr;
+      Jarr = json.decode(await doc.readAsString());
+      for (var item in Jarr) {
+        Task Tem= new Task().from( item );
+        Tareas.add(Tem);
+      }
+      print('Tareas leidas ${Tareas.length}');
+      for( int i=0;i<Tareas.length;i++)
+        print(' i=$i = ${ Tareas[i] } ');
+    } catch(e){
+      print('no jaloo por $e');
+      Tareas=[];
+    }
+  }
+  void ReadUser()async {
     try{
       final direc = await getApplicationDocumentsDirectory();
       File doc = File('${direc.path}/SaveUser.json');
@@ -52,26 +69,13 @@ class _LoadingState extends State<Loading> {
       );
       print('$Nambre');
       await WriteUser();
-
     }
 
-    try {
-      final direc = await getApplicationDocumentsDirectory();
-      File doc = File('${direc.path}/SaveTasks.json');
-      List Jarr;
-      Jarr = json.decode(await doc.readAsString());
-      for (var item in Jarr) {
-        Task Tem= new Task().from( item );
-        Tareas.add(Tem);
-      }
-      print('Tareas leidas ${Tareas.length}');
-      for( int i=0;i<Tareas.length;i++)
-        print(' $i = ${ Tareas[i] } ');
-    } catch(e){
-      print('no jaloo por $e');
-      Tareas=[];
-    }
+  }
 
+  void ReadData() async{
+    await ReadUser();
+    await ReadTask();
     for(int i=0;i<5;i++) {
       List<String> prro = ['paso1', 'ps2', 'p3', 'sad'];
       Metas.add(Meta(
@@ -93,7 +97,7 @@ class _LoadingState extends State<Loading> {
   @override
   void initState() {
     super.initState();
-     readData();
+     ReadData();
   }
   @override
   Widget build(BuildContext context) {

@@ -1,16 +1,23 @@
-import 'dart:ffi';
-import 'package:agendaprocrastinacion/Resultado.dart';
-import 'package:circular_countdown_timer/circular_countdown_timer.dart';
+import 'dart:io';
+import 'dart:convert';
+//import 'dart:html';
+import 'package:agendaprocrastinacion/Meta.dart';
+import 'package:agendaprocrastinacion/UserData.dart';
+import 'package:jiffy/jiffy.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:agendaprocrastinacion/Task.dart';
+
 import 'CustomTimerPainter.dart';
+
 
 class CountDownTimer extends StatefulWidget {
   @override
   _CountDownTimerState createState() => _CountDownTimerState();
 }
 
-class _CountDownTimerState extends State<CountDownTimer>
-    with TickerProviderStateMixin {
+class _CountDownTimerState extends State<CountDownTimer> with TickerProviderStateMixin {
   AnimationController controller;
   bool Bandera=false;
   bool Arranque=false;
@@ -34,7 +41,103 @@ class _CountDownTimerState extends State<CountDownTimer>
 
     return TimeOver();
   }
+  int ID;
   int Segundos=0;
+  List<Task> Tareas=new List();
+  UserData Yo;
+  void WriteUser()async{
+
+    try {
+      final direc = await getApplicationDocumentsDirectory();
+      File archivo = File('${direc.path}/SaveUser.json');
+      String jText = jsonEncode(Yo);
+      print('esto es el yo=$jText');
+      await archivo.writeAsString(jText);
+    } catch (e) {
+      print('no jaloo por ${e}');
+    }
+
+
+  }
+  void ReadUser()async {
+    try{
+      final direc = await getApplicationDocumentsDirectory();
+      File doc = File('${direc.path}/SaveUser.json');
+      dynamic tem=json.decode(await doc.readAsString());
+      print("tem=$tem");
+      Yo=UserData().from(tem);
+      print('nombreeeee=${Yo.NombreU}');
+    }
+    catch(e){
+      print('usuario error $e');
+    }
+
+  }
+  void ReadTask()async {
+    try {
+      final direc = await getApplicationDocumentsDirectory();
+      File doc = File('${direc.path}/SaveTasks.json');
+      List Jarr;
+      print("holaaa\n");
+      Jarr = json.decode(await doc.readAsString());
+      print("JARR==$Jarr");
+      for (var item in Jarr) {
+        print("item=$item");
+        Task Tem= new Task().from( item );
+        Tareas.add(Tem);
+        print(" Tem==== $Tem ");
+      }
+
+      print('Tareas leidas ${Tareas.length}');
+      for( int i=0;i<Tareas.length;i++)
+        print(' $i = ${ Tareas[i] } ');
+    } catch(e){
+      print('no jaloo por $e');
+    }
+  }
+  void WriteTask() async {
+    try {
+      print('p1\n');
+      final direc = await getApplicationDocumentsDirectory();
+      print('p2\n');
+      File archivo = File('${direc.path}/SaveTasks.json');
+      print('p3 ${ Tareas[0].toJson() } \n');
+
+      String jText = jsonEncode(Tareas);
+      print('p4\n');
+      print('cambio= ${jText} \n');
+      await archivo.writeAsString(jText);
+    } catch (e) {
+      print('no jaloo por ${e}');
+    }
+  }
+  void Fun( BuildContext context ,int tem)async{
+    try {
+      await ReadTask();
+      print("tareas->$Tareas");/*
+      for (int i = 0; i < Tareas.length; i++)
+        if (Tareas[i].ID == ID) {
+          Tareas[i].WDay[ Jiffy().dayOfYear ] = 3;
+        }*/
+      ///aqui hay error pero es porque no se esta leyendo bien las tareas
+      ///instance of tareas raroooo :(
+
+      await WriteTask();
+    }
+    catch(e){
+      print("errror tarea $e");
+    }
+    /*
+    try{
+      await ReadUser();
+      Yo.DailyTime[ Jiffy().dayOfYear ] += tem;
+      await WriteUser();
+    }
+    catch(e){
+      print("errror usuario $e");
+    }*/
+    Navigator.pushReplacementNamed(context,'/resultado' ,arguments: tem );
+  }
   @override
   void initState() {
     Bandera=false;
@@ -49,7 +152,7 @@ class _CountDownTimerState extends State<CountDownTimer>
       Bandera=true;
       dynamic cosa=ModalRoute.of(context).settings.arguments;
       print( " ${cosa['Hora']} =__= ${cosa['Minu']}" );
-
+      ID=cosa['ID'];
       Segundos= int.parse( cosa['Hora'] )*60+int.parse( cosa["Minu"] );
       MinutosFinales=Segundos;
       Segundos*=60;
@@ -296,6 +399,3 @@ class _CountDownTimerState extends State<CountDownTimer>
 }
 
 
-void Fun( BuildContext context ,int tem){
-  Navigator.pushReplacementNamed(context,'/resultado' ,arguments: tem );
-}
