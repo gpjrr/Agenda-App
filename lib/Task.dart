@@ -7,7 +7,7 @@ import 'package:jiffy/jiffy.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 class Task {
-  List<int> WDay= List.filled(380, 0);
+  List<int> WDay;
   bool Today; /// para saber si la tarea solo es para hoy
   ///int year=Jiffy().dayOfYear;
   int ID;
@@ -68,7 +68,8 @@ class Task {
   }
 
    Task from(Map<String, dynamic> jsn){
-     Task mapota = new Task(
+     print("convierte json\n");
+    Task mapota = new Task(
        Nombre: jsn['Nombre'],
        Descripcion: jsn['Descripcion'],
        Done: jsn['Done'],
@@ -79,19 +80,28 @@ class Task {
        Minu: jsn['Minu'],
        Today: jsn['Today'],
        ID:jsn['ID'],
+      // WDay: jsn['WDay'],
      );
+        print("convierte los arreglos \n");
         mapota.Dias = new List.filled(7, false);
         var tem = jsn['Dias'];
         for (int i = 0; i < 7; i++)
           mapota.Dias[i] = (tem[i]);
         print('NOMBRE=${mapota.Nombre} MP=${mapota.Dias}\n');
-     return mapota;
+     print("convierte los arreglos part2\n");
+        print("jsn===  ${ jsn['WDay'] }");
+        mapota.WDay=new List.filled(400, 0);
+        var tem2 = jsn['WDay'];
+        for(int i=0;i<400;i++)
+          mapota.WDay[i]=(tem2[i]);
+     //print('NOMBRE=${mapota.Nombre} MP=${mapota.WDay}\n');
+        return mapota;
   }
 
   Map<String, dynamic> toJson() {
-    Map<String ,dynamic> MDias={};
-    for(int i=0;i<7;i++)
-      MDias['i']=Dias[i];
+   // Map<String ,dynamic> MDias={};
+    /*for(int i=0;i<7;i++)
+      MDias['i']=Dias[i];*/
     Map<String, dynamic> mapita= {
       'Nombre': Nombre,
       'Descripcion': Descripcion,
@@ -104,8 +114,9 @@ class Task {
       'Minu': Minu,
       'Today': Today,
       'ID':ID,
+      'WDay':WDay,
     };
-//    print("\n mapita=$mapita \n");
+   print("\n mapita=$mapita \n");
     return mapita;
     }
 

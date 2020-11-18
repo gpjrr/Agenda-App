@@ -13,12 +13,17 @@ class UserData{
   } );
   UserData from( Map<String,dynamic> jsn){
     UserData yo=new UserData(
-      DailyTime: jsn['DailyTime'],
+     // DailyTime: jsn['DailyTime'],
       NombreU: jsn['NombreU'],
       TaskCont: jsn['TaskCont'],
     );
+    yo.DailyTime=new List.filled(400, 0);
+    var tem = jsn['DailyTime'];
+    for(int i=0;i<400;i++)
+      yo.DailyTime[i]=tem[i] ;
     return yo;
   }
+
   Map<String, dynamic> toJson(){
     Map<String, dynamic> mapita= {
       'DailyTime':DailyTime,

@@ -41,7 +41,7 @@ class _CountDownTimerState extends State<CountDownTimer> with TickerProviderStat
 
     return TimeOver();
   }
-  int ID;
+  int Identificador;
   int Segundos=0;
   List<Task> Tareas=new List();
   UserData Yo;
@@ -90,7 +90,7 @@ class _CountDownTimerState extends State<CountDownTimer> with TickerProviderStat
 
       print('Tareas leidas ${Tareas.length}');
       for( int i=0;i<Tareas.length;i++)
-        print(' $i = ${ Tareas[i] } ');
+        print(' $i = ${ Tareas[i].Nombre } ');
     } catch(e){
       print('no jaloo por $e');
     }
@@ -114,20 +114,24 @@ class _CountDownTimerState extends State<CountDownTimer> with TickerProviderStat
   void Fun( BuildContext context ,int tem)async{
     try {
       await ReadTask();
-      print("tareas->$Tareas");/*
-      for (int i = 0; i < Tareas.length; i++)
-        if (Tareas[i].ID == ID) {
-          Tareas[i].WDay[ Jiffy().dayOfYear ] = 3;
-        }*/
+      //print("tareas->${Tareas.length}");
+      for (int i = 0; i < Tareas.length; i++) {
+        print(" i=${Tareas[i].ID } id=$Identificador ");
+        int temporal=Jiffy().dayOfYear;
+        int popo=Tareas[i].ID;
+        if(  popo==temporal ) {
+          Tareas[i].WDay[ temporal ] = 3;
+          break;
+        }
+      }
       ///aqui hay error pero es porque no se esta leyendo bien las tareas
       ///instance of tareas raroooo :(
-
       await WriteTask();
     }
     catch(e){
       print("errror tarea $e");
     }
-    /*
+
     try{
       await ReadUser();
       Yo.DailyTime[ Jiffy().dayOfYear ] += tem;
@@ -135,7 +139,7 @@ class _CountDownTimerState extends State<CountDownTimer> with TickerProviderStat
     }
     catch(e){
       print("errror usuario $e");
-    }*/
+    }
     Navigator.pushReplacementNamed(context,'/resultado' ,arguments: tem );
   }
   @override
@@ -152,7 +156,7 @@ class _CountDownTimerState extends State<CountDownTimer> with TickerProviderStat
       Bandera=true;
       dynamic cosa=ModalRoute.of(context).settings.arguments;
       print( " ${cosa['Hora']} =__= ${cosa['Minu']}" );
-      ID=cosa['ID'];
+      Identificador=cosa['ID'];
       Segundos= int.parse( cosa['Hora'] )*60+int.parse( cosa["Minu"] );
       MinutosFinales=Segundos;
       Segundos*=60;

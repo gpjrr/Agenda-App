@@ -45,6 +45,7 @@ class _EditorTareasState extends State<EditorTareas> {
       Nota.Hora=cosa[ 'Hora' ];
       Nota.Minu=cosa['Minu'];
       Nota.Today=cosa['Today'];
+      Nota.WDay=cosa['WDay'];
       ///print("H=${Nota.Hora} ___ M=${Nota.Minu}");
       setState(() {
         ControlDesc=TextEditingController( text: Nota.Descripcion );
@@ -640,6 +641,7 @@ class _EditorTareasState extends State<EditorTareas> {
                       'Today': Nota.Today,
                       'Hora':Nota.Hora,
                       'Minu':Nota.Minu,
+                      'WDay ':Nota.WDay,
                     });
                   else {
                     //print("ya jalaa");

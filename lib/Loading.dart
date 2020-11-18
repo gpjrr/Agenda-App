@@ -31,21 +31,23 @@ class _LoadingState extends State<Loading> {
 
     
   }
-  void ReadTask()async {
+  void ReadTask()async{
     try {
       final direc = await getApplicationDocumentsDirectory();
       File doc = File('${direc.path}/SaveTasks.json');
       List Jarr;
       Jarr = json.decode(await doc.readAsString());
+      print("JARR= $Jarr");
       for (var item in Jarr) {
         Task Tem= new Task().from( item );
+        print("tem de la iteracion $Tem");
         Tareas.add(Tem);
       }
       print('Tareas leidas ${Tareas.length}');
       for( int i=0;i<Tareas.length;i++)
-        print(' i=$i = ${ Tareas[i] } ');
+        print(' i=$i = ${ Tareas[i].Nombre } ');
     } catch(e){
-      print('no jaloo por $e');
+      print('no leyo las tareas por  $e');
       Tareas=[];
     }
   }
@@ -54,9 +56,10 @@ class _LoadingState extends State<Loading> {
       final direc = await getApplicationDocumentsDirectory();
       File doc = File('${direc.path}/SaveUser.json');
       dynamic tem=json.decode(await doc.readAsString());
-      print("tem=$tem");
+     // print("tem=$tem");
       Yo=UserData().from(tem);
       print('nombreeeee=${Yo.NombreU}');
+      return;
     }
     catch(e){
       print('usuario error $e');
@@ -67,7 +70,7 @@ class _LoadingState extends State<Loading> {
         TaskCont: 0,
         NombreU: Nambre,
       );
-      print('$Nambre');
+      print('que es?=$Nambre');
       await WriteUser();
     }
 

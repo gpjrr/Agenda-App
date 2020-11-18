@@ -68,7 +68,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       final direc = await getApplicationDocumentsDirectory();
       print('p2\n');
       File archivo = File('${direc.path}/SaveTasks.json');
-      print('p3 ${ Tareas[0].toJson() } \n');
+     /// print('p3 ${ Tareas[0].toJson() } \n');
 
       String jText = jsonEncode(Tareas);
       print('p4\n');
@@ -84,20 +84,26 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     if (ban == false) {
       print("dia del ano= ${Jiffy().dayOfYear}");
       dynamic cosas = ModalRoute.of(context).settings.arguments;
-      print('tareaaa=${Tareas.length}');
+
       Tareas = cosas['Tareas'];
       Metas = cosas['Metas'];
       Yo=cosas['Yo'];
+      print('tareaaa=${Tareas.length}');
       print('yo=${Yo.TaskCont}');
       Yo.DaysWeek();
      // print('yoDias=${Yo.WeekDay }');
+      int HOY=Jiffy().dayOfYear;
+
       print('hoyDias=${ Jiffy().dayOfYear }');
+      for(var cosa in Tareas)
+        print("..${ cosa.WDay }");
+
 
       ban = true;
       for (int i = 0; i < Tareas.length; i++) {
         Tareas[i].RelojIcono();
         Tareas[i].Lave = UniqueKey();
-        print( ' nor=${Tareas[i].Lave} rara=${ UniqueKey() } ' );
+        //print( ' nor=${Tareas[i].Lave} rara=${ UniqueKey() } ' );
         Week.add( new WeekView( valores: colores ) );
       }
 
@@ -305,12 +311,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     ),
                     onDismissed: (direction) async {
                       Task tem = Tareas[index];
+
                       setState(() {
                         print("tam== ${Tareas.length} I=$index");
                         //print("${Tareas[index].Tempo}");
                         print("${Tareas[index].Hora} ${Tareas[index].Minu}");
-
                         Tareas.removeAt(index);
+
                       });
                       if (direction == DismissDirection.startToEnd) {
                         try {
@@ -322,8 +329,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                 'ID':tem.ID,
                               });
                         } catch (e) {
-                          print('no jalo por $e');
+                          print('no jalo el slide por $e');
                         }
+                      }
+                      else {
+                        await WriteTask();
                       }
 
                       /// aqui borramos la tarea peroo creo no requiere
@@ -397,6 +407,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 Tempo: false,
                 Today: true,
                 ID: Yo.TaskCont,
+                WDay: new List.filled(400, 0),
               );
              //// print("=-=${Nuevo.ID}");
               Nuevo.Hoy();
@@ -409,6 +420,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 'Minu': Nuevo.Minu,
                 'Today': Nuevo.Today,
                 'ID':Nuevo.ID,
+                'WDay':Nuevo.WDay,
               });
               ///print('tempo--${Nuevo.ID}');
             }
@@ -446,6 +458,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     Today: cosa['Today'],
                     Hora: cosa['Hora'],
                     Minu: cosa['Minu'],
+                    WDay: cosa['WDay'],
                     //ID: cosa['ID'],
                   );
                   Sujeto.ID= Yo.TaskCont++;
@@ -453,6 +466,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   Tareas.add(Sujeto);
                   print('voy a guardar\n');
                   WriteTask();
+                  print('guarde las tareas \n');
                   WriteUser();
                   Week.add(new WeekView( valores:colores ));
                 } else {
