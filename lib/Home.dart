@@ -64,14 +64,14 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   }
   void WriteTask() async {
     try {
-      print('p1\n');
+      print('p1 write task\n');
       final direc = await getApplicationDocumentsDirectory();
-      print('p2\n');
+      print('p2 write task \n');
       File archivo = File('${direc.path}/SaveTasks.json');
-     /// print('p3 ${ Tareas[0].toJson() } \n');
+      print('p3 writetask ${ Tareas[0].toJson() } \n');
 
       String jText = jsonEncode(Tareas);
-      print('p4\n');
+      print('p4 write task\n');
       print('cambio= ${jText} \n');
       await archivo.writeAsString(jText);
     } catch (e) {
@@ -262,7 +262,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                             });
                           },
                           //tileColor: Colors.blue,
-                         /// trailing: Text('${Tareas[index].ID}'),
+                            //Yo.DailyTime[ Jiffy().dayOfYear ]
+                            trailing: Text('${  Tareas[index].WDay[ Jiffy().dayOfYear ] }'),
                           leading: Tareas[index].Reloj,
                           title: Text(
                             Tareas[index].Nombre.substring(
@@ -328,6 +329,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                 'Minu': tem.Minu,
                                 'ID':tem.ID,
                               });
+                          /// condicionar que finalice el trabajo 
+                            print("regresa $work");
+                          setState(() {
+                            Yo.WeekDay[ Jiffy().dayOfYear  ]+=work;
+                            print("aqui vuelvee");
+                          });
                         } catch (e) {
                           print('no jalo el slide por $e');
                         }
@@ -409,7 +416,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 ID: Yo.TaskCont,
                 WDay: new List.filled(400, 0),
               );
-             //// print("=-=${Nuevo.ID}");
+             print("=-=${Nuevo.WDay}");
               Nuevo.Hoy();
               cosa = await Navigator.pushNamed(context, '/editor', arguments: {
                 'Nombre': Nuevo.Nombre,
@@ -422,7 +429,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 'ID':Nuevo.ID,
                 'WDay':Nuevo.WDay,
               });
-              ///print('tempo--${Nuevo.ID}');
+              print('cosa wday=${ cosa['WDay'] }');
             }
             else {
               Meta Nuevo = new Meta(
@@ -432,8 +439,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 Why: '',
                 //StepN: 0,
               );
-              cosa =
-                  await Navigator.pushNamed(context, '/editormeta', arguments: {
+              cosa = await Navigator.pushNamed(context, '/editormeta', arguments: {
                 'Name': Nuevo.Name,
                 'Days': Nuevo.Days,
                 'Why': Nuevo.Why,
@@ -445,9 +451,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             }
 
             setState(() {
-              print(' indice=${TabIndex}');
+              /*print('cosa1 wday= ${ cosa['WDay'] }');
+              print(' indice=${TabIndex}');*/
               if (cosa != null) {
                 if (TabIndex == 0) {
+                  //print('cosa wday= ${ cosa['WDay'] }');
                   Task Sujeto = Task(
                     Nombre: cosa['Nombre'],
                     Limpio: true,
@@ -458,13 +466,15 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     Today: cosa['Today'],
                     Hora: cosa['Hora'],
                     Minu: cosa['Minu'],
-                    WDay: cosa['WDay'],
+                    WDay:  cosa['WDay'],
                     //ID: cosa['ID'],
                   );
+
                   Sujeto.ID= Yo.TaskCont++;
                   Sujeto.RelojIcono();
                   Tareas.add(Sujeto);
                   print('voy a guardar\n');
+                  //print('try ${Sujeto.WDay[13]}\n');
                   WriteTask();
                   print('guarde las tareas \n');
                   WriteUser();

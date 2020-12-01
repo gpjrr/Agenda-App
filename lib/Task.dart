@@ -89,12 +89,12 @@ class Task {
           mapota.Dias[i] = (tem[i]);
         print('NOMBRE=${mapota.Nombre} MP=${mapota.Dias}\n');
      print("convierte los arreglos part2\n");
-        print("jsn===  ${ jsn['WDay'] }");
+        print("jsn en Task===  ${ jsn['WDay'] }");
         mapota.WDay=new List.filled(400, 0);
         var tem2 = jsn['WDay'];
         for(int i=0;i<400;i++)
           mapota.WDay[i]=(tem2[i]);
-     //print('NOMBRE=${mapota.Nombre} MP=${mapota.WDay}\n');
+     print('NOMBRE=${mapota.Nombre} MP=${mapota.WDay}\n');
         return mapota;
   }
 
@@ -102,6 +102,7 @@ class Task {
    // Map<String ,dynamic> MDias={};
     /*for(int i=0;i<7;i++)
       MDias['i']=Dias[i];*/
+    print(" arreglo = ${ this.WDay } ");
     Map<String, dynamic> mapita= {
       'Nombre': Nombre,
       'Descripcion': Descripcion,
@@ -113,10 +114,10 @@ class Task {
       'Hora': Hora,
       'Minu': Minu,
       'Today': Today,
-      'ID':ID,
-      'WDay':WDay,
+      'ID': ID,
+      'WDay': WDay,
     };
-   print("\n mapita=$mapita \n");
+   print("\n mapita=${mapita['Wday'] } \n");
     return mapita;
     }
 

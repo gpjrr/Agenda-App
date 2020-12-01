@@ -17,10 +17,18 @@ class UserData{
       NombreU: jsn['NombreU'],
       TaskCont: jsn['TaskCont'],
     );
+    print("comnzamos a convertir");
     yo.DailyTime=new List.filled(400, 0);
-    var tem = jsn['DailyTime'];
-    for(int i=0;i<400;i++)
-      yo.DailyTime[i]=tem[i] ;
+    var tem=jsn['DailyTime'];
+    print("tem en yo json=${tem}");
+    try {
+      for (int i = 0; i < 400; i++)
+        yo.DailyTime[i] = tem[i];
+      print(" yo daily=${yo.DailyTime} ");
+    }
+    catch(e){
+      print("esta vacio el jsn $e");
+    }
     return yo;
   }
 

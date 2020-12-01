@@ -20,6 +20,7 @@ class _LoadingState extends State<Loading> {
   void WriteUser()async{
 
     try {
+      Yo.DailyTime=new List.filled(400, 0);
       final direc = await getApplicationDocumentsDirectory();
       File archivo = File('${direc.path}/SaveUser.json');
       String jText = jsonEncode(Yo);
@@ -56,7 +57,7 @@ class _LoadingState extends State<Loading> {
       final direc = await getApplicationDocumentsDirectory();
       File doc = File('${direc.path}/SaveUser.json');
       dynamic tem=json.decode(await doc.readAsString());
-     // print("tem=$tem");
+      print("tem=$tem");
       Yo=UserData().from(tem);
       print('nombreeeee=${Yo.NombreU}');
       return;

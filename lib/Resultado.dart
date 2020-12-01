@@ -62,7 +62,7 @@ class _ResultadoState extends State<Resultado > {
                   ),
                   FlatButton.icon(
                       onPressed: (){
-                        Navigator.pop(context);
+                        Navigator.pop(context, Minutos);
                       },
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18.0),

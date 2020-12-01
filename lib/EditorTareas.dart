@@ -46,7 +46,8 @@ class _EditorTareasState extends State<EditorTareas> {
       Nota.Minu=cosa['Minu'];
       Nota.Today=cosa['Today'];
       Nota.WDay=cosa['WDay'];
-      ///print("H=${Nota.Hora} ___ M=${Nota.Minu}");
+      //print("H=${Nota.Hora} ___ M=${Nota.Minu}");
+      print("Nota Wd=${Nota.WDay}");
       setState(() {
         ControlDesc=TextEditingController( text: Nota.Descripcion );
         ControlName=TextEditingController( text: Nota.Nombre );
@@ -632,6 +633,8 @@ class _EditorTareasState extends State<EditorTareas> {
                   color: Colors.white,
                 ),
                 onPressed: (){
+                  ///Nota.WDay[13]=123;
+                  print("Nota Wd finaly from editortareas aqui esta bien ");
                   if(Nota.Nombre.isNotEmpty)
                     Navigator.pop(context, {
                       'Nombre': Nota.Nombre,
@@ -641,7 +644,7 @@ class _EditorTareasState extends State<EditorTareas> {
                       'Today': Nota.Today,
                       'Hora':Nota.Hora,
                       'Minu':Nota.Minu,
-                      'WDay ':Nota.WDay,
+                      'WDay':Nota.WDay,
                     });
                   else {
                     //print("ya jalaa");

@@ -125,7 +125,6 @@ class _CountDownTimerState extends State<CountDownTimer> with TickerProviderStat
         }
       }
       ///aqui hay error pero es porque no se esta leyendo bien las tareas
-      ///instance of tareas raroooo :(
       await WriteTask();
     }
     catch(e){
@@ -135,6 +134,7 @@ class _CountDownTimerState extends State<CountDownTimer> with TickerProviderStat
     try{
       await ReadUser();
       Yo.DailyTime[ Jiffy().dayOfYear ] += tem;
+      print(" trabajo=${Yo.DailyTime[ Jiffy().dayOfYear ] } ");
       await WriteUser();
     }
     catch(e){
