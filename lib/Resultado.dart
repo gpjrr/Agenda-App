@@ -20,6 +20,7 @@ class _ResultadoState extends State<Resultado > {
     if( ban==false ){
       Minutos=ModalRoute.of(context).settings.arguments;
       ban=true;
+      print("estoy en la ventana de resultado\n");
     }
     return Scaffold(
         //backgroundColor: Color.fromRGBO(238, 232, 2, 1),
@@ -62,7 +63,7 @@ class _ResultadoState extends State<Resultado > {
                   ),
                   FlatButton.icon(
                       onPressed: (){
-                        Navigator.pop(context, Minutos);
+                        Navigator.pop(context);
                       },
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18.0),

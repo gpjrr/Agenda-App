@@ -42,7 +42,20 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       print("Selected Index: " + _tabController.index.toString());
      });
   }
+  void ReadUser()async {
+    try{
+      final direc = await getApplicationDocumentsDirectory();
+      File doc = File('${direc.path}/SaveUser.json');
+      dynamic tem=json.decode(await doc.readAsString());
+      print("tem=$tem");
+      Yo=UserData().from(tem);
+      print('nombreeeee=${Yo.NombreU}');
+    }
+    catch(e){
+      print('usuario error $e');
+    }
 
+  }
   void WriteMeta() async {
     try {} catch (e) {
       print('No grabo meta por $e ');
@@ -104,7 +117,18 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         Tareas[i].RelojIcono();
         Tareas[i].Lave = UniqueKey();
         //print( ' nor=${Tareas[i].Lave} rara=${ UniqueKey() } ' );
-        Week.add( new WeekView( valores: colores ) );
+
+
+        Tareas[i].Crayola=new List.filled(7, 0);
+        for(int j=0;j<7;j++)
+          if( Tareas[i].Dias[j]==true ) {
+            Tareas[i].Crayola[j] = 1;
+            int tem=Yo.WeekDay[ j ];
+            print("yo=$tem i=$i j=$j val=${Tareas[i].WDay[ tem ]}");
+            if( Tareas[i].WDay[ tem ]!=0 )
+              Tareas[i].Crayola[j]=Tareas[i].WDay[ tem ];
+          }
+        Week.add( new WeekView( valores: Tareas[i].Crayola ) );
       }
 
     }
@@ -117,7 +141,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           iconTheme: IconThemeData(color: Colors.black),
           centerTitle: true,
           title: Text(
-            'Hola ${Yo.NombreU}=${Yo.DailyTime[Jiffy().dayOfYear]}',
+            'Hola ${Yo.NombreU}',
             //'Hola ${Yo.NombreU} ${Yo.TaskCont}',
             style: TextStyle(
               color: Colors.black,
@@ -263,7 +287,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                           },
                           //tileColor: Colors.blue,
                             //Yo.DailyTime[ Jiffy().dayOfYear ]
-                            trailing: Text('${  Tareas[index].WDay[ Jiffy().dayOfYear ] }'),
+                            //trailing: Text('${  Tareas[index].WDay[ Jiffy().dayOfYear ] }'),
                           leading: Tareas[index].Reloj,
                           title: Text(
                             Tareas[index].Nombre.substring(
@@ -312,36 +336,38 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     ),
                     onDismissed: (direction) async {
                       Task tem = Tareas[index];
-
-                      setState(() {
+                      setState(() async{
                         print("tam== ${Tareas.length} I=$index");
                         //print("${Tareas[index].Tempo}");
                         print("${Tareas[index].Hora} ${Tareas[index].Minu}");
                         Tareas.removeAt(index);
+                        if (direction == DismissDirection.startToEnd) {
+                          try {
+                            await Navigator.pushNamed(
+                                context, '/tiempo',
+                                arguments: {
+                                  'Hora': tem.Hora,
+                                  'Minu': tem.Minu,
+                                  'ID':tem.ID,
+                                });
+                            /*
+                            /// condicionar que finalice el trabajo
+                            //print("size=${Yo.WeekDay.length} day=${Jiffy().dayOfYear}");
+                            //Yo.DailyTime[ Jiffy().dayOfYear  ]+=work;
+                            */
+                            await ReadUser();
+                            print("aqui vuelvee");
+
+
+                          } catch (e) {
+                            print('no jalo el slide por $e');
+                          }
+                        }
+                        else {
+                          await WriteTask();
+                        }
 
                       });
-                      if (direction == DismissDirection.startToEnd) {
-                        try {
-                          dynamic work = await Navigator.pushNamed(
-                              context, '/tiempo',
-                              arguments: {
-                                'Hora': tem.Hora,
-                                'Minu': tem.Minu,
-                                'ID':tem.ID,
-                              });
-                          /// condicionar que finalice el trabajo 
-                            print("regresa $work");
-                          setState(() {
-                            Yo.WeekDay[ Jiffy().dayOfYear  ]+=work;
-                            print("aqui vuelvee");
-                          });
-                        } catch (e) {
-                          print('no jalo el slide por $e');
-                        }
-                      }
-                      else {
-                        await WriteTask();
-                      }
 
                       /// aqui borramos la tarea peroo creo no requiere
                     },
@@ -495,6 +521,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         drawer: Drawer(
           child: ListView(
             children: <Widget>[
+              Text(
+                'Tiempo concentrado\n${Yo.DailyTime[Jiffy().dayOfYear]} minutos',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 25,
+                  letterSpacing: 1,
+                  fontFamily: 'Bellota-BoldItalic',
+                ),
+                textAlign: TextAlign.center,
+              ),
               ListTile(
                 title: Text('Tips'),
                 trailing: Icon(

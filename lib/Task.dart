@@ -8,6 +8,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 class Task {
   List<int> WDay;
+
   bool Today; /// para saber si la tarea solo es para hoy
   ///int year=Jiffy().dayOfYear;
   int ID;
@@ -19,11 +20,12 @@ class Task {
   bool Done;
   bool Limpio;
   List<bool> Dias;
+  List<int> Crayola;
   Icon Reloj;
 
   Task({ this.Nombre, this.Descripcion, this.Done, this.Dias,
     this.Lave, this.Limpio, this.Tempo, this.Hora, this.Minu,
-    this.Today, this.ID,  this.WDay,  this.Reloj
+    this.Today, this.ID,  this.WDay,  this.Reloj,this.Crayola
   });
 
   void Hoy() {
@@ -68,7 +70,7 @@ class Task {
   }
 
    Task from(Map<String, dynamic> jsn){
-     print("convierte json\n");
+    // print("convierte json\n");
     Task mapota = new Task(
        Nombre: jsn['Nombre'],
        Descripcion: jsn['Descripcion'],
@@ -82,19 +84,19 @@ class Task {
        ID:jsn['ID'],
       // WDay: jsn['WDay'],
      );
-        print("convierte los arreglos \n");
+       // print("convierte los arreglos \n");
         mapota.Dias = new List.filled(7, false);
         var tem = jsn['Dias'];
         for (int i = 0; i < 7; i++)
           mapota.Dias[i] = (tem[i]);
-        print('NOMBRE=${mapota.Nombre} MP=${mapota.Dias}\n');
-     print("convierte los arreglos part2\n");
-        print("jsn en Task===  ${ jsn['WDay'] }");
+        //print('NOMBRE=${mapota.Nombre} MP=${mapota.Dias}\n');
+        //print("convierte los arreglos part2\n");
+        // print("jsn en Task===  ${ jsn['WDay'] }");
         mapota.WDay=new List.filled(400, 0);
         var tem2 = jsn['WDay'];
         for(int i=0;i<400;i++)
           mapota.WDay[i]=(tem2[i]);
-     print('NOMBRE=${mapota.Nombre} MP=${mapota.WDay}\n');
+        //print('NOMBRE=${mapota.Nombre} MP=${mapota.WDay}\n');
         return mapota;
   }
 
@@ -117,7 +119,7 @@ class Task {
       'ID': ID,
       'WDay': WDay,
     };
-   print("\n mapita=${mapita['Wday'] } \n");
+   ///print("\n mapita=${mapita['Wday'] } \n");
     return mapita;
     }
 

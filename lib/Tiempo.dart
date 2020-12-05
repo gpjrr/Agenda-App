@@ -53,8 +53,9 @@ class _CountDownTimerState extends State<CountDownTimer> with TickerProviderStat
       String jText = jsonEncode(Yo);
       print('esto es el yo=$jText');
       await archivo.writeAsString(jText);
+      print('guardo el usuario correctamente');
     } catch (e) {
-      print('no jaloo por ${e}');
+      print('no jaloo write user por ${e}');
     }
 
 
@@ -80,19 +81,19 @@ class _CountDownTimerState extends State<CountDownTimer> with TickerProviderStat
       List Jarr;
       print("holaaa\n");
       Jarr = json.decode(await doc.readAsString());
-      print("JARR==$Jarr");
+     // print("JARR==$Jarr");
       for (var item in Jarr) {
         print("item=$item");
         Task Tem= new Task().from( item );
         Tareas.add(Tem);
-        print(" Tem==== $Tem ");
+       // print(" Tem==== $Tem ");
       }
 
       print('Tareas leidas ${Tareas.length}');
       for( int i=0;i<Tareas.length;i++)
         print(' $i = ${ Tareas[i].Nombre } ');
     } catch(e){
-      print('no jaloo por $e');
+      print('no jaloo read task por $e');
     }
   }
   void WriteTask() async {
@@ -107,6 +108,7 @@ class _CountDownTimerState extends State<CountDownTimer> with TickerProviderStat
       print('p4\n');
       print('cambio= ${jText} \n');
       await archivo.writeAsString(jText);
+      print('exito al guardar las tareas \n');
     } catch (e) {
       print('no jaloo por ${e}');
     }
@@ -128,7 +130,7 @@ class _CountDownTimerState extends State<CountDownTimer> with TickerProviderStat
       await WriteTask();
     }
     catch(e){
-      print("errror tarea $e");
+      print("errror enviar resultado $e");
     }
 
     try{
